@@ -40,7 +40,7 @@
 - [ ] **Enriquecimiento con IA (opcional)**: tono, tagline, beneficios, público objetivo, guion sugerido.
 - [x] **Editor manual de marca** (panel en el Studio): selector de color, subir logo, buscador de Google Fonts, vista previa en vivo.
 - [x] Generar paleta derivada (tonos, contraste AA/AAA) y aviso de contraste (reutilizar `contrast-*` del CLI).
-- [ ] **Biblioteca de marcas**: varias marcas guardadas, duplicar, exportar/importar.
+- [x] **Biblioteca de marcas**: varias marcas guardadas, duplicar, exportar/importar.
 - [ ] Aplicar marca como **tokens CSS** (`--brand-primary`, `--brand-font-heading`…) inyectados en toda composición.
 - [ ] Cambiar de marca en un proyecto existente y que el video se re-adapte al instante.
 

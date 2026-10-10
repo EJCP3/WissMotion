@@ -8,6 +8,7 @@ import { writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { BrandExtractError, extractBrand } from "./extract-lib.mjs";
+import { resolveLibraryDir, saveBrand } from "./brand-library.mjs";
 import { validateBrand } from "./validate-brand.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -48,7 +49,7 @@ async function main() {
   const out = opt(rest, "--out");
   if (!url || url.startsWith("--") || !out) {
     console.error(
-      "Uso: node extract-from-url.mjs <url> --out brand.json [--screenshots dir] [--timeout ms]",
+      "Uso: node extract-from-url.mjs <url> --out brand.json [--screenshots dir] [--timeout ms] [--save nombre] [--brands-dir dir]",
     );
     process.exit(2);
   }
@@ -76,6 +77,12 @@ async function main() {
       console.log(
         `OK: ${out} (${debug.cssFiles} CSS, ${debug.colorCount} colores, ${debug.fontCount} fuentes)`,
       );
+      const saveName = opt(rest, "--save");
+      if (saveName) {
+        const dir = resolveLibraryDir(opt(rest, "--brands-dir"));
+        const { slug, file } = await saveBrand(dir, saveName, brand);
+        console.log(`OK: guardada en la biblioteca como ${slug} (${file})`);
+      }
     }
   } catch (e) {
     console.error(e instanceof BrandExtractError ? `error: ${e.message}` : e);
