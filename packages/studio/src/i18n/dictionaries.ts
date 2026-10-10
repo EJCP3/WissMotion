@@ -61,6 +61,19 @@ const es = {
   "brand.copyFailed": "No se pudo copiar",
   "brand.reset": "Restablecer",
   "brand.invalid": "Revisa los campos marcados",
+  "brand.contrast": "Contraste",
+  "brand.tones": "Tonos derivados",
+  "brand.tonesHint": "Clic para asignar el tono al campo",
+  "brand.pair.body": "Texto / Fondo",
+  "brand.pair.surface": "Texto / Superficie",
+  "brand.pair.cta": "CTA (blanco / Primario)",
+  "brand.pair.accent": "Primario / Fondo",
+  "brand.rating.aaa": "AAA",
+  "brand.rating.aa": "AA",
+  "brand.rating.aaLarge": "AA grande",
+  "brand.rating.fail": "No pasa",
+  "brand.contrastWarning": "El texto sobre el fondo no llega a AA (4.5)",
+  "brand.useSuggested": "Usar texto sugerido",
 } as const;
 
 const en: Record<keyof typeof es, string> = {
@@ -117,6 +130,19 @@ const en: Record<keyof typeof es, string> = {
   "brand.copyFailed": "Could not copy",
   "brand.reset": "Reset",
   "brand.invalid": "Check the marked fields",
+  "brand.contrast": "Contrast",
+  "brand.tones": "Derived tones",
+  "brand.tonesHint": "Click to assign the tone to the field",
+  "brand.pair.body": "Text / Background",
+  "brand.pair.surface": "Text / Surface",
+  "brand.pair.cta": "CTA (white / Primary)",
+  "brand.pair.accent": "Primary / Background",
+  "brand.rating.aaa": "AAA",
+  "brand.rating.aa": "AA",
+  "brand.rating.aaLarge": "AA large",
+  "brand.rating.fail": "Fail",
+  "brand.contrastWarning": "Body text on background is below AA (4.5)",
+  "brand.useSuggested": "Use suggested text",
 };
 
 export type StudioStringKey = keyof typeof es;

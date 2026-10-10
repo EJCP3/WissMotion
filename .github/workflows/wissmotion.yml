@@ -40,11 +40,11 @@ jobs:
 
       - name: Lint producto
         run: |
-          bunx oxlint wissmotion packages/studio/src/i18n packages/studio/src/components/LanguageToggle.tsx packages/studio/src/components/ui/WissMotionLogo.tsx packages/studio/src/components/StudioHeader.tsx packages/studio/src/components/StudioSplash.tsx packages/studio/src/telemetry/policy.ts packages/studio/src/components/OpenInDesktopButton.tsx
+          bunx oxlint wissmotion packages/studio/src/brand packages/studio/src/i18n packages/studio/src/components/LanguageToggle.tsx packages/studio/src/components/ui/WissMotionLogo.tsx packages/studio/src/components/StudioHeader.tsx packages/studio/src/components/StudioSplash.tsx packages/studio/src/telemetry/policy.ts packages/studio/src/components/OpenInDesktopButton.tsx packages/studio/src/components/StudioRightPanels.tsx packages/studio/src/components/dock/panelRegistry.ts packages/studio/src/components/dock/dockLayout.ts packages/studio/src/components/dock/DockTab.tsx
 
       - name: Formato producto
         run: |
-          bunx oxfmt --check wissmotion packages/studio/src/i18n packages/studio/src/components/LanguageToggle.tsx packages/studio/src/components/ui/WissMotionLogo.tsx packages/studio/src/components/StudioHeader.tsx packages/studio/src/components/StudioSplash.tsx packages/studio/src/telemetry/policy.ts packages/studio/src/components/OpenInDesktopButton.tsx packages/studio/index.html packages/studio/public/favicon.svg
+          bunx oxfmt --check wissmotion packages/studio/src/brand packages/studio/src/i18n packages/studio/src/components/LanguageToggle.tsx packages/studio/src/components/ui/WissMotionLogo.tsx packages/studio/src/components/StudioHeader.tsx packages/studio/src/components/StudioSplash.tsx packages/studio/src/telemetry/policy.ts packages/studio/src/components/OpenInDesktopButton.tsx packages/studio/src/components/StudioRightPanels.tsx packages/studio/src/components/dock/panelRegistry.ts packages/studio/src/components/dock/dockLayout.ts packages/studio/src/components/dock/DockTab.tsx packages/studio/index.html packages/studio/public/favicon.svg
 
       - name: Tests Brand Kit
         run: node --test wissmotion/brand-kit/brand.test.mjs wissmotion/brand-kit/extract.test.mjs

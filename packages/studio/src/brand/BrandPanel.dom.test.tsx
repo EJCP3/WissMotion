@@ -95,6 +95,55 @@ describe("BrandPanel", () => {
     );
   });
 
+  it("muestra 4 pares de contraste con ratio e insignia", async () => {
+    const host = await mountPanel();
+    const contrast = host.querySelector('[data-testid="brand-contrast"]')!;
+    for (const label of [
+      "Texto / Fondo",
+      "Texto / Superficie",
+      "CTA (blanco / Primario)",
+      "Primario / Fondo",
+    ]) {
+      expect(contrast.textContent).toContain(label);
+    }
+    expect(contrast.textContent).toMatch(/\d+\.\d{2}/);
+    expect(contrast.textContent).toMatch(/AAA|AA/);
+  });
+
+  it("avisa cuando el texto no contrasta y el fix lo corrige", async () => {
+    const host = await mountPanel();
+    const hexInputs = [...host.querySelectorAll('[data-testid="brand-panel"] input')].filter(
+      (i) => (i as HTMLInputElement).type !== "color",
+    ) as HTMLInputElement[];
+    const textHex = hexInputs.find((i) => i.value === "#1c1917") as HTMLInputElement;
+    await act(async () => {
+      textHex.focus();
+      setNativeValue(textHex, "#ffffff");
+      textHex.blur();
+    });
+    const alert = host.querySelector('[role="alert"]');
+    expect(alert?.textContent).toContain("no llega a AA");
+    const fix = [...host.querySelectorAll("button")].find(
+      (b) => b.textContent === "Usar texto sugerido",
+    )!;
+    await act(async () => fix.click());
+    const stored = JSON.parse(localStorage.getItem("wissmotion-studio:brand:panel-test")!);
+    expect(stored.colors.text).not.toBe("#ffffff");
+    expect(host.querySelector('[role="alert"]')?.textContent).not.toContain("no llega a AA");
+  });
+
+  it("los tonos derivados se asignan al campo con un clic", async () => {
+    const host = await mountPanel();
+    const tones = host.querySelector('[data-testid="brand-tones"]')!;
+    const firstTone = tones.querySelector("button") as HTMLButtonElement;
+    const hex = firstTone.title;
+    expect(hex).toMatch(/^#[0-9a-f]{6}$/);
+    await act(async () => firstTone.click());
+    expect(
+      JSON.parse(localStorage.getItem("wissmotion-studio:brand:panel-test")!).colors.primary,
+    ).toBe(hex);
+  });
+
   it("exportar descarga el brand.json con el nombre de la marca", async () => {
     const urls: string[] = [];
     vi.stubGlobal("URL", {
