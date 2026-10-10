@@ -1,0 +1,57 @@
+name: WissMotion
+
+permissions:
+  contents: read
+
+# CI propio del fork: verifica lo específico de WissMotion sin correr la
+# CI pesada de upstream (la hereda igual en cada push). Rápido (<5 min).
+env:
+  HYPERFRAMES_NO_TELEMETRY: "1"
+
+on:
+  push:
+    branches: [wissmotion]
+  pull_request:
+    branches: [wissmotion]
+  workflow_dispatch:
+
+concurrency:
+  group: wissmotion-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  wissmotion:
+    name: Brand kit + Studio (i18n, marca, flags)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+
+      - name: Install Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Lint producto
+        run: |
+          bunx oxlint wissmotion packages/studio/src/i18n packages/studio/src/components/LanguageToggle.tsx packages/studio/src/components/ui/WissMotionLogo.tsx packages/studio/src/components/StudioHeader.tsx packages/studio/src/components/StudioSplash.tsx packages/studio/src/telemetry/policy.ts packages/studio/src/components/OpenInDesktopButton.tsx
+
+      - name: Formato producto
+        run: |
+          bunx oxfmt --check wissmotion packages/studio/src/i18n packages/studio/src/components/LanguageToggle.tsx packages/studio/src/components/ui/WissMotionLogo.tsx packages/studio/src/components/StudioHeader.tsx packages/studio/src/components/StudioSplash.tsx packages/studio/src/telemetry/policy.ts packages/studio/src/components/OpenInDesktopButton.tsx packages/studio/index.html packages/studio/public/favicon.svg
+
+      - name: Tests Brand Kit
+        run: node --test wissmotion/brand-kit/brand.test.mjs wissmotion/brand-kit/extract.test.mjs
+
+      - name: Typecheck Studio
+        run: cd packages/studio && bunx tsc --noEmit
+
+      - name: Tests Studio (marca, i18n, flags)
+        run: |
+          bun run --cwd packages/studio test src/i18n src/headerExports.test.tsx src/components/StudioHeader.dom.test.tsx src/telemetry/policy.test.ts src/components/OpenInDesktopButton.dom.test.tsx -- --maxWorkers=2

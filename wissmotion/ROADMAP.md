@@ -20,20 +20,20 @@
 
 ## Fase 0 — Base del fork
 
-- [ ] Monorepo instalado y Studio corriendo en local (`bun install`, `bun run studio`).
-- [ ] Estrategia de sincronización con `upstream` (rama `main` = upstream, rama `wissmotion` = producto; merge periódico).
-- [ ] Carpeta `wissmotion/` para todo lo propio (brand kit, plantillas, presets, servidor MCP, docs).
-- [ ] Rebranding del Studio: nombre, logo, colores, splash, título de ventana, favicon.
-- [ ] Desactivar o redirigir lo específico de HeyGen (telemetría, botón "Open in desktop/Framey", login cloud) detrás de flags.
-- [ ] Idioma: interfaz en **español** con sistema i18n (es/en).
-- [ ] CI propio: build, tests, lint en GitHub Actions del fork.
+- [x] Monorepo instalado y Studio corriendo en local (`bun install`, `bun run studio`).
+- [x] Estrategia de sincronización con `upstream` (rama `main` = upstream, rama `wissmotion` = producto; merge periódico).
+- [x] Carpeta `wissmotion/` para todo lo propio (brand kit, plantillas, presets, servidor MCP, docs).
+- [x] Rebranding del Studio: nombre, logo, colores, splash, título de ventana, favicon.
+- [x] Desactivar o redirigir lo específico de HeyGen (telemetría, botón "Open in desktop/Framey", login cloud) detrás de flags.
+- [x] Idioma: interfaz en **español** con sistema i18n (es/en).
+- [x] CI propio: build, tests, lint en GitHub Actions del fork (`.github/workflows/wissmotion.yml`).
 
 ## Fase 1 — Brand Kit
 
-- [ ] **Esquema `brand.json`** versionado y validado (JSON Schema):
+- [x] **Esquema `brand.json`** versionado y validado (JSON Schema):
       nombre, logo (completo / ícono / monocromo / claro-oscuro), colores (primary, secondary, accent, background, surface, text),
       tipografías (heading, body, pesos), tono, personalidad de movimiento, tagline, features, CTA, URL, capturas, redes sociales.
-- [ ] **Extractor desde URL (sin IA)**: colores del CSS, fuentes, favicon/logo, imagen OG, título, meta descripción,
+- [x] **Extractor desde URL (sin IA)**: colores del CSS, fuentes, favicon/logo, imagen OG, título, meta descripción,
       capturas desktop y móvil (reutilizar `hyperframes capture`).
 - [ ] **Extractor desde app**: subir capturas de App Store / Play Store o imágenes sueltas.
 - [ ] **Importar desde Figma**: variables/tokens y logo.
