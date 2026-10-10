@@ -54,7 +54,7 @@
 - [x] **Transiciones** entre escenas (push, zoom-through, morph, shader-transitions existentes, whip).
 - [ ] **Editor de curvas de easing** (bézier visual + spring con masa/rigidez/amortiguación) estilo Jitter.
 - [ ] Controles de **stagger** (orden, dirección, desde el centro, aleatorio).
-- [ ] Vista previa de cada preset en miniatura animada.
+- [x] Vista previa de cada preset en miniatura (póster fijo por preset; la animada llega con la galería de Fase 3).
 - [ ] Todos los presets **seek-safe** y deterministas (render frame a frame idéntico al preview).
 
 ## Fase 3 — Plantillas promocionales

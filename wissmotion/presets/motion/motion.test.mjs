@@ -1,7 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
-import { readdir, readFile } from "node:fs/promises";
+import { readdir, readFile, stat } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv from "ajv/dist/2020.js";
@@ -155,6 +155,14 @@ describe("motion/examples", () => {
       const report = await lintDir(join(here, "examples", d));
       assert.equal(report.ok, true, `${d}: ok`);
       assert.equal(report.errorCount, 0, `${d}: sin errores`);
+    }
+  });
+
+  it("cada ejemplo tiene su póster en previews/", async () => {
+    const ids = [...Object.keys(presets.presets), ...Object.keys(transitions.transitions)].sort();
+    for (const id of ids) {
+      const info = await stat(join(here, "previews", `${id}.png`));
+      assert.ok(info.size > 1000, `${id}: póster no vacío`);
     }
   });
 });
