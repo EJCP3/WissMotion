@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>browser-scroll · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #0b1220;
+      }
+      #browser {
+        position: absolute;
+        left: 140px;
+        top: 90px;
+        width: 1000px;
+        height: 540px;
+        border-radius: 16px;
+        background: #1c1917;
+        overflow: hidden;
+      }
+      #chrome {
+        height: 48px;
+        background: #292524;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 16px;
+      }
+      #chrome i {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #57534e;
+        font-style: normal;
+      }
+      #urlbar {
+        flex: 1;
+        height: 28px;
+        border-radius: 8px;
+        background: #1c1917;
+      }
+      #page {
+        height: 492px;
+        overflow: hidden;
+        background: #faf9f7;
+      }
+      .block {
+        margin: 24px;
+        height: 120px;
+        border-radius: 12px;
+        background: #e7e5e4;
+      }
+      .block.hero {
+        height: 220px;
+        background: #0ea5e9;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="browser-scroll"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="browser" class="clip" data-start="0.3" data-duration="2.5" data-track-index="0">
+        <div id="chrome">
+          <i></i><i></i><i></i>
+          <div id="urlbar"></div>
+        </div>
+        <div id="page">
+          <div class="block hero"></div>
+          <div class="block"></div>
+          <div class="block"></div>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from("#browser", { y: 60, opacity: 0, duration: 0.7, ease: "power3.out" }, 0.3);
+        tl.to("#page", { y: -180, duration: 1.2, ease: "power2.inOut" }, 1.0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["browser-scroll"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

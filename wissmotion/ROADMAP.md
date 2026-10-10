@@ -50,7 +50,7 @@
       Cada una define easings, duraciones, stagger, rebote, uso de blur y escala.
 - [x] **Presets de entrada/salida**: mask-reveal, stagger-words, stagger-chars, blur-in, spring-pop, slide-stack, scale-fade, wipe, typewriter.
 - [x] **Presets de énfasis**: pulse, highlight-sweep, underline-draw, counter-up, number-roll, shake, glow.
-- [ ] **Presets de escena**: device-mockup-scroll, browser-scroll, card-carousel, feature-grid, split-screen, logo-build, kinetic-type.
+- [x] **Presets de escena**: device-mockup-scroll, browser-scroll, card-carousel, feature-grid, split-screen, logo-build, kinetic-type.
 - [ ] **Transiciones** entre escenas (push, zoom-through, morph, shader-transitions existentes, whip).
 - [ ] **Editor de curvas de easing** (bézier visual + spring con masa/rigidez/amortiguación) estilo Jitter.
 - [ ] Controles de **stagger** (orden, dirección, desde el centro, aleatorio).

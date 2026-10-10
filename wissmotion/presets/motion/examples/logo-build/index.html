@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>logo-build · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #0b1220;
+      }
+      #mark {
+        position: absolute;
+        left: 500px;
+        top: 220px;
+        width: 120px;
+        height: 120px;
+        border-radius: 28px;
+        background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      }
+      #word {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 380px;
+        margin: 0;
+        text-align: center;
+        font:
+          700 72px Inter,
+          sans-serif;
+        color: #f5f5f4;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="logo-build"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="mark" class="clip" data-start="0.3" data-duration="2.5" data-track-index="0"></div>
+      <h1 id="word" class="clip" data-start="0.3" data-duration="2.5" data-track-index="1">
+        WissMotion
+      </h1>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from("#mark", { scale: 0, rotation: -30, duration: 0.7, ease: "back.out(1.7)" }, 0.3);
+        tl.from("#word", { y: "100%", duration: 0.7, ease: "power3.out" }, 0.7);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["logo-build"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

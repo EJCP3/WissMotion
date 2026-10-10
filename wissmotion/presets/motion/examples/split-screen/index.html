@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>split-screen · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #faf9f7;
+      }
+      .half {
+        position: absolute;
+        top: 0;
+        width: 640px;
+        height: 720px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font:
+          700 72px Inter,
+          sans-serif;
+      }
+      #left {
+        left: 0;
+        background: #1c1917;
+        color: #faf9f7;
+      }
+      #right {
+        left: 640px;
+        background: #6d28d9;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="split-screen"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="left" class="half clip" data-start="0.3" data-duration="2.5" data-track-index="0">
+        Antes
+      </div>
+      <div id="right" class="half clip" data-start="0.3" data-duration="2.5" data-track-index="1">
+        Después
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from(
+          "#left",
+          { scaleX: 0, transformOrigin: "right center", duration: 0.7, ease: "power3.inOut" },
+          0.3,
+        );
+        tl.from(
+          "#right",
+          { scaleX: 0, transformOrigin: "left center", duration: 0.7, ease: "power3.inOut" },
+          0.3,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["split-screen"] = tl;
+      </script>
+    </div>
+  </body>
+</html>
