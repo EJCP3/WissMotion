@@ -1,0 +1,221 @@
+# WissMotion — Roadmap
+
+> Estudio local para crear **videos promocionales adaptados a la marca** (app, web, producto, negocio),
+> con calidad visual inspirada en Jitter, construido sobre HyperFrames (fork, Apache-2.0).
+> La IA acelera, pero **todo lo que hace la IA se puede hacer a mano** en el estudio.
+
+---
+
+## Principios
+
+1. **Un solo formato de verdad**: cada proyecto es una composición HyperFrames (HTML + GSAP) + `brand.json`.
+   La IA, los agentes externos y el editor manual leen y escriben los mismos archivos.
+2. **IA opcional**: sin tokens o sin conexión, el usuario puede crear, editar y renderizar igual.
+3. **Brand-first**: ninguna plantilla tiene colores, fuentes o logos fijos; todo sale del Brand Kit.
+4. **Local-first**: render en la máquina del usuario (Chrome headless + FFmpeg). La nube es opcional.
+5. **Agnóstico de agente**: Claude Code, Antigravity, OpenCode, Codex, Cursor, Gemini CLI… se conectan por estándares (MCP, AGENTS.md, Skills), no por integraciones a medida.
+6. **Fork limpio**: el código propio vive en `wissmotion/` y en parches mínimos al Studio, para poder traer cambios de `upstream`.
+
+---
+
+## Fase 0 — Base del fork
+
+- [ ] Monorepo instalado y Studio corriendo en local (`bun install`, `bun run studio`).
+- [ ] Estrategia de sincronización con `upstream` (rama `main` = upstream, rama `wissmotion` = producto; merge periódico).
+- [ ] Carpeta `wissmotion/` para todo lo propio (brand kit, plantillas, presets, servidor MCP, docs).
+- [ ] Rebranding del Studio: nombre, logo, colores, splash, título de ventana, favicon.
+- [ ] Desactivar o redirigir lo específico de HeyGen (telemetría, botón "Open in desktop/Framey", login cloud) detrás de flags.
+- [ ] Idioma: interfaz en **español** con sistema i18n (es/en).
+- [ ] CI propio: build, tests, lint en GitHub Actions del fork.
+
+## Fase 1 — Brand Kit
+
+- [ ] **Esquema `brand.json`** versionado y validado (JSON Schema):
+      nombre, logo (completo / ícono / monocromo / claro-oscuro), colores (primary, secondary, accent, background, surface, text),
+      tipografías (heading, body, pesos), tono, personalidad de movimiento, tagline, features, CTA, URL, capturas, redes sociales.
+- [ ] **Extractor desde URL (sin IA)**: colores del CSS, fuentes, favicon/logo, imagen OG, título, meta descripción,
+      capturas desktop y móvil (reutilizar `hyperframes capture`).
+- [ ] **Extractor desde app**: subir capturas de App Store / Play Store o imágenes sueltas.
+- [ ] **Importar desde Figma**: variables/tokens y logo.
+- [ ] **Enriquecimiento con IA (opcional)**: tono, tagline, beneficios, público objetivo, guion sugerido.
+- [ ] **Editor manual de marca** (panel en el Studio): selector de color, subir logo, buscador de Google Fonts, vista previa en vivo.
+- [ ] Generar paleta derivada (tonos, contraste AA/AAA) y aviso de contraste (reutilizar `contrast-*` del CLI).
+- [ ] **Biblioteca de marcas**: varias marcas guardadas, duplicar, exportar/importar.
+- [ ] Aplicar marca como **tokens CSS** (`--brand-primary`, `--brand-font-heading`…) inyectados en toda composición.
+- [ ] Cambiar de marca en un proyecto existente y que el video se re-adapte al instante.
+
+## Fase 2 — Kit de movimiento (el "look Jitter")
+
+- [ ] **Personalidades de movimiento** ligadas a la marca: `suave`, `enérgico`, `premium`, `juguetón`, `corporativo`, `tech`.
+      Cada una define easings, duraciones, stagger, rebote, uso de blur y escala.
+- [ ] **Presets de entrada/salida**: mask-reveal, stagger-words, stagger-chars, blur-in, spring-pop, slide-stack, scale-fade, wipe, typewriter.
+- [ ] **Presets de énfasis**: pulse, highlight-sweep, underline-draw, counter-up, number-roll, shake, glow.
+- [ ] **Presets de escena**: device-mockup-scroll, browser-scroll, card-carousel, feature-grid, split-screen, logo-build, kinetic-type.
+- [ ] **Transiciones** entre escenas (push, zoom-through, morph, shader-transitions existentes, whip).
+- [ ] **Editor de curvas de easing** (bézier visual + spring con masa/rigidez/amortiguación) estilo Jitter.
+- [ ] Controles de **stagger** (orden, dirección, desde el centro, aleatorio).
+- [ ] Vista previa de cada preset en miniatura animada.
+- [ ] Todos los presets **seek-safe** y deterministas (render frame a frame idéntico al preview).
+
+## Fase 3 — Plantillas promocionales
+
+- [ ] **Galería de plantillas** con miniaturas animadas, categorías, búsqueda y filtros por formato/duración.
+- [ ] Plantillas iniciales:
+  - [ ] Promo de app móvil (capturas en mockup de teléfono)
+  - [ ] Promo de web / SaaS (navegador + features)
+  - [ ] Intro / sting de logo
+  - [ ] Lanzamiento de producto (countdown + reveal)
+  - [ ] Feature highlight (1 función, 6–10 s)
+  - [ ] Antes / después
+  - [ ] Testimonios / reseñas
+  - [ ] Precios / planes
+  - [ ] Estadísticas / métricas (contadores, gráficas)
+  - [ ] Oferta / promoción (descuento, CTA)
+  - [ ] Evento / webinar
+  - [ ] Historia corta para redes (9:16)
+- [ ] **Variables de plantilla**: textos, imágenes, colores, duración, número de escenas → formulario sin código.
+- [ ] Multi-formato desde la misma plantilla: 16:9, 9:16, 1:1, 4:5 con layouts adaptativos (safe zones).
+- [ ] Duraciones variables (6 s, 15 s, 30 s, 60 s) re-escalando el timing.
+- [ ] El usuario puede **guardar sus propios proyectos como plantilla**.
+- [ ] Mockups de dispositivos (iPhone, Android, laptop, navegador, tablet) con tema claro/oscuro.
+
+## Fase 4 — Estudio de edición (React)
+
+- [ ] **Home / dashboard**: proyectos recientes, crear desde plantilla, desde URL, desde cero o desde prompt.
+- [ ] Flujo guiado "Nuevo video promo": marca → plantilla/IA → contenido → preview → render.
+- [ ] **Panel de marca** integrado (Fase 1).
+- [ ] **Inspector de propiedades** estilo Jitter: posición, tamaño, rotación, opacidad, blur, radio, sombras, relleno, borde.
+- [ ] **Inspector de animación**: lista de animaciones del elemento, preset, duración, delay, easing (editor de curvas), stagger.
+- [ ] Timeline: arrastrar, recortar, dividir, snapping, zoom, marcadores, keyframes visibles por propiedad.
+- [ ] Panel de capas con agrupar, bloquear, ocultar, renombrar.
+- [ ] Herramientas de canvas: texto, formas, imagen, video, ícono, mockup; alineación y distribución; guías.
+- [ ] **Biblioteca de assets**: logos, imágenes, íconos, videos, fuentes del proyecto y de la marca.
+- [ ] Deshacer/rehacer ilimitado, autoguardado, historial de versiones (reutilizar `history`).
+- [ ] Atajos de teclado y paleta de comandos.
+- [ ] Panel de **variables de plantilla** editable.
+- [ ] Modo código (CodeMirror ya existe) para usuarios avanzados.
+- [ ] Rendimiento: preview fluido a 60 fps con proyectos de 60 s.
+
+## Fase 5 — Audio y medios
+
+- [ ] Biblioteca de música libre de derechos y SFX (whoosh, click, pop, riser).
+- [ ] Sincronizar cortes y animaciones al **beat** (reutilizar `beats` / bpm-detective).
+- [ ] **Voz en off**: TTS local o por API (reutilizar `tts`), o subir grabación propia.
+- [ ] **Subtítulos** automáticos (reutilizar `transcribe`) con estilos de la marca.
+- [ ] Mezcla: volumen, fades, ducking de música bajo la voz.
+- [ ] Quitar fondo de imágenes/videos (reutilizar `remove-background`).
+- [ ] Grabación/importación de screencasts de la app o web para escenas reales.
+
+## Fase 6 — Render y exportación
+
+- [ ] Cola de render local con progreso, cancelar y reintentar.
+- [ ] Formatos: MP4 (H.264/H.265), WebM, MOV con alfa, GIF, secuencia PNG, miniatura/póster.
+- [ ] Presets de destino: Instagram Reels, TikTok, YouTube, YouTube Shorts, LinkedIn, X, web hero (loop).
+- [ ] **Render por lotes**: un proyecto → todos los formatos en un clic (reutilizar `batchRender`).
+- [ ] Calidad: 720p / 1080p / 4K, 24/30/60 fps.
+- [ ] Render en la nube opcional (Lambda / Cloud Run ya existen) detrás de configuración.
+
+## Fase 7 — IA integrada en la app
+
+- [ ] **Panel de chat** dentro del Studio para crear y editar con lenguaje natural.
+- [ ] **Proveedores configurables (BYOK)**: Anthropic Claude, Google Gemini, OpenAI/compatibles, OpenRouter, **Ollama/LM Studio local** (gratis, sin tokens).
+- [ ] Flujo **brief → guion → storyboard → composición**, con aprobación del usuario en cada paso.
+- [ ] Ediciones por chat: "haz la escena 2 más lenta", "usa el color accent en el CTA", "versión 9:16".
+- [ ] La IA ve el video: snapshots de frames para revisar y corregir su propio trabajo (reutilizar `snapshot`).
+- [ ] Generación de copy: titulares, CTA y variaciones A/B.
+- [ ] **Medidor de consumo** de tokens/costo por proveedor y límite configurable.
+- [ ] **Degradación elegante**: si se acaban los tokens o falla el proveedor, el panel lo indica y sugiere la acción manual equivalente.
+- [ ] Cada acción de IA queda en el historial y se puede deshacer.
+
+## Fase 8 — Conectividad con agentes externos
+
+Objetivo: que cualquier agente de código (Claude Code, Antigravity, OpenCode, Codex, Cursor, Gemini CLI…) pueda crear y editar
+videos WissMotion, viendo los cambios en vivo en el Studio.
+
+### 8.1 Servidor MCP de WissMotion
+
+- [ ] Comando `wissmotion mcp` con transporte **stdio** (agentes locales) y **Streamable HTTP** (agentes remotos o varios a la vez).
+- [ ] Herramientas expuestas:
+
+| Grupo      | Herramientas                                                                                      |
+| ---------- | ------------------------------------------------------------------------------------------------- |
+| Proyecto   | `project_list`, `project_create`, `project_open`, `project_info`, `project_timeline`              |
+| Marca      | `brand_extract_from_url`, `brand_get`, `brand_update`, `brand_apply`, `brand_list`                |
+| Plantillas | `template_list`, `template_preview`, `template_instantiate`, `template_set_variables`             |
+| Escenas    | `scene_add`, `scene_update`, `scene_reorder`, `scene_remove`                                      |
+| Elementos  | `element_select`, `element_set_text`, `element_set_style`, `element_transform`                    |
+| Animación  | `motion_list_presets`, `motion_apply_preset`, `animation_add`, `animation_update`, `keyframe_add` |
+| Medios     | `media_add`, `audio_set_music`, `voiceover_generate`, `captions_generate`                         |
+| Visión     | `frame_snapshot`, `studio_look`, `lint_check`                                                     |
+| Render     | `render_start`, `render_status`, `render_batch`                                                   |
+
+- [ ] **Puente con el Studio abierto**: el servidor MCP reenvía a las herramientas WebMCP que ya registra el Studio
+      (`studio_select`, `studio_set_text`, `studio_add_animation`…), así el usuario ve cada edición en vivo.
+- [ ] Si el Studio está cerrado, las herramientas operan sobre los archivos y el CLI.
+- [ ] Recursos MCP: `brand.json`, timeline, lista de plantillas y presets como contexto legible.
+- [ ] Prompts MCP: "crear promo de app", "crear promo de web", "adaptar a 9:16".
+
+### 8.2 Contexto e instrucciones para agentes
+
+- [ ] `AGENTS.md` de WissMotion (estándar leído por OpenCode, Codex, Antigravity, Cursor y otros).
+- [ ] `CLAUDE.md` apuntando a `AGENTS.md`.
+- [ ] **Skills** de WissMotion (formato Agent Skills): `wissmotion` (entrada), `wissmotion-brand`, `wissmotion-templates`, `wissmotion-motion`.
+- [ ] Reutilizar las skills de HyperFrames para el contrato de composición.
+
+### 8.3 Configuración por agente (un comando o un snippet cada uno)
+
+- [ ] **Claude Code**: plugin (`.claude-plugin/`) + `claude mcp add wissmotion -- npx wissmotion mcp`.
+- [ ] **Antigravity**: entrada en su configuración MCP (`mcpServers`) + reglas basadas en `AGENTS.md`.
+- [ ] **OpenCode**: entrada `mcp` en `opencode.json` (`type: local`, `command: ["npx","wissmotion","mcp"]`) + `AGENTS.md`.
+- [ ] **Codex / Cursor / Gemini CLI**: adaptar los plugins existentes (`.codex-plugin`, `.cursor-plugin`, `gemini-extension.json`).
+- [ ] Comando `wissmotion agents setup` que detecta los agentes instalados y escribe su configuración.
+- [ ] Página "Conectar agente" en el Studio con los snippets listos para copiar y un indicador de agente conectado.
+
+### 8.4 Colaboración en vivo y seguridad
+
+- [ ] Recarga en vivo cuando un agente modifica archivos (el Studio ya vigila archivos y avisa de conflictos).
+- [ ] Indicador de "el agente está editando" y bloqueo suave para evitar choques con la edición manual.
+- [ ] Permisos por herramienta (lectura / edición / render) y confirmación para acciones costosas.
+- [ ] Registro de acciones de cada agente en el historial, reversibles.
+
+## Fase 9 — Proyectos y colaboración
+
+- [ ] Paquete exportable `.wissmotion` (zip con composición, marca, assets) para compartir o respaldar.
+- [ ] Duplicar proyecto, variantes (A/B, idiomas, formatos).
+- [ ] Versiones con nombre y comparación visual (reutilizar `compare`).
+- [ ] Videos multilingües: mismo proyecto, textos y voz por idioma.
+- [ ] Comentarios sobre frames para revisión (opcional).
+
+## Fase 10 — Calidad, distribución y decisión sobre Vue
+
+- [ ] Tests de plantillas y presets (render determinista, snapshot visual).
+- [ ] Documentación de usuario en español + tutoriales en video hechos con WissMotion.
+- [ ] Onboarding: primer video en menos de 5 minutos.
+- [ ] Empaquetado: instalador local (CLI global) y evaluar app de escritorio (Electron/Tauri).
+- [ ] Accesibilidad del editor (teclado, contraste, lector de pantalla en paneles).
+- [ ] **Evaluación de migración a Vue/Nuxt**: inventario de componentes React propios, qué paquetes son agnósticos
+      (core, player, sdk, engine, producer, studio-server) y estimación de esfuerzo vs. beneficio.
+
+---
+
+## Definición de "WissMotion completo"
+
+WissMotion se considera completo cuando un usuario puede, **sin escribir código y sin IA**:
+
+1. Pegar una URL o subir su logo y obtener un Brand Kit correcto.
+2. Elegir una plantilla promo y verla adaptada a su marca al instante.
+3. Editar textos, tiempos, animaciones y escenas en el estudio.
+4. Añadir música, voz y subtítulos.
+5. Exportar en todos los formatos de redes con un clic.
+
+…y además, **con IA o con un agente externo** (Claude Code, Antigravity, OpenCode), puede hacer lo mismo con un prompt,
+viendo cada cambio en vivo en el Studio y pudiendo continuar a mano en cualquier momento.
+
+## Orden sugerido
+
+| Prioridad | Fases                                   | Resultado                                       |
+| --------- | --------------------------------------- | ----------------------------------------------- |
+| MVP       | 0 → 1 → 2 → 3 (3 plantillas) → 6 básico | Videos promo con marca, editables y exportables |
+| v1        | 4 → 5 → 3 completo                      | Estudio completo estilo Jitter                  |
+| v1.5      | 8 → 7                                   | IA y agentes conectados                         |
+| v2        | 9 → 10                                  | Producto pulido y decisión sobre Vue            |
