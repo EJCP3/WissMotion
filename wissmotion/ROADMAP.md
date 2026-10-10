@@ -38,7 +38,7 @@
 - [ ] **Extractor desde app**: subir capturas de App Store / Play Store o imágenes sueltas.
 - [ ] **Importar desde Figma**: variables/tokens y logo.
 - [ ] **Enriquecimiento con IA (opcional)**: tono, tagline, beneficios, público objetivo, guion sugerido.
-- [ ] **Editor manual de marca** (panel en el Studio): selector de color, subir logo, buscador de Google Fonts, vista previa en vivo.
+- [x] **Editor manual de marca** (panel en el Studio): selector de color, subir logo, buscador de Google Fonts, vista previa en vivo.
 - [ ] Generar paleta derivada (tonos, contraste AA/AAA) y aviso de contraste (reutilizar `contrast-*` del CLI).
 - [ ] **Biblioteca de marcas**: varias marcas guardadas, duplicar, exportar/importar.
 - [ ] Aplicar marca como **tokens CSS** (`--brand-primary`, `--brand-font-heading`…) inyectados en toda composición.
