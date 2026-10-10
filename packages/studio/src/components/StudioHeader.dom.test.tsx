@@ -129,7 +129,7 @@ it("no longer renders Undo or Redo in the header", () => {
 
 it("groups Capture and Inspector in one bordered segment, Export outside it", () => {
   const host = mount();
-  const group = query(host, '[aria-label="Capture current frame"]').closest(".divide-x");
+  const group = query(host, '[aria-label="Capturar el fotograma actual"]').closest(".divide-x");
 
   expect(group?.contains(query(host, '[aria-label="Inspector"]'))).toBe(true);
   expect(group?.contains(query(host, '[data-testid="header-export"]'))).toBe(false);
@@ -138,7 +138,7 @@ it("groups Capture and Inspector in one bordered segment, Export outside it", ()
 
 it("drops the Capture label below 1000px but keeps its accessible name", () => {
   const host = mount();
-  const capture = query(host, '[aria-label="Capture current frame"]');
+  const capture = query(host, '[aria-label="Capturar el fotograma actual"]');
 
   expect(query(capture, "span").className).toContain("max-[1000px]:hidden");
 });
@@ -168,7 +168,7 @@ it("keeps Capture a real download link rather than a button", () => {
   // `download` is what saves the frame. A Button here would render a <button>
   // and the control would quietly stop downloading anything.
   const host = mount();
-  const capture = query(host, '[aria-label="Capture current frame"]');
+  const capture = query(host, '[aria-label="Capturar el fotograma actual"]');
 
   expect(capture.tagName).toBe("A");
   expect(capture.getAttribute("download")).toBe("frame.png");
@@ -184,7 +184,7 @@ it("classifies the new header controls for the hotkey filters as the old ones we
   const controls = [
     query(host, '[data-testid="header-export"]'),
     query(host, '[aria-label="Inspector"]'),
-    query(host, '[aria-label="Capture current frame"]'),
+    query(host, '[aria-label="Capturar el fotograma actual"]'),
   ];
 
   for (const el of controls) {

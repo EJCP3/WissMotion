@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { IconContext } from "@phosphor-icons/react";
 import { StudioApp } from "./App";
 import { ShowThemeToggle } from "./components/ThemeToggle";
+import { LanguageProvider } from "./i18n/LanguageContext";
 import { StudioErrorBoundary } from "./components/StudioErrorBoundary";
 import { readIconTokens } from "./styles/iconTokens";
 import { trackStudioEvent } from "./utils/studioTelemetry";
@@ -134,7 +135,9 @@ createRoot(document.getElementById("root")!).render(
     <IconContext.Provider value={readIconTokens()}>
       <StudioErrorBoundary>
         <ShowThemeToggle.Provider value>
-          <StudioApp />
+          <LanguageProvider>
+            <StudioApp />
+          </LanguageProvider>
         </ShowThemeToggle.Provider>
       </StudioErrorBoundary>
     </IconContext.Provider>
