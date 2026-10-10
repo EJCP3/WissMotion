@@ -7,6 +7,11 @@ import { Button, buttonBase, buttonSizes, buttonVariants, cn, Popover } from "./
 
 // "Edit with Framey": the preview server (`/api/open-in-desktop`) says whether to show it and whether the app can
 // take the project yet (its gate is the CLI's HANDOFF_READY); until then a press introduces Framey with the download.
+//
+// WissMotion product builds hide the button entirely behind the
+// VITE_WISSMOTION_NO_DESKTOP_BUTTON build-time flag (same affirmative
+// spellings as the telemetry opt-outs): the desktop app hand-off is
+// HeyGen-specific and has no equivalent in the WissMotion product.
 const ROUTE = "/api/open-in-desktop";
 /** How far the pupils travel towards the pointer, in the glyph's own units. */
 const GAZE = 2.2;
@@ -16,6 +21,16 @@ const OPENING_MS = 1600;
 type OpenResult = { opened: true } | { opened: false; reason: string; downloadUrl: string };
 
 type DesktopRoute = { handoff: boolean; downloadUrl: string | null };
+
+/** WissMotion product flag: hide the desktop-app hand-off at build time. */
+function isDesktopButtonDisabled(): boolean {
+  try {
+    const v = import.meta.env.VITE_WISSMOTION_NO_DESKTOP_BUTTON as string | undefined;
+    return v !== undefined && ["1", "true", "yes", "on"].includes(v.trim().toLowerCase());
+  } catch {
+    return false;
+  }
+}
 
 /** Null hides the button: no route (the app's own Studio), or nothing here to open or download. */
 function useDesktopRoute(): DesktopRoute | null {
@@ -73,7 +88,7 @@ export function OpenInDesktopButton() {
   const trigger = useRef<HTMLButtonElement>(null);
   const eye = useRef<SVGGElement>(null);
   useGaze(trigger, eye);
-  if (!route) return null;
+  if (isDesktopButtonDisabled() || !route) return null;
 
   const open = async () => {
     if (!route.handoff) {

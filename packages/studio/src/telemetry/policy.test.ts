@@ -21,6 +21,7 @@ describe("browserTelemetryAllowed", () => {
     // baseline has to be an explicitly production-like env.
     vi.stubEnv("DEV", false);
     vi.stubEnv("VITE_HYPERFRAMES_NO_TELEMETRY", "");
+    vi.stubEnv("VITE_WISSMOTION_NO_TELEMETRY", "");
     Object.defineProperty(navigator, "doNotTrack", { value: null, configurable: true });
     ({ browserTelemetryAllowed } = await import("./policy"));
   });
@@ -78,6 +79,23 @@ describe("browserTelemetryAllowed", () => {
 
   it("ignores an unset or unrelated VITE_HYPERFRAMES_NO_TELEMETRY value", async () => {
     vi.stubEnv("VITE_HYPERFRAMES_NO_TELEMETRY", "0");
+    vi.resetModules();
+    ({ browserTelemetryAllowed } = await import("./policy"));
+    expect(browserTelemetryAllowed()).toBe(true);
+  });
+
+  it.each(["1", "true", "yes", "on", " ON "])(
+    "refuses when VITE_WISSMOTION_NO_TELEMETRY=%s",
+    async (value) => {
+      vi.stubEnv("VITE_WISSMOTION_NO_TELEMETRY", value);
+      vi.resetModules();
+      ({ browserTelemetryAllowed } = await import("./policy"));
+      expect(browserTelemetryAllowed()).toBe(false);
+    },
+  );
+
+  it("ignores an unset or unrelated VITE_WISSMOTION_NO_TELEMETRY value", async () => {
+    vi.stubEnv("VITE_WISSMOTION_NO_TELEMETRY", "0");
     vi.resetModules();
     ({ browserTelemetryAllowed } = await import("./policy"));
     expect(browserTelemetryAllowed()).toBe(true);

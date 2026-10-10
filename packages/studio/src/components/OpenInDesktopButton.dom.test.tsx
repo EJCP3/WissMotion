@@ -55,6 +55,7 @@ beforeEach(() => showToast.mockReset());
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
   if (!mounted) return;
   const { root, host } = mounted;
   mounted = null;
@@ -66,6 +67,16 @@ it("stays hidden where the server has no hand-off (the desktop's own Studio)", a
   serve(null);
   await mount();
   expect(button()).toBeNull();
+});
+
+it("stays hidden in WissMotion product builds even where the server offers a hand-off", async () => {
+  vi.stubEnv("VITE_WISSMOTION_NO_DESKTOP_BUTTON", "1");
+  serve(Response.json({ available: true, handoff: true, downloadUrl: DOWNLOAD }), {
+    opened: true,
+  });
+  await mount();
+  expect(button()).toBeNull();
+  expect(posts).toBe(0);
 });
 
 it("stays hidden when the app has no build for this machine (Windows)", async () => {
