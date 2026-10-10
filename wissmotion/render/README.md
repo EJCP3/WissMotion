@@ -1,0 +1,22 @@
+# Render por lotes (Fase 6 básico, CLI)
+
+Un proyecto → todos los destinos en un comando, sobre `hyperframes render`:
+
+```bash
+node render-batch.mjs --project ./mi-promo --dest all --variables-file ./mi-promo/variables.json
+```
+
+| Destino                            | Formato | fps | Calidad                 | Aspecto |
+| ---------------------------------- | ------- | --- | ----------------------- | ------- |
+| `youtube`, `linkedin`, `x`, `hero` | mp4     | 30  | delivery/standard/looks | 16:9    |
+| `webm`                             | webm    | 30  | standard                | 16:9    |
+| `gif`                              | gif     | 15  | standard                | 16:9    |
+| `reels`, `tiktok`, `shorts`        | mp4     | 30  | delivery                | 9:16    |
+
+El aspecto se lee del `index.html`; lo incompatible se omite con aviso
+(salvo `--force`). Salida: `renders/<nombre>.<dest>.<ext>` + `manifest.json`.
+`--dry-run` imprime el plan sin renderizar. `--quality` global opcional,
+`--workers` por defecto 2 (1 en máquinas justas).
+
+Verificado end-to-end: `logo-sting` → MP4 6 s reales con el CLI.
+La cola con progreso/cancelación en el Studio llega con la Fase 4/6 UI.

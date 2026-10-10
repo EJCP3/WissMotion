@@ -110,8 +110,8 @@
 
 - [ ] Cola de render local con progreso, cancelar y reintentar.
 - [ ] Formatos: MP4 (H.264/H.265), WebM, MOV con alfa, GIF, secuencia PNG, miniatura/póster.
-- [ ] Presets de destino: Instagram Reels, TikTok, YouTube, YouTube Shorts, LinkedIn, X, web hero (loop).
-- [ ] **Render por lotes**: un proyecto → todos los formatos en un clic (reutilizar `batchRender`).
+- [x] Presets de destino: Instagram Reels, TikTok, YouTube, YouTube Shorts, LinkedIn, X, web hero (loop).
+- [x] **Render por lotes**: un proyecto → todos los formatos en un clic (reutilizar `batchRender`).
 - [ ] Calidad: 720p / 1080p / 4K, 24/30/60 fps.
 - [ ] Render en la nube opcional (Lambda / Cloud Run ya existen) detrás de configuración.
 
