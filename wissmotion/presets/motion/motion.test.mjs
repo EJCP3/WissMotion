@@ -49,6 +49,7 @@ function baseEase(ease) {
 
 const personalities = JSON.parse(await readFile(join(here, "personalities.json"), "utf8"));
 const presets = JSON.parse(await readFile(join(here, "presets.json"), "utf8"));
+const transitions = JSON.parse(await readFile(join(here, "transitions.json"), "utf8"));
 
 function lintDir(dir) {
   return new Promise((resolve, reject) => {
@@ -104,13 +105,36 @@ describe("motion/presets.json", () => {
   });
 });
 
+describe("motion/transitions.json", () => {
+  it("4 transiciones con contrato válido", () => {
+    const ids = Object.keys(transitions.transitions);
+    assert.equal(ids.length, 4);
+    for (const [id, t] of Object.entries(transitions.transitions)) {
+      assert.equal(t.kind, "transición", `${id}: kind`);
+      assert.ok(
+        typeof t.description === "string" && t.description.length > 0,
+        `${id}: description`,
+      );
+      assert.ok(GSAP_EASES.has(baseEase(t.ease)), `${id}: ease ${t.ease}`);
+      assert.ok(
+        t.duration > 0 && t.overlap > 0 && t.overlap <= t.duration + 1,
+        `${id}: duration/overlap`,
+      );
+      assert.ok(t.gsap && t.gsap.in && t.gsap.out, `${id}: gsap.in/out`);
+    }
+  });
+});
+
 describe("motion/examples", () => {
-  it("cada preset tiene ejemplo y viceversa", async () => {
+  it("cada preset y transición tiene ejemplo y viceversa", async () => {
     const dirs = (await readdir(join(here, "examples"), { withFileTypes: true }))
       .filter((d) => d.isDirectory())
       .map((d) => d.name)
       .sort();
-    assert.deepEqual(dirs, Object.keys(presets.presets).sort());
+    assert.deepEqual(
+      dirs,
+      [...Object.keys(presets.presets), ...Object.keys(transitions.transitions)].sort(),
+    );
   });
 
   it("los ejemplos son deterministas (sin reloj ni azar)", async () => {
@@ -125,7 +149,7 @@ describe("motion/examples", () => {
     }
   });
 
-  it("hyperframes lint pasa en los 10 ejemplos", { timeout: 300_000 }, async () => {
+  it("hyperframes lint pasa en todos los ejemplos", { timeout: 300_000 }, async () => {
     const dirs = await readdir(join(here, "examples"));
     for (const d of dirs.sort()) {
       const report = await lintDir(join(here, "examples", d));

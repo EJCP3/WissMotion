@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "transitions": {
+    "tr-push": {
+      "kind": "transición",
+      "description": "La escena A sale por la izquierda mientras la B entra por la derecha, en espejo.",
+      "ease": "power3.inOut",
+      "duration": 0.6,
+      "overlap": 0.6,
+      "gsap": {
+        "out": { "x": -1280 },
+        "in": { "x": 1280 }
+      }
+    },
+    "tr-zoom-through": {
+      "kind": "transición",
+      "description": "La cámara atraviesa la escena A (zoom+fade) y aterriza en la B.",
+      "ease": "power2.inOut",
+      "duration": 0.6,
+      "overlap": 0.6,
+      "gsap": {
+        "out": { "scale": 1.6, "opacity": 0 },
+        "in": { "scale": 0.6, "opacity": 0 }
+      }
+    },
+    "tr-morph": {
+      "kind": "transición",
+      "description": "Fundido con micro-escala opuesta. La más sobria.",
+      "ease": "sine.inOut",
+      "duration": 0.6,
+      "overlap": 0.6,
+      "gsap": {
+        "out": { "opacity": 0, "scale": 1.04 },
+        "in": { "opacity": 0, "scale": 0.97 }
+      }
+    },
+    "tr-whip": {
+      "kind": "transición",
+      "description": "Latigazo lateral rápido con skew. Energía máxima, 0.35 s.",
+      "ease": "power4.inOut",
+      "duration": 0.35,
+      "overlap": 0.35,
+      "gsap": {
+        "out": { "x": -1280, "skewX": 8 },
+        "in": { "x": 1280, "skewX": 8 }
+      }
+    }
+  }
+}

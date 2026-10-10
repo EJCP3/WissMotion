@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>tr-zoom-through · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font:
+          700 120px Inter,
+          sans-serif;
+      }
+      #a {
+        background: #0b1220;
+        color: #f5f5f4;
+      }
+      #b {
+        background: #f59e0b;
+        color: #1c1917;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="tr-zoom-through"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="a" class="scene clip" data-start="0" data-duration="2.6" data-track-index="0">
+        Uno
+      </div>
+      <div id="b" class="scene clip" data-start="2" data-duration="2.6" data-track-index="1">
+        Dos
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.to("#a", { scale: 1.6, opacity: 0, duration: 0.6, ease: "power2.in" }, 2.0);
+        tl.fromTo(
+          "#b",
+          { scale: 0.6, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.6, ease: "power2.out" },
+          2.0,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["tr-zoom-through"] = tl;
+      </script>
+    </div>
+  </body>
+</html>
