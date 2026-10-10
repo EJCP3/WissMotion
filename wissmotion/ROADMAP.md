@@ -65,11 +65,11 @@
   - [x] Promo de web / SaaS (navegador + features)
   - [x] Intro / sting de logo
   - [ ] Lanzamiento de producto (countdown + reveal)
-  - [ ] Feature highlight (1 función, 6–10 s)
+  - [x] Feature highlight (1 función, 6–10 s)
   - [ ] Antes / después
   - [ ] Testimonios / reseñas
   - [ ] Precios / planes
-  - [ ] Estadísticas / métricas (contadores, gráficas)
+  - [x] Estadísticas / métricas (contadores, gráficas)
   - [ ] Oferta / promoción (descuento, CTA)
   - [ ] Evento / webinar
   - [ ] Historia corta para redes (9:16)

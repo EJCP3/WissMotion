@@ -1,0 +1,9 @@
+{
+  "id": "stats",
+  "name": "Estadísticas / métricas",
+  "description": "3 cifras con etiquetas en grilla. 6 s, 16:9.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 6
+}

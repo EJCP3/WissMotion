@@ -4,11 +4,13 @@ Composiciones HyperFrames con variables (`data-composition-variables`):
 el mismo `index.html` sirve a todas las marcas vía `--variables-file`
 (y el panel Variables del Studio las edita en vivo).
 
-| Plantilla     | Qué es                                                                                                          |
-| ------------- | --------------------------------------------------------------------------------------------------------------- |
-| `promo-app/`  | App móvil: mockup con scroll, nombre, tagline, 3 features y CTA. 8 s. ![promo-app](promo-app/preview.png)       |
-| `promo-web/`  | Web/SaaS: navegador con captura, titular, subtítulo, 3 features y CTA. 8 s. ![promo-web](promo-web/preview.png) |
-| `logo-sting/` | Intro de logo (pop + reveal + tagline + fade). 6 s. ![logo-sting](logo-sting/preview.png)                       |
+| Plantilla            | Qué es                                                                                                                       |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `promo-app/`         | App móvil: mockup con scroll, nombre, tagline, 3 features y CTA. 8 s. ![promo-app](promo-app/preview.png)                    |
+| `promo-web/`         | Web/SaaS: navegador con captura, titular, subtítulo, 3 features y CTA. 8 s. ![promo-web](promo-web/preview.png)              |
+| `logo-sting/`        | Intro de logo (pop + reveal + tagline + fade). 6 s. ![logo-sting](logo-sting/preview.png)                                    |
+| `feature-highlight/` | Una función en 8 s: kicker, titular con reveal, subrayado y descripción. ![feature-highlight](feature-highlight/preview.png) |
+| `stats/`             | 3 cifras con etiquetas en grilla. 6 s. ![stats](stats/preview.png)                                                           |
 
 ## Convención de variables
 

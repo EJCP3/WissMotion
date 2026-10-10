@@ -1,0 +1,9 @@
+{
+  "id": "feature-highlight",
+  "name": "Feature highlight",
+  "description": "Una función en 8 segundos: kicker, titular con reveal, subrayado y descripción. 16:9.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 8
+}
