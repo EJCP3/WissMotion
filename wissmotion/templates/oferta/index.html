@@ -1,0 +1,128 @@
+<!doctype html>
+<html
+  lang="es"
+  data-composition-variables='[
+    {"id":"offerTitle","type":"string","label":"Título de la oferta","default":"-30% plan anual"},
+    {"id":"offerDesc","type":"string","label":"Descripción","default":"Solo esta semana. Sin letra pequeña."},
+    {"id":"ctaLabel","type":"string","label":"Texto del CTA","default":"Lo quiero"},
+    {"id":"brandPrimary","type":"color","label":"Primario","default":"#6d28d9"},
+    {"id":"brandAccent","type":"color","label":"Acento","default":"#f59e0b"},
+    {"id":"brandBackground","type":"color","label":"Fondo","default":"#0b1220"},
+    {"id":"brandText","type":"color","label":"Texto","default":"#f5f5f4"},
+    {"id":"brandHeading","type":"string","label":"Fuente titulares","default":"Inter"},
+    {"id":"brandBody","type":"string","label":"Fuente texto","default":"Inter"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Oferta · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: var(--brandBackground);
+      }
+      #badge {
+        position: absolute;
+        left: 540px;
+        top: 120px;
+        padding: 10px 28px;
+        border-radius: 999px;
+        background: var(--brandAccent);
+        color: #1c1917;
+        font: 700 28px var(--brandBody);
+        letter-spacing: 3px;
+      }
+      #title {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 220px;
+        margin: 0;
+        text-align: center;
+        font: 700 110px var(--brandHeading);
+        color: var(--brandText);
+      }
+      #desc {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 370px;
+        margin: 0;
+        text-align: center;
+        font: 400 34px var(--brandBody);
+        color: var(--brandText);
+        opacity: 0.8;
+      }
+      #cta {
+        position: absolute;
+        left: 490px;
+        top: 470px;
+        padding: 20px 72px;
+        border-radius: 999px;
+        background: var(--brandPrimary);
+        color: #fff;
+        font: 700 40px var(--brandBody);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage" data-composition-id="oferta" data-start="0" data-width="1280" data-height="720">
+      <div id="badge" class="clip" data-start="0.3" data-duration="5.7" data-track-index="0">
+        OFERTA
+      </div>
+      <h1
+        id="title"
+        class="clip"
+        data-start="0.5"
+        data-duration="5.5"
+        data-track-index="0"
+        data-var-text="offerTitle"
+      >
+        -30% plan anual
+      </h1>
+      <p
+        id="desc"
+        class="clip"
+        data-start="0.9"
+        data-duration="5.1"
+        data-track-index="0"
+        data-var-text="offerDesc"
+      >
+        Solo esta semana. Sin letra pequeña.
+      </p>
+      <div
+        id="cta"
+        class="clip"
+        data-start="1.3"
+        data-duration="4.7"
+        data-track-index="1"
+        data-var-text="ctaLabel"
+      >
+        Lo quiero
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from("#badge", { scale: 0, duration: 0.6, ease: "back.out(1.7)" }, 0.3);
+        tl.from("#title", { scale: 0.9, opacity: 0, duration: 0.7, ease: "power3.out" }, 0.5);
+        tl.from("#desc", { opacity: 0, y: 20, duration: 0.6, ease: "power2.out" }, 0.9);
+        tl.from("#cta", { scale: 0.6, opacity: 0, duration: 0.6, ease: "back.out(1.7)" }, 1.3);
+        tl.to(
+          "#cta",
+          { scale: 1.05, duration: 0.4, ease: "sine.inOut", yoyo: true, repeat: 3 },
+          2.5,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["oferta"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html
+  lang="es"
+  data-composition-variables='[
+    {"id":"quote","type":"string","label":"Cita","default":"Pasamos de tardar días a minutos en cada video"},
+    {"id":"author","type":"string","label":"Autor","default":"Lucía Fernández"},
+    {"id":"role","type":"string","label":"Cargo / empresa","default":"Marketing en Acme"},
+    {"id":"stars","type":"string","label":"Estrellas (texto)","default":"★★★★★"},
+    {"id":"brandPrimary","type":"color","label":"Primario","default":"#6d28d9"},
+    {"id":"brandBackground","type":"color","label":"Fondo","default":"#faf9f7"},
+    {"id":"brandText","type":"color","label":"Texto","default":"#1c1917"},
+    {"id":"brandHeading","type":"string","label":"Fuente titulares","default":"Inter"},
+    {"id":"brandBody","type":"string","label":"Fuente texto","default":"Inter"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Testimonios · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: var(--brandBackground);
+      }
+      #mark {
+        position: absolute;
+        left: 140px;
+        top: 140px;
+        margin: 0;
+        font: 700 120px var(--brandHeading);
+        color: var(--brandPrimary);
+        opacity: 0.35;
+      }
+      #quote {
+        position: absolute;
+        left: 140px;
+        top: 250px;
+        width: 1000px;
+        margin: 0;
+        font: 600 56px/1.25 var(--brandHeading);
+        color: var(--brandText);
+      }
+      #stars {
+        position: absolute;
+        left: 140px;
+        top: 470px;
+        margin: 0;
+        font: 400 44px var(--brandBody);
+        color: var(--brandPrimary);
+        letter-spacing: 8px;
+      }
+      #author {
+        position: absolute;
+        left: 140px;
+        top: 540px;
+        margin: 0;
+        font: 700 32px var(--brandBody);
+        color: var(--brandText);
+      }
+      #role {
+        position: absolute;
+        left: 140px;
+        top: 585px;
+        margin: 0;
+        font: 400 28px var(--brandBody);
+        color: var(--brandText);
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="testimonios"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <p id="mark" class="clip" data-start="0.3" data-duration="5.7" data-track-index="0">“</p>
+      <p
+        id="quote"
+        class="clip"
+        data-start="0.5"
+        data-duration="5.5"
+        data-track-index="0"
+        data-var-text="quote"
+      >
+        Pasamos de tardar días a minutos en cada video
+      </p>
+      <p
+        id="stars"
+        class="clip"
+        data-start="1.0"
+        data-duration="5"
+        data-track-index="1"
+        data-var-text="stars"
+      >
+        ★★★★★
+      </p>
+      <p
+        id="author"
+        class="clip"
+        data-start="1.2"
+        data-duration="4.8"
+        data-track-index="1"
+        data-var-text="author"
+      >
+        Lucía Fernández
+      </p>
+      <p
+        id="role"
+        class="clip"
+        data-start="1.2"
+        data-duration="4.8"
+        data-track-index="1"
+        data-var-text="role"
+      >
+        Marketing en Acme
+      </p>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from("#mark", { opacity: 0, scale: 0.6, duration: 0.6, ease: "back.out(1.7)" }, 0.3);
+        tl.from("#quote", { y: 40, opacity: 0, duration: 0.8, ease: "power3.out" }, 0.5);
+        tl.from("#stars", { opacity: 0, duration: 0.5, ease: "power2.out" }, 1.0);
+        tl.from(
+          "#author, #role",
+          { x: -30, opacity: 0, duration: 0.6, ease: "power3.out", stagger: 0.1 },
+          1.2,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["testimonios"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

@@ -9,7 +9,15 @@ import { brandToVariables, instantiate, parseDeclaredVariables } from "./instant
 
 const here = dirname(fileURLToPath(import.meta.url));
 const cli = join(here, "..", "..", "packages", "cli", "dist", "cli.js");
-const IDS = ["promo-app", "promo-web", "logo-sting", "feature-highlight", "stats"];
+const IDS = [
+  "promo-app",
+  "promo-web",
+  "logo-sting",
+  "feature-highlight",
+  "stats",
+  "testimonios",
+  "oferta",
+];
 
 function lintDir(dir) {
   return new Promise((resolve, reject) => {

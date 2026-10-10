@@ -1,0 +1,9 @@
+{
+  "id": "testimonios",
+  "name": "Testimonios / reseñas",
+  "description": "Cita con autor, cargo y estrellas. 6 s, 16:9.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 6
+}

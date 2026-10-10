@@ -67,10 +67,10 @@
   - [ ] Lanzamiento de producto (countdown + reveal)
   - [x] Feature highlight (1 función, 6–10 s)
   - [ ] Antes / después
-  - [ ] Testimonios / reseñas
+  - [x] Testimonios / reseñas
   - [ ] Precios / planes
   - [x] Estadísticas / métricas (contadores, gráficas)
-  - [ ] Oferta / promoción (descuento, CTA)
+  - [x] Oferta / promoción (descuento, CTA)
   - [ ] Evento / webinar
   - [ ] Historia corta para redes (9:16)
 - [x] **Variables de plantilla**: textos, imágenes, colores, duración, número de escenas → formulario sin código.

@@ -1,0 +1,9 @@
+{
+  "id": "oferta",
+  "name": "Oferta / promoción",
+  "description": "Badge, titular con descuento, descripción y CTA con pulse. 6 s, 16:9.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 6
+}

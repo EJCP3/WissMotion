@@ -11,6 +11,8 @@ el mismo `index.html` sirve a todas las marcas vía `--variables-file`
 | `logo-sting/`        | Intro de logo (pop + reveal + tagline + fade). 6 s. ![logo-sting](logo-sting/preview.png)                                    |
 | `feature-highlight/` | Una función en 8 s: kicker, titular con reveal, subrayado y descripción. ![feature-highlight](feature-highlight/preview.png) |
 | `stats/`             | 3 cifras con etiquetas en grilla. 6 s. ![stats](stats/preview.png)                                                           |
+| `testimonios/`       | Cita con autor, cargo y estrellas. 6 s. ![testimonios](testimonios/preview.png)                                              |
+| `oferta/`            | Badge, titular con descuento, descripción y CTA con pulse. 6 s. ![oferta](oferta/preview.png)                                |
 
 ## Convención de variables
 
