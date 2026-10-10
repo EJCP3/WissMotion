@@ -1,0 +1,9 @@
+{
+  "id": "promo-web",
+  "name": "Promo de web / SaaS",
+  "description": "Navegador con captura, titular, subtítulo, 3 features y CTA. 8 s, 16:9.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 8
+}

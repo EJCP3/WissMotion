@@ -1,0 +1,241 @@
+<!doctype html>
+<html
+  lang="es"
+  data-composition-variables='[
+    {"id":"brandName","type":"string","label":"Nombre del producto","default":"Mi SaaS"},
+    {"id":"headline","type":"string","label":"Titular","default":"El panel que tu equipo merece"},
+    {"id":"subhead","type":"string","label":"Subtítulo","default":"Métricas, proyectos y clientes en un solo lugar"},
+    {"id":"feature1","type":"string","label":"Feature 1","default":"Dashboards en vivo"},
+    {"id":"feature2","type":"string","label":"Feature 2","default":"Automatizaciones"},
+    {"id":"feature3","type":"string","label":"Feature 3","default":"API abierta"},
+    {"id":"ctaLabel","type":"string","label":"Texto del CTA","default":"Probar gratis"},
+    {"id":"screenShot","type":"string","label":"Captura del producto (URL o ruta)","default":""},
+    {"id":"brandPrimary","type":"color","label":"Primario","default":"#0ea5e9"},
+    {"id":"brandAccent","type":"color","label":"Acento","default":"#f59e0b"},
+    {"id":"brandBackground","type":"color","label":"Fondo","default":"#faf9f7"},
+    {"id":"brandSurface","type":"color","label":"Superficie","default":"#ffffff"},
+    {"id":"brandText","type":"color","label":"Texto","default":"#1c1917"},
+    {"id":"brandHeading","type":"string","label":"Fuente titulares","default":"Inter"},
+    {"id":"brandBody","type":"string","label":"Fuente texto","default":"Inter"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Promo Web · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: var(--brandBackground);
+      }
+      #browser {
+        position: absolute;
+        left: 560px;
+        top: 110px;
+        width: 620px;
+        height: 500px;
+        border-radius: 16px;
+        background: #1c1917;
+        overflow: hidden;
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
+      }
+      #chrome {
+        height: 44px;
+        background: #292524;
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+      }
+      #urlbar {
+        width: 100%;
+        height: 26px;
+        border-radius: 8px;
+        background: #1c1917;
+        border: 1px solid #44403c;
+      }
+      #page {
+        height: 456px;
+        overflow: hidden;
+        background: var(--brandSurface);
+      }
+      #page img {
+        width: 100%;
+        display: block;
+      }
+      #name {
+        position: absolute;
+        left: 100px;
+        top: 130px;
+        margin: 0;
+        font: 700 40px var(--brandHeading);
+        color: var(--brandPrimary);
+      }
+      #headline {
+        position: absolute;
+        left: 100px;
+        top: 190px;
+        width: 400px;
+        margin: 0;
+        font: 700 56px/1.1 var(--brandHeading);
+        color: var(--brandText);
+      }
+      #subhead {
+        position: absolute;
+        left: 100px;
+        top: 360px;
+        width: 380px;
+        margin: 0;
+        font: 400 26px var(--brandBody);
+        color: var(--brandText);
+        opacity: 0.75;
+      }
+      .feat {
+        position: absolute;
+        left: 100px;
+        font: 600 24px var(--brandBody);
+        color: var(--brandText);
+      }
+      #feat1 {
+        top: 470px;
+      }
+      #feat2 {
+        top: 510px;
+      }
+      #feat3 {
+        top: 550px;
+      }
+      .feat::before {
+        content: "";
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--brandAccent);
+        margin-right: 10px;
+      }
+      #cta {
+        position: absolute;
+        left: 100px;
+        top: 610px;
+        padding: 12px 32px;
+        border-radius: 999px;
+        background: var(--brandPrimary);
+        color: #fff;
+        font: 700 26px var(--brandBody);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="promo-web"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <h2
+        id="name"
+        class="clip"
+        data-start="0.4"
+        data-duration="3"
+        data-track-index="1"
+        data-var-text="brandName"
+      >
+        Mi SaaS
+      </h2>
+      <h1
+        id="headline"
+        class="clip"
+        data-start="0.6"
+        data-duration="3"
+        data-track-index="1"
+        data-var-text="headline"
+      >
+        El panel que tu equipo merece
+      </h1>
+      <p
+        id="subhead"
+        class="clip"
+        data-start="0.9"
+        data-duration="3"
+        data-track-index="1"
+        data-var-text="subhead"
+      >
+        Métricas, proyectos y clientes en un solo lugar
+      </p>
+      <div id="browser" class="clip" data-start="0.3" data-duration="7.7" data-track-index="0">
+        <div id="chrome"><div id="urlbar"></div></div>
+        <div id="page">
+          <img
+            data-var-src="screenShot"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='456'%3E%3Crect width='620' height='456' fill='%230ea5e9'/%3E%3Crect x='32' y='32' width='300' height='140' rx='12' fill='%23ffffff' fill-opacity='0.85'/%3E%3Crect x='348' y='32' width='240' height='140' rx='12' fill='%231c1917' fill-opacity='0.85'/%3E%3Crect x='32' y='196' width='556' height='180' rx='12' fill='%23ffffff' fill-opacity='0.6'/%3E%3C/svg%3E"
+            alt=""
+          />
+        </div>
+      </div>
+      <p
+        id="feat1"
+        class="feat clip"
+        data-start="3.4"
+        data-duration="2.4"
+        data-track-index="2"
+        data-var-text="feature1"
+      >
+        Dashboards en vivo
+      </p>
+      <p
+        id="feat2"
+        class="feat clip"
+        data-start="3.4"
+        data-duration="2.4"
+        data-track-index="3"
+        data-var-text="feature2"
+      >
+        Automatizaciones
+      </p>
+      <p
+        id="feat3"
+        class="feat clip"
+        data-start="3.4"
+        data-duration="2.4"
+        data-track-index="4"
+        data-var-text="feature3"
+      >
+        API abierta
+      </p>
+      <div
+        id="cta"
+        class="clip"
+        data-start="6"
+        data-duration="2"
+        data-track-index="5"
+        data-var-text="ctaLabel"
+      >
+        Probar gratis
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from("#browser", { y: 60, opacity: 0, duration: 0.7, ease: "power3.out" }, 0.3);
+        tl.from("#name", { opacity: 0, duration: 0.5, ease: "power2.out" }, 0.4);
+        tl.from("#headline", { y: 40, opacity: 0, duration: 0.7, ease: "power3.out" }, 0.6);
+        tl.from("#subhead", { opacity: 0, duration: 0.6, ease: "power2.out" }, 0.9);
+        tl.from(
+          ".feat",
+          { x: -30, opacity: 0, duration: 0.5, ease: "power3.out", stagger: 0.12 },
+          3.4,
+        );
+        tl.from("#cta", { scale: 0.6, opacity: 0, duration: 0.6, ease: "back.out(1.7)" }, 6.0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["promo-web"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

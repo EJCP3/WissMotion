@@ -60,10 +60,10 @@
 ## Fase 3 — Plantillas promocionales
 
 - [ ] **Galería de plantillas** con miniaturas animadas, categorías, búsqueda y filtros por formato/duración.
-- [ ] Plantillas iniciales:
-  - [ ] Promo de app móvil (capturas en mockup de teléfono)
-  - [ ] Promo de web / SaaS (navegador + features)
-  - [ ] Intro / sting de logo
+- [x] Plantillas iniciales:
+  - [x] Promo de app móvil (capturas en mockup de teléfono)
+  - [x] Promo de web / SaaS (navegador + features)
+  - [x] Intro / sting de logo
   - [ ] Lanzamiento de producto (countdown + reveal)
   - [ ] Feature highlight (1 función, 6–10 s)
   - [ ] Antes / después
@@ -73,7 +73,7 @@
   - [ ] Oferta / promoción (descuento, CTA)
   - [ ] Evento / webinar
   - [ ] Historia corta para redes (9:16)
-- [ ] **Variables de plantilla**: textos, imágenes, colores, duración, número de escenas → formulario sin código.
+- [x] **Variables de plantilla**: textos, imágenes, colores, duración, número de escenas → formulario sin código.
 - [ ] Multi-formato desde la misma plantilla: 16:9, 9:16, 1:1, 4:5 con layouts adaptativos (safe zones).
 - [ ] Duraciones variables (6 s, 15 s, 30 s, 60 s) re-escalando el timing.
 - [ ] El usuario puede **guardar sus propios proyectos como plantilla**.

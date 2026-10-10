@@ -1,0 +1,9 @@
+{
+  "id": "logo-sting",
+  "name": "Intro de logo",
+  "description": "Construcción de logo (pop + reveal) con tagline y salida en fade. 6 s, 16:9.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 6
+}

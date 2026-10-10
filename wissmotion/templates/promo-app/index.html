@@ -1,0 +1,216 @@
+<!doctype html>
+<html
+  lang="es"
+  data-composition-variables='[
+    {"id":"brandName","type":"string","label":"Nombre de la app","default":"Mi App"},
+    {"id":"brandTagline","type":"string","label":"Tagline","default":"Todo lo que necesitas, en tu bolsillo"},
+    {"id":"feature1","type":"string","label":"Feature 1","default":"Rápida y liviana"},
+    {"id":"feature2","type":"string","label":"Feature 2","default":"Sin anuncios"},
+    {"id":"feature3","type":"string","label":"Feature 3","default":"Funciona sin conexión"},
+    {"id":"ctaLabel","type":"string","label":"Texto del CTA","default":"Descargar gratis"},
+    {"id":"screenShot","type":"string","label":"Captura de la app (URL o ruta)","default":""},
+    {"id":"brandPrimary","type":"color","label":"Primario","default":"#6d28d9"},
+    {"id":"brandAccent","type":"color","label":"Acento","default":"#f59e0b"},
+    {"id":"brandBackground","type":"color","label":"Fondo","default":"#0b1220"},
+    {"id":"brandText","type":"color","label":"Texto","default":"#f5f5f4"},
+    {"id":"brandHeading","type":"string","label":"Fuente titulares","default":"Inter"},
+    {"id":"brandBody","type":"string","label":"Fuente texto","default":"Inter"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Promo App · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: var(--brandBackground);
+      }
+      #phone {
+        position: absolute;
+        left: 800px;
+        top: 80px;
+        width: 300px;
+        height: 560px;
+        border-radius: 44px;
+        background: #000;
+        padding: 12px;
+      }
+      #screen {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 34px;
+        overflow: hidden;
+        background: var(--brandPrimary);
+      }
+      #screen img {
+        width: 100%;
+        display: block;
+      }
+      .screen-fallback {
+        position: absolute;
+        inset: 0;
+        padding: 32px 24px;
+        color: #fff;
+        font: 600 28px var(--brandBody);
+      }
+      #name {
+        position: absolute;
+        left: 120px;
+        top: 170px;
+        width: 560px;
+        margin: 0;
+        font: 700 88px var(--brandHeading);
+        color: var(--brandText);
+        overflow: hidden;
+      }
+      #tag {
+        position: absolute;
+        left: 120px;
+        top: 300px;
+        width: 520px;
+        margin: 0;
+        font: 400 32px var(--brandBody);
+        color: var(--brandText);
+        opacity: 0.8;
+      }
+      .feat {
+        position: absolute;
+        left: 120px;
+        font: 600 30px var(--brandBody);
+        color: var(--brandText);
+      }
+      #feat1 {
+        top: 420px;
+      }
+      #feat2 {
+        top: 470px;
+      }
+      #feat3 {
+        top: 520px;
+      }
+      .feat::before {
+        content: "";
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--brandAccent);
+        margin-right: 12px;
+      }
+      #cta {
+        position: absolute;
+        left: 120px;
+        top: 590px;
+        padding: 16px 40px;
+        border-radius: 999px;
+        background: var(--brandPrimary);
+        color: #fff;
+        font: 700 32px var(--brandBody);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="promo-app"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="phone" class="clip" data-start="0.3" data-duration="7.7" data-track-index="0">
+        <div id="screen">
+          <img
+            data-var-src="screenShot"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='276' height='536'%3E%3Crect width='276' height='536' fill='%236d28d9'/%3E%3Crect x='24' y='40' width='228' height='120' rx='16' fill='%23ffffff' fill-opacity='0.25'/%3E%3Crect x='24' y='184' width='228' height='64' rx='12' fill='%23ffffff' fill-opacity='0.18'/%3E%3Crect x='24' y='264' width='228' height='64' rx='12' fill='%23ffffff' fill-opacity='0.18'/%3E%3C/svg%3E"
+            alt=""
+          />
+          <div class="screen-fallback">Mi App</div>
+        </div>
+      </div>
+      <h1
+        id="name"
+        class="clip"
+        data-start="0.5"
+        data-duration="3"
+        data-track-index="1"
+        data-var-text="brandName"
+      >
+        Mi App
+      </h1>
+      <p
+        id="tag"
+        class="clip"
+        data-start="0.8"
+        data-duration="3"
+        data-track-index="1"
+        data-var-text="brandTagline"
+      >
+        Todo lo que necesitas, en tu bolsillo
+      </p>
+      <p
+        id="feat1"
+        class="feat clip"
+        data-start="3.2"
+        data-duration="2.6"
+        data-track-index="2"
+        data-var-text="feature1"
+      >
+        Rápida y liviana
+      </p>
+      <p
+        id="feat2"
+        class="feat clip"
+        data-start="3.2"
+        data-duration="2.6"
+        data-track-index="3"
+        data-var-text="feature2"
+      >
+        Sin anuncios
+      </p>
+      <p
+        id="feat3"
+        class="feat clip"
+        data-start="3.2"
+        data-duration="2.6"
+        data-track-index="4"
+        data-var-text="feature3"
+      >
+        Funciona sin conexión
+      </p>
+      <div
+        id="cta"
+        class="clip"
+        data-start="6"
+        data-duration="2"
+        data-track-index="5"
+        data-var-text="ctaLabel"
+      >
+        Descargar gratis
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from("#phone", { y: 80, opacity: 0, duration: 0.7, ease: "power3.out" }, 0.3);
+        tl.from("#name", { y: "100%", duration: 0.7, ease: "power3.out" }, 0.5);
+        tl.from("#tag", { opacity: 0, y: 20, duration: 0.6, ease: "power2.out" }, 0.8);
+        tl.from(
+          ".feat",
+          { x: -40, opacity: 0, duration: 0.5, ease: "power3.out", stagger: 0.12 },
+          3.2,
+        );
+        tl.from("#cta", { scale: 0.6, opacity: 0, duration: 0.6, ease: "back.out(1.7)" }, 6.0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["promo-app"] = tl;
+      </script>
+    </div>
+  </body>
+</html>
