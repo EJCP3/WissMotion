@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wissmotion.dev/schemas/brand/v1.json",
+  "title": "WissMotion Brand Kit",
+  "description": "Contrato versionado de marca: toda plantilla y composición WissMotion lee estos campos y nada más.",
+  "type": "object",
+  "required": ["brandVersion", "name", "colors", "fonts"],
+  "additionalProperties": false,
+  "properties": {
+    "brandVersion": {
+      "description": "Versión del esquema. Hoy solo existe la 1.",
+      "const": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "tagline": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "logo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "full": { "type": "string", "format": "uri-reference" },
+        "icon": { "type": "string", "format": "uri-reference" },
+        "mono": { "type": "string", "format": "uri-reference" },
+        "light": { "type": "string", "format": "uri-reference" },
+        "dark": { "type": "string", "format": "uri-reference" }
+      }
+    },
+    "colors": {
+      "type": "object",
+      "required": ["primary", "secondary", "accent", "background", "surface", "text"],
+      "additionalProperties": false,
+      "properties": {
+        "primary": { "$ref": "#/$defs/hexColor" },
+        "secondary": { "$ref": "#/$defs/hexColor" },
+        "accent": { "$ref": "#/$defs/hexColor" },
+        "background": { "$ref": "#/$defs/hexColor" },
+        "surface": { "$ref": "#/$defs/hexColor" },
+        "text": { "$ref": "#/$defs/hexColor" }
+      }
+    },
+    "fonts": {
+      "type": "object",
+      "required": ["heading", "body"],
+      "additionalProperties": false,
+      "properties": {
+        "heading": { "type": "string", "minLength": 1 },
+        "body": { "type": "string", "minLength": 1 },
+        "weights": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 100, "maximum": 900, "multipleOf": 100 }
+        }
+      }
+    },
+    "tone": {
+      "description": "Tono de voz de la marca (cercano, técnico, premium…). Texto libre.",
+      "type": "string",
+      "maxLength": 280
+    },
+    "motionPersonality": {
+      "description": "Personalidad de movimiento (la usa la Fase 2 para elegir easings y ritmos).",
+      "enum": ["suave", "enérgico", "premium", "juguetón", "corporativo", "tech"]
+    },
+    "features": {
+      "type": "array",
+      "maxItems": 12,
+      "items": { "type": "string", "minLength": 1, "maxLength": 120 }
+    },
+    "cta": {
+      "type": "object",
+      "required": ["label"],
+      "additionalProperties": false,
+      "properties": {
+        "label": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+    "screenshots": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "desktop": { "type": "string", "format": "uri-reference" },
+        "mobile": { "type": "string", "format": "uri-reference" }
+      }
+    },
+    "social": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": { "type": "string", "format": "uri" },
+        "instagram": { "type": "string", "format": "uri" },
+        "youtube": { "type": "string", "format": "uri" },
+        "linkedin": { "type": "string", "format": "uri" },
+        "tiktok": { "type": "string", "format": "uri" }
+      }
+    }
+  },
+  "$defs": {
+    "hexColor": {
+      "type": "string",
+      "pattern": "^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
+    }
+  }
+}
