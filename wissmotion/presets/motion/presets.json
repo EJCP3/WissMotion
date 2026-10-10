@@ -101,6 +101,72 @@
       "gsap": {
         "to": { "opacity": 0, "filter": "blur(12px)" }
       }
+    },
+    "pulse": {
+      "kind": "énfasis",
+      "description": "Latido de escala finito (3 idas y vueltas). CTAs y ofertas.",
+      "ease": "sine.inOut",
+      "duration": 0.4,
+      "gsap": {
+        "to": { "scale": 1.06, "yoyo": true, "repeat": 3 }
+      }
+    },
+    "highlight-sweep": {
+      "kind": "énfasis",
+      "description": "Barrido de resaltador tras la palabra clave.",
+      "ease": "power3.out",
+      "duration": 0.6,
+      "gsap": {
+        "from": { "scaleX": 0, "transformOrigin": "left center" },
+        "to": { "scaleX": 1 }
+      }
+    },
+    "underline-draw": {
+      "kind": "énfasis",
+      "description": "Subrayado que se dibuja de izquierda a derecha.",
+      "ease": "power3.out",
+      "duration": 0.6,
+      "gsap": {
+        "from": { "scaleX": 0, "transformOrigin": "left center" },
+        "to": { "scaleX": 1 }
+      }
+    },
+    "counter-up": {
+      "kind": "énfasis",
+      "description": "Contador 0→N con onUpdate (seek-safe: función pura del tiempo). Métricas y precios.",
+      "ease": "power2.out",
+      "duration": 1.5,
+      "gsap": {
+        "to": { "value": 100 }
+      }
+    },
+    "number-roll": {
+      "kind": "énfasis",
+      "description": "Tira vertical de dígitos que rueda hasta el número. Sin callbacks.",
+      "ease": "power3.inOut",
+      "duration": 1.2,
+      "gsap": {
+        "to": { "y": "-7em" }
+      }
+    },
+    "shake": {
+      "kind": "énfasis",
+      "description": "Sacudida horizontal en 5 keyframes. Errores y alertas.",
+      "ease": "none",
+      "duration": 0.4,
+      "gsap": {
+        "to": { "keyframes": [{ "x": -10 }, { "x": 10 }, { "x": -6 }, { "x": 6 }, { "x": 0 }] }
+      }
+    },
+    "glow": {
+      "kind": "énfasis",
+      "description": "Pulso de opacidad sobre texto con text-shadow fijo. Títulos nocturnos.",
+      "ease": "sine.inOut",
+      "duration": 0.6,
+      "gsap": {
+        "from": { "opacity": 0.55 },
+        "to": { "opacity": 1, "yoyo": true, "repeat": 1 }
+      }
     }
   }
 }

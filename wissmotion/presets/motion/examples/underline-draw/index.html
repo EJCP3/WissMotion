@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>underline-draw · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #faf9f7;
+      }
+      #t {
+        position: absolute;
+        left: 120px;
+        top: 300px;
+        margin: 0;
+        font:
+          700 96px Inter,
+          sans-serif;
+        color: #1c1917;
+      }
+      #ul {
+        display: block;
+        height: 8px;
+        margin-top: 8px;
+        border-radius: 4px;
+        background: #6d28d9;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="underline-draw"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <h1 id="t" class="clip" data-start="0.5" data-duration="2" data-track-index="0">
+        Subraya<span id="ul"></span>
+      </h1>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from(
+          "#ul",
+          { scaleX: 0, transformOrigin: "left center", duration: 0.6, ease: "power3.out" },
+          0.7,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["underline-draw"] = tl;
+      </script>
+    </div>
+  </body>
+</html>
