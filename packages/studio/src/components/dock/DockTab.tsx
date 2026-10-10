@@ -7,6 +7,7 @@ import {
   Image,
   Layout,
   Monitor,
+  Palette,
   Presentation,
   SlidersHorizontal,
   SquaresFour,
@@ -28,6 +29,7 @@ const TAB_ICONS: Record<PanelId, Icon> = {
   layers: Stack,
   renders: FilmSlate,
   variables: BracketsCurly,
+  brand: Palette,
   slideshow: Presentation,
 };
 
