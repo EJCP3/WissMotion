@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "personalities": {
+    "suave": {
+      "description": "Transiciones lentas y continuas, sin golpes. Institucional amable.",
+      "ease": "sine.inOut",
+      "durationScale": 1.2,
+      "stagger": 0.08,
+      "blur": false,
+      "scalePunch": false
+    },
+    "enérgico": {
+      "description": "Entradas rápidas con frenada marcada. Lanzamientos, promos.",
+      "ease": "power3.out",
+      "durationScale": 0.8,
+      "stagger": 0.05,
+      "blur": false,
+      "scalePunch": false
+    },
+    "premium": {
+      "description": "Lento, amplio y preciso. Lujo, editorial, marca personal.",
+      "ease": "expo.out",
+      "durationScale": 1.4,
+      "stagger": 0.12,
+      "blur": false,
+      "scalePunch": false
+    },
+    "juguetón": {
+      "description": "Rebote elástico y offsets con humor. Contenido joven, redes.",
+      "ease": "back.out(1.7)",
+      "durationScale": 0.9,
+      "stagger": 0.06,
+      "blur": false,
+      "scalePunch": true
+    },
+    "corporativo": {
+      "description": "Sobrio y legible. SaaS, explicadores, testimonios.",
+      "ease": "power2.out",
+      "durationScale": 1.0,
+      "stagger": 0.07,
+      "blur": false,
+      "scalePunch": false
+    },
+    "tech": {
+      "description": "Cortes nítidos con blur de entrada. Producto, devtools, IA.",
+      "ease": "circ.out",
+      "durationScale": 0.85,
+      "stagger": 0.04,
+      "blur": true,
+      "scalePunch": false
+    }
+  }
+}

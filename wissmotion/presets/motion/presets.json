@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "presets": {
+    "mask-reveal": {
+      "kind": "entrada",
+      "description": "El texto se descubre tras una máscara horizontal.",
+      "ease": "power3.out",
+      "duration": 0.9,
+      "gsap": {
+        "from": { "clipPath": "inset(0 100% 0 0)" },
+        "to": { "clipPath": "inset(0 0% 0 0)" }
+      }
+    },
+    "stagger-words": {
+      "kind": "entrada",
+      "description": "Palabras que suben en cascada. Requiere partir el texto en <span class=w> a mano (sin SplitText).",
+      "ease": "power3.out",
+      "duration": 0.7,
+      "stagger": 0.06,
+      "gsap": {
+        "from": { "y": "100%", "opacity": 0 },
+        "to": { "y": "0%", "opacity": 1 }
+      }
+    },
+    "blur-in": {
+      "kind": "entrada",
+      "description": "Aparición con desenfoque. Firma de la personalidad tech.",
+      "ease": "circ.out",
+      "duration": 0.8,
+      "gsap": {
+        "from": { "opacity": 0, "filter": "blur(12px)" },
+        "to": { "opacity": 1, "filter": "blur(0px)" }
+      }
+    },
+    "spring-pop": {
+      "kind": "entrada",
+      "description": "Pop con rebote. Firma de la personalidad juguetón.",
+      "ease": "back.out(1.7)",
+      "duration": 0.7,
+      "gsap": {
+        "from": { "scale": 0.6, "opacity": 0 },
+        "to": { "scale": 1, "opacity": 1 }
+      }
+    },
+    "slide-stack": {
+      "kind": "entrada",
+      "description": "Tarjetas que suben apiladas en cascada.",
+      "ease": "power3.out",
+      "duration": 0.6,
+      "stagger": 0.08,
+      "gsap": {
+        "from": { "y": 60, "opacity": 0 },
+        "to": { "y": 0, "opacity": 1 }
+      }
+    },
+    "scale-fade": {
+      "kind": "entrada",
+      "description": "Zoom suave. Comodín corporativo.",
+      "ease": "power2.out",
+      "duration": 0.8,
+      "gsap": {
+        "from": { "scale": 0.92, "opacity": 0 },
+        "to": { "scale": 1, "opacity": 1 }
+      }
+    },
+    "wipe": {
+      "kind": "entrada",
+      "description": "Barrido lateral con origen a la izquierda.",
+      "ease": "power3.inOut",
+      "duration": 0.7,
+      "gsap": {
+        "from": { "scaleX": 0, "transformOrigin": "left center" },
+        "to": { "scaleX": 1 }
+      }
+    },
+    "typewriter": {
+      "kind": "entrada",
+      "description": "Máquina de escribir por caracteres (spans a mano, stagger corto).",
+      "ease": "none",
+      "duration": 0.04,
+      "stagger": 0.035,
+      "gsap": {
+        "from": { "opacity": 0 },
+        "to": { "opacity": 1 }
+      }
+    },
+    "fade-slide-out": {
+      "kind": "salida",
+      "description": "Salida estándar: sube y se disuelve.",
+      "ease": "power2.in",
+      "duration": 0.5,
+      "gsap": {
+        "to": { "y": -30, "opacity": 0 }
+      }
+    },
+    "blur-out": {
+      "kind": "salida",
+      "description": "Salida con desenfoque, pareja de blur-in.",
+      "ease": "power2.in",
+      "duration": 0.5,
+      "gsap": {
+        "to": { "opacity": 0, "filter": "blur(12px)" }
+      }
+    }
+  }
+}

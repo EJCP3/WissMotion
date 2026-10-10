@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wissmotion.dev/schemas/motion-personalities/v1.json",
+  "title": "WissMotion Motion Personalities",
+  "description": "Las 6 personalidades de movimiento ligadas a brand.json motionPersonality. Cada una fija easing base, escala de duración, stagger y recursos (blur/escala).",
+  "type": "object",
+  "required": ["version", "personalities"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "personalities": {
+      "type": "object",
+      "minProperties": 6,
+      "maxProperties": 6,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["description", "ease", "durationScale", "stagger", "blur", "scalePunch"],
+        "additionalProperties": false,
+        "properties": {
+          "description": { "type": "string", "minLength": 1 },
+          "ease": { "type": "string", "minLength": 1 },
+          "durationScale": { "type": "number", "exclusiveMinimum": 0, "maximum": 2 },
+          "stagger": { "type": "number", "minimum": 0, "maximum": 0.5 },
+          "blur": { "type": "boolean" },
+          "scalePunch": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

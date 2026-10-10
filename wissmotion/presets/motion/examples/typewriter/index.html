@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>typewriter · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #0b1220;
+      }
+      #t {
+        position: absolute;
+        left: 120px;
+        top: 300px;
+        margin: 0;
+        font:
+          500 72px "JetBrains Mono",
+          monospace;
+        color: #f5f5f4;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="typewriter"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <p id="t" class="clip" data-start="0.5" data-duration="2" data-track-index="0">
+        <span class="ch">H</span><span class="ch">o</span><span class="ch">l</span
+        ><span class="ch">a</span><span class="ch">.</span>
+      </p>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from("#t .ch", { opacity: 0, duration: 0.04, ease: "none", stagger: 0.035 }, 0.5);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["typewriter"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

@@ -46,9 +46,9 @@
 
 ## Fase 2 — Kit de movimiento (el "look Jitter")
 
-- [ ] **Personalidades de movimiento** ligadas a la marca: `suave`, `enérgico`, `premium`, `juguetón`, `corporativo`, `tech`.
+- [x] **Personalidades de movimiento** ligadas a la marca: `suave`, `enérgico`, `premium`, `juguetón`, `corporativo`, `tech`.
       Cada una define easings, duraciones, stagger, rebote, uso de blur y escala.
-- [ ] **Presets de entrada/salida**: mask-reveal, stagger-words, stagger-chars, blur-in, spring-pop, slide-stack, scale-fade, wipe, typewriter.
+- [x] **Presets de entrada/salida**: mask-reveal, stagger-words, stagger-chars, blur-in, spring-pop, slide-stack, scale-fade, wipe, typewriter.
 - [ ] **Presets de énfasis**: pulse, highlight-sweep, underline-draw, counter-up, number-roll, shake, glow.
 - [ ] **Presets de escena**: device-mockup-scroll, browser-scroll, card-carousel, feature-grid, split-screen, logo-build, kinetic-type.
 - [ ] **Transiciones** entre escenas (push, zoom-through, morph, shader-transitions existentes, whip).
