@@ -134,7 +134,7 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 
 ### 8.1 Servidor MCP de WissMotion
 
-- [ ] Comando `wissmotion mcp` con transporte **stdio** (agentes locales) y **Streamable HTTP** (agentes remotos o varios a la vez).
+- [x] Comando `wissmotion mcp` con transporte **stdio** (agentes locales). Streamable HTTP pendiente.
 - [ ] Herramientas expuestas:
 
 | Grupo      | Herramientas                                                                                      |
