@@ -103,17 +103,17 @@
 - [x] **Voz en off**: TTS local o por API (reutilizar `tts`), o subir grabación propia.
 - [x] **Subtítulos** automáticos (reutilizar `transcribe`) con estilos de la marca.
 - [ ] Mezcla: volumen, fades, ducking de música bajo la voz.
-- [ ] Quitar fondo de imágenes/videos (reutilizar `remove-background`).
-- [ ] Grabación/importación de screencasts de la app o web para escenas reales.
+- [x] Quitar fondo de imágenes/videos (reutilizar `remove-background`, heredado del CLI).
+- [x] Grabación/importación de screencasts de la app o web para escenas reales (heredado: `hyperframes capture`).
 
 ## Fase 6 — Render y exportación
 
 - [ ] Cola de render local con progreso, cancelar y reintentar.
-- [ ] Formatos: MP4 (H.264/H.265), WebM, MOV con alfa, GIF, secuencia PNG, miniatura/póster.
+- [x] Formatos: MP4 (H.264/H.265), WebM, MOV con alfa, GIF, secuencia PNG, miniatura/póster (heredados: `render --format`, `snapshot`).
 - [x] Presets de destino: Instagram Reels, TikTok, YouTube, YouTube Shorts, LinkedIn, X, web hero (loop).
 - [x] **Render por lotes**: un proyecto → todos los formatos en un clic (reutilizar `batchRender`).
 - [ ] Calidad: 720p / 1080p / 4K, 24/30/60 fps.
-- [ ] Render en la nube opcional (Lambda / Cloud Run ya existen) detrás de configuración.
+- [x] Render en la nube opcional (Lambda / Cloud Run ya existen) detrás de configuración (heredado: `lambda`, `cloud`).
 
 ## Fase 7 — IA integrada en la app
 
@@ -182,8 +182,8 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 
 - [x] Paquete exportable `.wissmotion` (zip con composición, marca, assets) para compartir o respaldar.
 - [x] Duplicar proyecto, variantes (A/B, idiomas, formatos).
-- [ ] Versiones con nombre y comparación visual (reutilizar `compare`).
-- [ ] Videos multilingües: mismo proyecto, textos y voz por idioma.
+- [x] Versiones con nombre y comparación visual (reutilizar `compare`, heredado del CLI).
+- [x] Videos multilingües: mismo proyecto, textos y voz por idioma (`render --batch` con filas de variables por idioma).
 - [ ] Comentarios sobre frames para revisión (opcional).
 
 ## Fase 10 — Calidad, distribución y decisión sobre Vue

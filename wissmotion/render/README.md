@@ -18,5 +18,24 @@ El aspecto se lee del `index.html`; lo incompatible se omite con aviso
 `--dry-run` imprime el plan sin renderizar. `--quality` global opcional,
 `--workers` por defecto 2 (1 en máquinas justas).
 
+## Variantes A/B e idiomas
+
+El mismo proyecto, varias filas de variables (`render --batch` del CLI):
+
+```json
+{
+  "rows": [
+    { "headline": "El panel que mereces" },
+    { "headline": "The dashboard you deserve", "ctaLabel": "Try free" }
+  ]
+}
+```
+
+```bash
+node packages/cli/dist/cli.js render ./mi-promo --batch filas.json
+```
+
+Cada fila = un render. Multiplica por destinos corriendo el lote por fila.
+
 Verificado end-to-end: `logo-sting` → MP4 6 s reales con el CLI.
 La cola con progreso/cancelación en el Studio llega con la Fase 4/6 UI.
