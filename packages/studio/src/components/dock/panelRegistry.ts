@@ -12,6 +12,7 @@ export const PANEL_IDS = [
   "renders",
   "variables",
   "brand",
+  "assistant",
   "slideshow",
 ] as const;
 
@@ -57,6 +58,7 @@ export const PANEL_DEFINITIONS = {
   renders: { title: "Renders", zone: "right", reopen: { near: "design", direction: "within" } },
   variables: { title: "Variables", zone: "right", reopen: { near: "design", direction: "within" } },
   brand: { title: "Marca", zone: "right", reopen: { near: "design", direction: "within" } },
+  assistant: { title: "Asistente", zone: "right", reopen: { near: "design", direction: "within" } },
   slideshow: { title: "Slideshow", zone: "right", reopen: { near: "design", direction: "within" } },
 } as const satisfies Record<PanelId, PanelDefinition>;
 

@@ -158,8 +158,8 @@ describe("dock tab strips", () => {
   it("jump to the first and last tab with Home and End", () => {
     const tabs = tabsOf("design");
     press(tabs[0] as HTMLElement, "End");
-    expect(api.getPanel("design")?.group.activePanel?.id).toBe("brand");
-    expect(document.activeElement).toBe(tabs[4]);
+    expect(api.getPanel("design")?.group.activePanel?.id).toBe("assistant");
+    expect(document.activeElement).toBe(tabs[5]);
     press(tabs[3] as HTMLElement, "Home");
     expect(api.getPanel("design")?.group.activePanel?.id).toBe("design");
   });

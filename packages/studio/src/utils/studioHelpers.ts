@@ -24,6 +24,7 @@ export type RightPanelTab =
   | "block-params"
   | "slideshow"
   | "brand"
+  | "assistant"
   | "variables";
 export interface AgentModalAnchorPoint {
   x: number;
