@@ -268,7 +268,12 @@ function cleanName(title, siteName) {
 export function mapToBrand({ meta, colorCounts, fontNames, fontWeights, bestIcon, pageUrl }) {
   const ranked = [...colorCounts.entries()].sort((a, b) => b[1] - a[1]);
   const byLight = [...colorCounts.keys()].sort((a, b) => luminance(a) - luminance(b));
-  const chromatic = ranked.filter(([hex]) => saturation(hex) >= 0.12).map(([hex]) => hex);
+  // Cromáticos por frecuencia y, en empate, por saturación: un casi-blanco
+  // de fondo no le gana al acento aunque aparezca igual de veces.
+  const chromatic = ranked
+    .filter(([hex]) => saturation(hex) >= 0.12)
+    .sort((a, b) => b[1] - a[1] || saturation(b[0]) - saturation(a[0]))
+    .map(([hex]) => hex);
   const frequent = ranked.map(([hex]) => hex);
 
   const lightest = byLight[byLight.length - 1];
