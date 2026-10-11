@@ -2,9 +2,10 @@
 // comando, sobre el `hyperframes render` existente:
 //   node render-batch.mjs --project ./mi-promo --dest all|youtube|reels|tiktok|shorts|linkedin|x|webm|gif|hero
 //     [--variables-file vars.json] [--quality draft|looks|delivery] [--workers 2] [--force] [--dry-run]
-// Cada destino es {format, fps, quality, resolution}; el aspecto de la
-// composición debe coincidir (las plantillas MVP son 16:9) o se omite con
-// aviso, salvo --force. Deja renders/<nombre>.<dest>.<ext> + manifest.json.
+// Cada destino es {format, fps, quality, resolution?}; 16:9 rinde nativo
+// (1280×720: el upscale a 1080p exige factor no entero y el CLI lo rechaza).
+// El aspecto de la composición debe coincidir o se omite con aviso,
+// salvo --force. Deja renders/<nombre>.<dest>.<ext> + manifest.json.
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
@@ -14,18 +15,12 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 
 export const DESTINATIONS = {
-  youtube: { format: "mp4", fps: 30, quality: "delivery", resolution: "landscape", aspect: "16:9" },
-  linkedin: {
-    format: "mp4",
-    fps: 30,
-    quality: "standard",
-    resolution: "landscape",
-    aspect: "16:9",
-  },
-  x: { format: "mp4", fps: 30, quality: "standard", resolution: "landscape", aspect: "16:9" },
-  hero: { format: "mp4", fps: 30, quality: "looks", resolution: "landscape", aspect: "16:9" },
-  webm: { format: "webm", fps: 30, quality: "standard", resolution: "landscape", aspect: "16:9" },
-  gif: { format: "gif", fps: 15, quality: "standard", resolution: "landscape", aspect: "16:9" },
+  youtube: { format: "mp4", fps: 30, quality: "delivery", aspect: "16:9" },
+  linkedin: { format: "mp4", fps: 30, quality: "standard", aspect: "16:9" },
+  x: { format: "mp4", fps: 30, quality: "standard", aspect: "16:9" },
+  hero: { format: "mp4", fps: 30, quality: "looks", aspect: "16:9" },
+  webm: { format: "webm", fps: 30, quality: "standard", aspect: "16:9" },
+  gif: { format: "gif", fps: 15, quality: "standard", aspect: "16:9" },
   reels: { format: "mp4", fps: 30, quality: "delivery", resolution: "portrait", aspect: "9:16" },
   tiktok: { format: "mp4", fps: 30, quality: "delivery", resolution: "portrait", aspect: "9:16" },
   shorts: { format: "mp4", fps: 30, quality: "delivery", resolution: "portrait", aspect: "9:16" },

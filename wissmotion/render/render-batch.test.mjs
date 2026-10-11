@@ -54,7 +54,7 @@ describe("render-batch.mjs (dry-run)", () => {
     const args = renderArgs({
       projectDir: "/p",
       outFile: "/p/renders/a.youtube.mp4",
-      job: { format: "mp4", fps: 30, quality: "delivery", resolution: "landscape", workers: 2 },
+      job: { format: "mp4", fps: 30, quality: "delivery", workers: 2 },
       variablesFile: "/p/variables.json",
     });
     assert.deepEqual(args, [
@@ -68,13 +68,20 @@ describe("render-batch.mjs (dry-run)", () => {
       "30",
       "--quality",
       "delivery",
-      "--resolution",
-      "landscape",
       "--variables-file",
       "/p/variables.json",
       "--workers",
       "2",
     ]);
+  });
+
+  it("renderArgs pasa --resolution solo si el destino la trae (9:16)", () => {
+    const args = renderArgs({
+      projectDir: "/p",
+      outFile: "/p/renders/a.reels.mp4",
+      job: { format: "mp4", fps: 30, quality: "delivery", resolution: "portrait", workers: 2 },
+    });
+    assert.ok(args.includes("--resolution") && args.includes("portrait"));
   });
 
   it("runBatch dry-run genera plan y respeta aspecto", async () => {

@@ -57,3 +57,9 @@ node templateize.mjs --project ./mi-promo --id mi-promo --name "Mi promo"
 Copia el `index.html` a `templates/<id>/` con `template.json` (formato
 detectado del `data-width/height`) si declara variables; ida y vuelta
 probada (la guardada se vuelve a instanciar).
+
+## Regla de timing
+
+El render dura lo que la **timeline**, no los clips: cada plantilla termina
+su último tween (hold, pulse o fade de salida) exactamente en la duración
+del manifiesto. `templates.test.mjs` lo verifica (±0.6 s).

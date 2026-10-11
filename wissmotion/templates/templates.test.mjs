@@ -212,3 +212,36 @@ describe("templates", () => {
     );
   });
 });
+
+/**
+ * Fin estimado del timeline raíz (el render dura lo que la timeline, no los
+ * clips). Heurística documentada: tweens planos `tl.from|to("sel", vars, pos)`
+ * con duration/repeat literales; fin = pos + dur * (repeat + 1).
+ */
+export function estimateTimelineEnd(html) {
+  const script = html.slice(html.indexOf("<script>", html.indexOf("</style>")));
+  let end = 0;
+  for (const m of script.matchAll(
+    /tl\.(from|to|fromTo)\(\s*"[^"]*"\s*,\s*\{([^{}]*)\}\s*,\s*([\d.]+)\s*,?\s*\)/g,
+  )) {
+    const vars = m[2];
+    const duration = Number(/duration:\s*([\d.]+)/.exec(vars)?.[1] ?? 0);
+    const repeat = Number(/repeat:\s*(\d+)/.exec(vars)?.[1] ?? 0);
+    end = Math.max(end, Number(m[3]) + duration * (repeat + 1));
+  }
+  return Math.round(end * 100) / 100;
+}
+
+describe("templates/timing", () => {
+  it("el timeline termina donde dice el manifiesto (±0.6 s)", async () => {
+    for (const id of IDS) {
+      const html = await readFile(join(here, id, "index.html"), "utf8");
+      const manifest = JSON.parse(await readFile(join(here, id, "template.json"), "utf8"));
+      const end = estimateTimelineEnd(html);
+      assert.ok(
+        Math.abs(end - manifest.duration) <= 0.6,
+        `${id}: timeline ${end}s vs manifiesto ${manifest.duration}s`,
+      );
+    }
+  });
+});
