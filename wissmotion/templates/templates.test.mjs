@@ -23,6 +23,7 @@ const IDS = [
   "lanzamiento",
   "antes-despues",
   "historia",
+  "lista-cinetica",
 ];
 
 function lintDir(dir) {

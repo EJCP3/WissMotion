@@ -73,6 +73,7 @@
   - [x] Oferta / promoción (descuento, CTA)
   - [x] Evento / webinar
   - [x] Historia corta para redes (9:16)
+  - [x] Lista cinética vertical (estilo Jitter List, 9:16)
 - [x] **Variables de plantilla**: textos, imágenes, colores, duración, número de escenas → formulario sin código.
 - [ ] Multi-formato desde la misma plantilla: 16:9, 9:16, 1:1, 4:5 con layouts adaptativos (safe zones).
 - [ ] Duraciones variables (6 s, 15 s, 30 s, 60 s) re-escalando el timing.

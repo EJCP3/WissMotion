@@ -1,0 +1,9 @@
+{
+  "id": "lista-cinetica",
+  "name": "Lista cinética vertical",
+  "description": "Columna de palabras con foco nítido y flecha, resto difuminado. 9 s, 9:16.",
+  "format": "9:16",
+  "width": 1080,
+  "height": 1920,
+  "duration": 9
+}
