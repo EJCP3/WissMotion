@@ -117,14 +117,14 @@
 
 ## Fase 7 — IA integrada en la app
 
-- [ ] **Panel de chat** dentro del Studio para crear y editar con lenguaje natural.
-- [ ] **Proveedores configurables (BYOK)**: Anthropic Claude, Google Gemini, OpenAI/compatibles, OpenRouter, **Ollama/LM Studio local** (gratis, sin tokens).
+- [x] **Panel de chat** dentro del Studio para crear y editar con lenguaje natural.
+- [x] **Proveedores configurables (BYOK)**: Anthropic Claude, Google Gemini, OpenAI/compatibles, OpenRouter, **Ollama/LM Studio local** (gratis, sin tokens).
 - [ ] Flujo **brief → guion → storyboard → composición**, con aprobación del usuario en cada paso.
 - [ ] Ediciones por chat: "haz la escena 2 más lenta", "usa el color accent en el CTA", "versión 9:16".
 - [ ] La IA ve el video: snapshots de frames para revisar y corregir su propio trabajo (reutilizar `snapshot`).
 - [ ] Generación de copy: titulares, CTA y variaciones A/B.
-- [ ] **Medidor de consumo** de tokens/costo por proveedor y límite configurable.
-- [ ] **Degradación elegante**: si se acaban los tokens o falla el proveedor, el panel lo indica y sugiere la acción manual equivalente.
+- [x] **Medidor de consumo** de tokens/costo por proveedor y límite configurable.
+- [x] **Degradación elegante**: si se acaban los tokens o falla el proveedor, el panel lo indica y sugiere la acción manual equivalente.
 - [ ] Cada acción de IA queda en el historial y se puede deshacer.
 
 ## Fase 8 — Conectividad con agentes externos
