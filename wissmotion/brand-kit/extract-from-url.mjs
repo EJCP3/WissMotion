@@ -6,7 +6,7 @@ import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { BrandExtractError, extractBrand } from "./extract-lib.mjs";
 import { resolveLibraryDir, saveBrand } from "./brand-library.mjs";
 import { validateBrand } from "./validate-brand.mjs";
@@ -90,5 +90,7 @@ async function main() {
   }
 }
 
-// Solo corre el CLI con argumentos reales; importarlo (tests) no hace nada.
-if (process.argv[2] && !process.argv[2].startsWith("--")) await main();
+// Solo corre el CLI directo; importarlo (tests, brand-library) no hace nada,
+// aunque el proceso padre traiga argv posicionales.
+const isMain = !!process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url;
+if (isMain && process.argv[2] && !process.argv[2].startsWith("--")) await main();

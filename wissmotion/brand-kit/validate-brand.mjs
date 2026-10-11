@@ -2,7 +2,7 @@
 // Sale 0 si la marca cumple brand.schema.json, 1 si no (lista los errores).
 import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import Ajv from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
@@ -22,7 +22,10 @@ export async function validateBrand(brand) {
 }
 
 const target = process.argv[2];
-if (target) {
+// Solo corre directo (node validate-brand.mjs <marca>); al importarlo desde
+// otro script (p. ej. brand-library.mjs) argv[1] es otro archivo y no hace nada.
+const isMain = !!process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url;
+if (target && isMain) {
   const raw = await readFile(target, "utf8");
   const { valid, errors } = await validateBrand(JSON.parse(raw));
   if (valid) {

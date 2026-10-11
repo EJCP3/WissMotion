@@ -116,3 +116,30 @@ export async function importBrand(dir, path, name) {
 export function tmpLibraryDir() {
   return join(tmpdir(), "wissmotion-brands-");
 }
+
+function opt(args, name) {
+  const i = args.indexOf(name);
+  if (i === -1) return undefined;
+  const v = args[i + 1];
+  return v === undefined || v.startsWith("--") ? undefined : v;
+}
+
+// Solo corre con --list/--get (importarlo desde tests no hace nada).
+if (process.argv.includes("--list") || process.argv.includes("--get")) {
+  const args = process.argv.slice(2);
+  try {
+    const dir = resolveLibraryDir(opt(args, "--dir"));
+    if (process.argv.includes("--list")) {
+      const brands = await listBrands(dir);
+      if (brands.length === 0) console.log("(biblioteca vacía)");
+      for (const b of brands) console.log(`${b.slug}\t${b.name}\tv${b.brandVersion}`);
+    } else {
+      const name = opt(args, "--get");
+      if (!name) throw new BrandLibraryError("uso: --get <nombre> [--dir d]");
+      console.log(JSON.stringify(await getBrand(dir, name), null, 2));
+    }
+  } catch (e) {
+    console.error(`error: ${e.message}`);
+    process.exitCode = 1;
+  }
+}
