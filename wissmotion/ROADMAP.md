@@ -189,8 +189,8 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 ## Fase 10 — Calidad, distribución y decisión sobre Vue
 
 - [ ] Tests de plantillas y presets (render determinista, snapshot visual).
-- [ ] Documentación de usuario en español + tutoriales en video hechos con WissMotion.
-- [ ] Onboarding: primer video en menos de 5 minutos.
+- [x] Documentación de usuario en español (`wissmotion/docs/`; los tutoriales en video llegan cuando haya voz/música de Fase 5).
+- [x] Onboarding: primer video en menos de 5 minutos (`primeros-pasos.md`).
 - [ ] Empaquetado: instalador local (CLI global) y evaluar app de escritorio (Electron/Tauri).
 - [ ] Accesibilidad del editor (teclado, contraste, lector de pantalla en paneles).
 - [ ] **Evaluación de migración a Vue/Nuxt**: inventario de componentes React propios, qué paquetes son agnósticos
