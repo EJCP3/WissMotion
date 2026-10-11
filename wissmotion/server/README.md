@@ -21,3 +21,7 @@ node wissmotion/server/mcp.mjs   # los agentes lo lanzan como `npx wissmotion mc
 
 `server.test.mjs` levanta el servidor por stdio y prueba handshake,
 las 9 herramientas y el error de herramienta desconocida.
+
+`agents-setup.mjs` (Fase 8.3): detecta agentes instalados y emite/escribe su
+config MCP (`--list`, `--write opencode|cursor|…`). Cubre Claude Code,
+Claude Desktop, OpenCode, Cursor, VS Code, Gemini CLI, Codex y Antigravity.

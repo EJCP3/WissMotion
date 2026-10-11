@@ -165,10 +165,10 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 ### 8.3 Configuración por agente (un comando o un snippet cada uno)
 
 - [ ] **Claude Code**: plugin (`.claude-plugin/`) + `claude mcp add wissmotion -- npx wissmotion mcp`.
-- [ ] **Antigravity**: entrada en su configuración MCP (`mcpServers`) + reglas basadas en `AGENTS.md`.
-- [ ] **OpenCode**: entrada `mcp` en `opencode.json` (`type: local`, `command: ["npx","wissmotion","mcp"]`) + `AGENTS.md`.
-- [ ] **Codex / Cursor / Gemini CLI**: adaptar los plugins existentes (`.codex-plugin`, `.cursor-plugin`, `gemini-extension.json`).
-- [ ] Comando `wissmotion agents setup` que detecta los agentes instalados y escribe su configuración.
+- [x] **Antigravity**: entrada en su configuración MCP (`mcpServers`) + reglas basadas en `AGENTS.md`.
+- [x] **OpenCode**: entrada `mcp` en `opencode.json` (`type: local`, `command: ["npx","wissmotion","mcp"]`) + `AGENTS.md`.
+- [x] **Codex / Cursor / Gemini CLI**: adaptar los plugins existentes (`.codex-plugin`, `.cursor-plugin`, `gemini-extension.json`).
+- [x] Comando `wissmotion agents setup` que detecta los agentes instalados y escribe su configuración.
 - [ ] Página "Conectar agente" en el Studio con los snippets listos para copiar y un indicador de agente conectado.
 
 ### 8.4 Colaboración en vivo y seguridad
