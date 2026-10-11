@@ -24,10 +24,13 @@ git checkout wissmotion && git merge main
 ```text
 wissmotion/
   ROADMAP.md        → plan por fases (fuente de verdad)
-  brand-kit/        → esquema brand.json, extractor, editor (Fase 1)
+  AGENTS.md         → instrucciones para agentes de código
+  brand-kit/        → esquema brand.json, extractor, editor, biblioteca (Fase 1)
   templates/       → plantillas promocionales (Fase 3)
   presets/motion/  → personalidades y presets de movimiento (Fase 2)
+  render/          → render por lotes + destinos (Fase 6)
   server/          → servidor MCP de WissMotion (Fase 8)
+  skills/          → skills del producto: wissmotion, -brand, -templates, -motion
   docs/            → docs propias en español (Fase 10)
 ```
 

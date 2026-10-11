@@ -157,9 +157,9 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 
 ### 8.2 Contexto e instrucciones para agentes
 
-- [ ] `AGENTS.md` de WissMotion (estándar leído por OpenCode, Codex, Antigravity, Cursor y otros).
+- [x] `AGENTS.md` de WissMotion (estándar leído por OpenCode, Codex, Antigravity, Cursor y otros).
 - [ ] `CLAUDE.md` apuntando a `AGENTS.md`.
-- [ ] **Skills** de WissMotion (formato Agent Skills): `wissmotion` (entrada), `wissmotion-brand`, `wissmotion-templates`, `wissmotion-motion`.
+- [x] **Skills** de WissMotion (formato Agent Skills): `wissmotion` (entrada), `wissmotion-brand`, `wissmotion-templates`, `wissmotion-motion`.
 - [ ] Reutilizar las skills de HyperFrames para el contrato de composición.
 
 ### 8.3 Configuración por agente (un comando o un snippet cada uno)
