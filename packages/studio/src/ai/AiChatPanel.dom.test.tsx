@@ -4,6 +4,10 @@ import { createRoot, type Root } from "react-dom/client";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { AiChatPanel } from "./AiChatPanel";
 
+vi.mock("../contexts/StudioContext", () => ({
+  useStudioShellContext: () => ({ setActiveCompPath: vi.fn() }),
+}));
+
 (globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
 let mounted: { root: Root; host: HTMLElement } | null = null;

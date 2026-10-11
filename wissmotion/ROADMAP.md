@@ -119,7 +119,7 @@
 
 - [x] **Panel de chat** dentro del Studio para crear y editar con lenguaje natural.
 - [x] **Proveedores configurables (BYOK)**: Anthropic Claude, Google Gemini, OpenAI/compatibles, OpenRouter, **Ollama/LM Studio local** (gratis, sin tokens).
-- [ ] Flujo **brief → guion → storyboard → composición**, con aprobación del usuario en cada paso.
+- [x] Flujo **brief → guion → storyboard → composición**, con aprobación del usuario en cada paso.
 - [ ] Ediciones por chat: "haz la escena 2 más lenta", "usa el color accent en el CTA", "versión 9:16".
 - [ ] La IA ve el video: snapshots de frames para revisar y corregir su propio trabajo (reutilizar `snapshot`).
 - [ ] Generación de copy: titulares, CTA y variaciones A/B.

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Button, Input, Select, cn } from "../ui";
 import { useLanguage } from "../i18n/LanguageContext";
+import { useStudioShellContext } from "../contexts/StudioContext";
 import { PROVIDERS, type ProviderConfig } from "./providers";
 import { useAiChat } from "./useAiChat";
+import { AiBriefFlow } from "./AiBriefFlow";
 
 function ConfigForm({
   config,
@@ -92,73 +94,113 @@ function ConfigForm({
  */
 export function AiChatPanel({ projectId }: { projectId: string }) {
   const { t } = useLanguage();
+  const { setActiveCompPath } = useStudioShellContext();
   const { config, setConfig, messages, usage, limitUsd, setLimitUsd, sending, send, clear } =
     useAiChat(projectId);
   const [draft, setDraft] = useState("");
+  const [tab, setTab] = useState<"chat" | "brief">("chat");
 
   return (
     <div className="flex h-full flex-col" data-testid="ai-panel">
       <ConfigForm config={config} onChange={setConfig} limitUsd={limitUsd} onLimit={setLimitUsd} />
-      <div className="flex items-center justify-between border-b border-border-strong px-3 py-1.5 text-step-11 text-text-3">
-        <span className={cn(usage.usd >= limitUsd && limitUsd > 0 ? "text-danger-ink" : undefined)}>
-          {`${t("ai.usage")}: $${usage.usd.toFixed(4)} / $${limitUsd} · ${usage.inputTokens + usage.outputTokens} tok`}
-        </span>
-        <button type="button" onClick={clear} className="hover:text-text-0">
-          {t("ai.clear")}
-        </button>
+      <div
+        className="flex gap-1 border-b border-border-strong px-3 py-1.5"
+        role="tablist"
+        aria-label={t("ai.tabs")}
+      >
+        {(["chat", "brief"] as const).map((id) => (
+          <button
+            key={id}
+            type="button"
+            role="tab"
+            aria-selected={tab === id}
+            onClick={() => setTab(id)}
+            className={cn(
+              "rounded-full px-2.5 py-1 text-step-11 font-semibold",
+              tab === id ? "bg-on text-text-0" : "text-text-3 hover:text-text-0",
+            )}
+          >
+            {t(id === "chat" ? "ai.tabChat" : "ai.tabBrief")}
+          </button>
+        ))}
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2" aria-live="polite">
-        {messages.length === 0 ? (
-          <p className="text-step-12 text-text-3">{t("ai.empty")}</p>
-        ) : (
-          <div className="grid gap-2">
-            {messages.map((m, i) => (
-              <div
-                key={i}
-                className={cn(
-                  "whitespace-pre-wrap rounded-md px-2.5 py-2 text-step-12 leading-relaxed",
-                  m.role === "user" ? "justify-self-end bg-on text-text-0" : "bg-bg-2 text-text-1",
-                )}
-              >
-                {m.local ? (
-                  <span className="mb-1 block text-step-11 font-semibold text-accent-ink">
-                    {t("ai.localDraft")}
-                  </span>
-                ) : null}
-                {m.text}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      <div className="flex gap-2 border-t border-border-strong p-2">
-        <div className="min-w-0 flex-1">
-          <Input
-            aria-label={t("ai.prompt")}
-            value={draft}
-            placeholder={t("ai.prompt")}
-            onCommit={(next) => {
-              if (next.trim()) {
-                setDraft("");
-                void send(next);
-              }
+      {tab === "brief" ? (
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          <AiBriefFlow
+            projectId={projectId}
+            onOpenProject={(_projectId, compPath) => {
+              if (compPath) setActiveCompPath(compPath);
             }}
           />
         </div>
-        <Button
-          variant="primary"
-          disabled={!draft.trim() || sending}
-          onClick={() => {
-            if (draft.trim()) {
-              const text = draft;
-              setDraft("");
-              void send(text);
-            }
-          }}
-        >
-          {sending ? t("ai.sending") : t("ai.send")}
-        </Button>
-      </div>
+      ) : (
+        <>
+          <div className="flex items-center justify-between border-b border-border-strong px-3 py-1.5 text-step-11 text-text-3">
+            <span
+              className={cn(usage.usd >= limitUsd && limitUsd > 0 ? "text-danger-ink" : undefined)}
+            >
+              {`${t("ai.usage")}: $${usage.usd.toFixed(4)} / $${limitUsd} · ${usage.inputTokens + usage.outputTokens} tok`}
+            </span>
+            <button type="button" onClick={clear} className="hover:text-text-0">
+              {t("ai.clear")}
+            </button>
+          </div>
+          <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2" aria-live="polite">
+            {messages.length === 0 ? (
+              <p className="text-step-12 text-text-3">{t("ai.empty")}</p>
+            ) : (
+              <div className="grid gap-2">
+                {messages.map((m, i) => (
+                  <div
+                    key={i}
+                    className={cn(
+                      "whitespace-pre-wrap rounded-md px-2.5 py-2 text-step-12 leading-relaxed",
+                      m.role === "user"
+                        ? "justify-self-end bg-on text-text-0"
+                        : "bg-bg-2 text-text-1",
+                    )}
+                  >
+                    {m.local ? (
+                      <span className="mb-1 block text-step-11 font-semibold text-accent-ink">
+                        {t("ai.localDraft")}
+                      </span>
+                    ) : null}
+                    {m.text}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="flex gap-2 border-t border-border-strong p-2">
+            <div className="min-w-0 flex-1">
+              <Input
+                aria-label={t("ai.prompt")}
+                value={draft}
+                placeholder={t("ai.prompt")}
+                onCommit={(next) => {
+                  if (next.trim()) {
+                    setDraft("");
+                    void send(next);
+                  }
+                }}
+              />
+            </div>
+            <Button
+              variant="primary"
+              disabled={!draft.trim() || sending}
+              onClick={() => {
+                if (draft.trim()) {
+                  const text = draft;
+                  setDraft("");
+                  void send(text);
+                }
+              }}
+            >
+              {sending ? t("ai.sending") : t("ai.send")}
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
