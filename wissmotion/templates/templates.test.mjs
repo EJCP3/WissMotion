@@ -6,6 +6,7 @@ import { dirname, join } from "node:path";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { brandToVariables, instantiate, parseDeclaredVariables } from "./instantiate.mjs";
+import { templateize } from "./templateize.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const cli = join(here, "..", "..", "packages", "cli", "dist", "cli.js");
@@ -149,4 +150,65 @@ describe("templates", () => {
       assert.equal(report.errorCount, 0);
     },
   );
+
+  it("templateize guarda un proyecto como plantilla reutilizable", async () => {
+    const lib = join(tmp, "lib");
+    const src = join(tmp, "src-promo");
+    await instantiate({
+      templateId: "promo-app",
+      brand: exampleBrand,
+      contentVars: {},
+      outDir: src,
+    });
+    const { manifest, variables } = await templateize({
+      projectDir: src,
+      id: "Mi Promo",
+      name: "Mi promo",
+      templatesDir: lib,
+    });
+    assert.equal(manifest.id, "mi-promo");
+    assert.equal(manifest.format, "16:9");
+    assert.ok(variables >= 5);
+    // Ida y vuelta: la plantilla guardada se vuelve a instanciar.
+    const back = await instantiate({
+      templateId: "mi-promo",
+      brand: exampleBrand,
+      contentVars: {},
+      outDir: join(tmp, "back"),
+      templatesDir: lib,
+    });
+    assert.equal(back.manifest.id, "mi-promo");
+    await assert.rejects(
+      templateize({ projectDir: src, id: "Mi Promo", templatesDir: lib }),
+      /ya existe/,
+    );
+  });
+
+  it("templateize detecta formato vertical y exige variables e id", async () => {
+    const { mkdir, writeFile } = await import("node:fs/promises");
+    const vertical = join(tmp, "vertical");
+    await mkdir(vertical, { recursive: true });
+    await writeFile(
+      join(vertical, "index.html"),
+      `<html data-composition-variables='[{"id":"t","type":"string","label":"T","default":"x"}]'><body><div data-composition-id="v" data-width="1080" data-height="1920"></div></body></html>`,
+      "utf8",
+    );
+    const { manifest } = await templateize({
+      projectDir: vertical,
+      id: "v",
+      templatesDir: join(tmp, "lib2"),
+    });
+    assert.equal(manifest.format, "9:16");
+    const bare = join(tmp, "bare");
+    await mkdir(bare, { recursive: true });
+    await writeFile(join(bare, "index.html"), "<html><body></body></html>", "utf8");
+    await assert.rejects(
+      templateize({ projectDir: bare, id: "b", templatesDir: join(tmp, "lib3") }),
+      /nada que parametrizar/,
+    );
+    await assert.rejects(
+      templateize({ projectDir: vertical, id: "!!!", templatesDir: join(tmp, "lib4") }),
+      /slug válido/,
+    );
+  });
 });

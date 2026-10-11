@@ -34,3 +34,13 @@ node packages/cli/dist/cli.js render ./mi-promo --variables-file ./mi-promo/vari
 ```
 
 `vars.json` ejemplo: `{"brandName":"Acme","ctaLabel":"Instalar ya"}`.
+
+## Guardar un proyecto como plantilla
+
+```bash
+node templateize.mjs --project ./mi-promo --id mi-promo --name "Mi promo"
+```
+
+Copia el `index.html` a `templates/<id>/` con `template.json` (formato
+detectado del `data-width/height`) si declara variables; ida y vuelta
+probada (la guardada se vuelve a instanciar).
