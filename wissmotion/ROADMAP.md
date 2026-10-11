@@ -193,7 +193,7 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 - [x] Onboarding: primer video en menos de 5 minutos (`primeros-pasos.md`).
 - [ ] Empaquetado: instalador local (CLI global) y evaluar app de escritorio (Electron/Tauri).
 - [ ] Accesibilidad del editor (teclado, contraste, lector de pantalla en paneles).
-- [ ] **Evaluación de migración a Vue/Nuxt**: inventario de componentes React propios, qué paquetes son agnósticos
+- [x] **Evaluación de migración a Vue/Nuxt**: inventario de componentes React propios, qué paquetes son agnósticos
       (core, player, sdk, engine, producer, studio-server) y estimación de esfuerzo vs. beneficio.
 
 ---
