@@ -15,6 +15,9 @@ el mismo `index.html` sirve a todas las marcas vía `--variables-file`
 | `oferta/`            | Badge, titular con descuento, descripción y CTA con pulse. 6 s. ![oferta](oferta/preview.png)                                |
 | `precios/`           | 3 planes con destacado central y CTA. 6 s. ![precios](precios/preview.png)                                                   |
 | `evento/`            | Anuncio de evento en vivo con fecha y CTA. 6 s. ![evento](evento/preview.png)                                                |
+| `lanzamiento/`       | Countdown 3-2-1 con reveal del nombre y fecha. 6 s. ![lanzamiento](lanzamiento/preview.png)                                  |
+| `antes-despues/`     | Comparativa con dos imágenes, divisor y etiquetas. 6 s. ![antes-despues](antes-despues/preview.png)                          |
+| `historia/`          | Vertical 9:16 con barra de progreso, titular y CTA. 6 s. ![historia](historia/preview.png)                                   |
 
 ## Convención de variables
 

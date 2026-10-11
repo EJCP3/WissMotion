@@ -64,15 +64,15 @@
   - [x] Promo de app móvil (capturas en mockup de teléfono)
   - [x] Promo de web / SaaS (navegador + features)
   - [x] Intro / sting de logo
-  - [ ] Lanzamiento de producto (countdown + reveal)
+  - [x] Lanzamiento de producto (countdown + reveal)
   - [x] Feature highlight (1 función, 6–10 s)
-  - [ ] Antes / después
+  - [x] Antes / después
   - [x] Testimonios / reseñas
   - [x] Precios / planes
   - [x] Estadísticas / métricas (contadores, gráficas)
   - [x] Oferta / promoción (descuento, CTA)
   - [x] Evento / webinar
-  - [ ] Historia corta para redes (9:16)
+  - [x] Historia corta para redes (9:16)
 - [x] **Variables de plantilla**: textos, imágenes, colores, duración, número de escenas → formulario sin código.
 - [ ] Multi-formato desde la misma plantilla: 16:9, 9:16, 1:1, 4:5 con layouts adaptativos (safe zones).
 - [ ] Duraciones variables (6 s, 15 s, 30 s, 60 s) re-escalando el timing.

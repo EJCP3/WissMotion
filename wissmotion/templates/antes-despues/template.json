@@ -1,0 +1,9 @@
+{
+  "id": "antes-despues",
+  "name": "Antes / después",
+  "description": "Comparativa con dos imágenes, divisor y etiquetas. 6 s, 16:9.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 6
+}

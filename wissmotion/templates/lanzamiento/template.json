@@ -1,0 +1,9 @@
+{
+  "id": "lanzamiento",
+  "name": "Lanzamiento de producto",
+  "description": "Countdown 3-2-1 con reveal del nombre y fecha. 6 s, 16:9.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 6
+}

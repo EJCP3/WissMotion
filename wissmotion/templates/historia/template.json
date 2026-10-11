@@ -1,0 +1,9 @@
+{
+  "id": "historia",
+  "name": "Historia corta para redes",
+  "description": "Vertical 9:16 con barra de progreso, titular y CTA. 6 s.",
+  "format": "9:16",
+  "width": 1080,
+  "height": 1920,
+  "duration": 6
+}

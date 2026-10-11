@@ -19,6 +19,9 @@ const IDS = [
   "oferta",
   "precios",
   "evento",
+  "lanzamiento",
+  "antes-despues",
+  "historia",
 ];
 
 function lintDir(dir) {
