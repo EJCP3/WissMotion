@@ -46,6 +46,7 @@ export interface BrandKit {
   brand: BrandV1;
   errors: string[];
   patch: (partial: Partial<BrandV1>) => void;
+  replace: (brand: BrandV1) => void;
   setColor: (field: BrandColorField, hex: string) => boolean;
   reset: () => void;
   exportJson: () => void;
@@ -89,6 +90,10 @@ export function useBrandKit(projectId: string): BrandKit {
     setBrand((prev) => ({ ...prev, ...partial }));
   }, []);
 
+  const replace = useCallback((next: BrandV1) => {
+    if (validateBrandStructure(next).length === 0) setBrand(next);
+  }, []);
+
   const setColor = useCallback((field: BrandColorField, hex: string) => {
     const normalized = normalizeHex(hex);
     if (!normalized) return false;
@@ -130,5 +135,5 @@ export function useBrandKit(projectId: string): BrandKit {
   }, [brand]);
 
   const errors = useMemo(() => validateBrandStructure(brand), [brand]);
-  return { brand, errors, patch, setColor, reset, exportJson, importJson, copyTokens };
+  return { brand, errors, patch, replace, setColor, reset, exportJson, importJson, copyTokens };
 }

@@ -12,6 +12,12 @@ import type { StudioStringKey } from "../i18n/dictionaries";
 import type { BrandV1 } from "./brandTypes";
 import { GOOGLE_FONT_SUGGESTIONS } from "./googleFonts";
 import { MAX_LOGO_BYTES, useBrandKit } from "./useBrandKit";
+import {
+  deleteSavedBrand,
+  duplicateSavedBrand,
+  listSavedBrands,
+  saveNamedBrand,
+} from "./brandLibrary";
 import { BrandPreview } from "./BrandPreview";
 import {
   contrastRatio,
@@ -133,7 +139,7 @@ function FontField({
  */
 export function BrandPanel({ projectId }: { projectId: string }) {
   const { t } = useLanguage();
-  const { brand, errors, patch, setColor, reset, exportJson, importJson, copyTokens } =
+  const { brand, errors, patch, replace, setColor, reset, exportJson, importJson, copyTokens } =
     useBrandKit(projectId);
   const [notice, setNotice] = useState<string | null>(null);
   const importRef = useRef<HTMLInputElement>(null);
@@ -168,6 +174,7 @@ export function BrandPanel({ projectId }: { projectId: string }) {
 
   return (
     <div className="pb-4" data-testid="brand-panel">
+      <LibrarySection brand={brand} onApply={replace} notify={flash} />
       <Section title={t("brand.identity")}>
         <Field label={t("brand.name")}>
           <Input
@@ -503,6 +510,111 @@ function TonesSection({
             </div>
           </div>
         ))}
+      </div>
+    </Section>
+  );
+}
+
+function LibrarySection({
+  brand,
+  onApply,
+  notify,
+}: {
+  brand: BrandV1;
+  onApply: (brand: BrandV1) => void;
+  notify: (message: string) => void;
+}) {
+  const { t } = useLanguage();
+  const [saved, setSaved] = useState(listSavedBrands);
+  const [picked, setPicked] = useState("");
+  const [name, setName] = useState("");
+
+  const apply = (brandName: string) => {
+    const found = listSavedBrands().find((b) => b.name === brandName);
+    if (!found) return;
+    onApply(found.brand);
+    notify(t("brand.applied"));
+  };
+
+  return (
+    <Section title={t("brand.library")}>
+      {saved.length > 0 ? (
+        <div className="grid gap-2">
+          <Field label={t("brand.libraryPick")}>
+            <select
+              aria-label={t("brand.libraryPick")}
+              value={picked}
+              onChange={(e) => {
+                setPicked(e.target.value);
+                if (e.target.value) apply(e.target.value);
+              }}
+              className={cn(fieldBase, fieldText, "py-1.5")}
+            >
+              <option value="">{t("brand.libraryPick")}</option>
+              {saved.map((b) => (
+                <option key={b.name} value={b.name}>
+                  {b.name}
+                </option>
+              ))}
+            </select>
+          </Field>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="ghost"
+              disabled={!picked}
+              onClick={() => {
+                if (!picked) return;
+                try {
+                  setSaved(duplicateSavedBrand(picked, `${picked}${t("brand.copySuffix")}`));
+                  notify(t("brand.duplicated"));
+                } catch {
+                  notify(t("brand.importError"));
+                }
+              }}
+            >
+              {t("brand.duplicate")}
+            </Button>
+            <Button
+              variant="ghost"
+              disabled={!picked}
+              onClick={() => {
+                if (!picked) return;
+                setSaved(deleteSavedBrand(picked));
+                setPicked("");
+                notify(t("brand.deleted"));
+              }}
+            >
+              {t("brand.delete")}
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <p className="text-step-12 text-text-3">{t("brand.noBrands")}</p>
+      )}
+      <div className="flex gap-2">
+        <div className="min-w-0 flex-1">
+          <Input
+            aria-label={t("brand.saveName")}
+            value={name}
+            placeholder={t("brand.saveName")}
+            onCommit={setName}
+          />
+        </div>
+        <Button
+          variant="ghost"
+          disabled={!name.trim()}
+          onClick={() => {
+            try {
+              setSaved(saveNamedBrand(name, brand));
+              setName("");
+              notify(t("brand.saved"));
+            } catch {
+              notify(t("brand.invalid"));
+            }
+          }}
+        >
+          {t("brand.save")}
+        </Button>
       </div>
     </Section>
   );

@@ -36,6 +36,7 @@ describe("BrandPanel", () => {
     const host = await mountPanel();
     expect(host.querySelector('[data-testid="brand-panel"]')).not.toBeNull();
     for (const title of [
+      "Biblioteca",
       "Identidad",
       "Colores",
       "Tipografías",
@@ -51,7 +52,10 @@ describe("BrandPanel", () => {
 
   it("editar el nombre persiste la marca del proyecto", async () => {
     const host = await mountPanel();
-    const name = host.querySelectorAll("section")[0].querySelector("input")!;
+    const identity = [...host.querySelectorAll("section")].find((s) =>
+      s.querySelector("h3")?.textContent?.includes("Identidad"),
+    )!;
+    const name = identity.querySelector("input")!;
     await act(async () => {
       name.focus();
       setNativeValue(name, "Acme");
@@ -142,6 +146,50 @@ describe("BrandPanel", () => {
     expect(
       JSON.parse(localStorage.getItem("wissmotion-studio:brand:panel-test")!).colors.primary,
     ).toBe(hex);
+  });
+
+  it("la biblioteca guarda, aplica y elimina marcas", async () => {
+    const host = await mountPanel();
+    expect(host.textContent).toContain("Aún no hay marcas guardadas");
+
+    // Como un usuario: primero nombra la marca, luego la guarda.
+    const identity = [...host.querySelectorAll("section")].find((s) =>
+      s.querySelector("h3")?.textContent?.includes("Identidad"),
+    )!;
+    const brandName = identity.querySelector("input")!;
+    await act(async () => {
+      brandName.focus();
+      setNativeValue(brandName, "Acme");
+      brandName.blur();
+    });
+    const nameInput = host.querySelector(
+      'input[aria-label="Nombre para guardar"]',
+    ) as HTMLInputElement;
+    await act(async () => {
+      nameInput.focus();
+      setNativeValue(nameInput, "Acme");
+      nameInput.blur();
+    });
+    const saveBtn = [...host.querySelectorAll("button")].find((b) => b.textContent === "Guardar")!;
+    await act(async () => saveBtn.click());
+    expect(host.querySelector('select option[value="Acme"]')).not.toBeNull();
+
+    // Cambiar el color y aplicar la guardada lo restaura.
+    const stored = JSON.parse(localStorage.getItem("wissmotion-studio:brands")!);
+    expect(stored).toHaveLength(1);
+    const picker = host.querySelector("select") as HTMLSelectElement;
+    picker.value = "Acme";
+    await act(async () => {
+      picker.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+    expect(host.querySelector('[role="status"]')?.textContent).toContain("Marca aplicada");
+
+    const deleteBtn = [...host.querySelectorAll("button")].find(
+      (b) => b.textContent === "Eliminar",
+    )!;
+    await act(async () => deleteBtn.click());
+    expect(host.querySelector('select option[value="Acme"]')).toBeNull();
+    expect(host.textContent).toContain("Marca eliminada");
   });
 
   it("exportar descarga el brand.json con el nombre de la marca", async () => {
