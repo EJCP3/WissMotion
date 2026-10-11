@@ -18,6 +18,7 @@ import { ensureElementAddressable } from "./gsapScriptCommitHelpers";
 import { idSelector } from "./gsapShared";
 import { assignGsapTargetAutoIdIfNeeded } from "./useDomEditCommitsHelpers";
 import type { CommitMutation, SafeGsapCommitMutation } from "./gsapScriptCommitTypes";
+import { presetAddSpec, type MotionPreset } from "../motion/wissmotionPresets";
 
 interface SdkAnimationDeps {
   sdkSession?: Composition | null;
@@ -120,6 +121,9 @@ export function useGsapAnimationOps({
       selection: DomEditSelection,
       method: "to" | "from" | "set" | "fromTo",
       _currentTime?: number,
+      // Preset WissMotion opcional: rellena vars/duración/easing; sin él,
+      // el alta manual conserva sus defaults exactos (ver tests).
+      preset?: MotionPreset,
     ) => {
       const address = ensureElementAddressable(selection);
       const { autoId } = address;
@@ -158,21 +162,25 @@ export function useGsapAnimationOps({
 
       // After an id write (autoId) the SDK session has not reloaded the file yet,
       // so persisting its serialization would drop the new id.
+      const presetBody = preset ? presetAddSpec(preset) : null;
+      const label = preset ? `Apply ${preset.id} preset` : `Add GSAP ${method} animation`;
       if (!autoId && selection.hfId && sdkSession && sdkDeps) {
         const targetPath = selection.sourceFile || activeCompPath || "index.html";
         const spec = {
           method,
           position,
-          ...(method !== "set" ? { duration, ease: "power2.out" as const } : {}),
-          properties: toDefaults[method] ?? { opacity: 1 },
-          ...(method === "fromTo" ? { fromProperties: { opacity: 0 } } : {}),
+          ...(method !== "set"
+            ? { duration: presetBody?.duration ?? duration, ease: presetBody?.ease ?? "power2.out" }
+            : {}),
+          properties: presetBody?.properties ?? toDefaults[method] ?? { opacity: 1 },
+          ...(method === "fromTo" ? { fromProperties: presetBody?.fromProperties ?? { opacity: 0 } } : {}),
         };
         const handled = await sdkGsapTweenPersist(
           targetPath,
           { kind: "add", target: selection.hfId, spec },
           sdkSession,
           sdkDeps,
-          { label: `Add GSAP ${method} animation` },
+          { label },
         );
         if (cutoverCommittedOrThrow(handled)) return;
       }
@@ -184,12 +192,12 @@ export function useGsapAnimationOps({
           targetSelector: selector,
           method,
           position,
-          duration: method === "set" ? undefined : duration,
-          ease: method === "set" ? undefined : "power2.out",
-          properties: toDefaults[method] ?? { opacity: 1 },
-          fromProperties: method === "fromTo" ? { opacity: 0 } : undefined,
+          duration: method === "set" ? undefined : (presetBody?.duration ?? duration),
+          ease: method === "set" ? undefined : (presetBody?.ease ?? "power2.out"),
+          properties: presetBody?.properties ?? toDefaults[method] ?? { opacity: 1 },
+          fromProperties: method === "fromTo" ? (presetBody?.fromProperties ?? { opacity: 0 }) : undefined,
         },
-        { label: `Add GSAP ${method} animation`, softReload: true },
+        { label, softReload: true },
       );
     },
     [

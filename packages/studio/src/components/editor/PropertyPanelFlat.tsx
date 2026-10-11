@@ -123,6 +123,7 @@ export function PropertyPanelFlat({
   onAddGsapFromProperty,
   onRemoveGsapFromProperty,
   onAddGsapAnimation,
+  onApplyMotionPreset,
   onSetArcPath,
   onUpdateArcSegment,
   onUnroll,
@@ -274,6 +275,7 @@ export function PropertyPanelFlat({
     onAddGsapAnimation
       ? {
           onAddAnimation: onAddGsapAnimation,
+          onApplyPreset: onApplyMotionPreset,
           onUpdateProperty: onUpdateGsapProperty,
           onUpdateMeta: onUpdateGsapMeta,
           onDeleteAnimation: onDeleteGsapAnimation,

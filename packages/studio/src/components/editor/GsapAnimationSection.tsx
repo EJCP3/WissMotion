@@ -11,6 +11,8 @@ interface GsapAnimationSectionProps extends GsapAnimationEditCallbacks {
   multipleTimelines?: boolean;
   unsupportedTimelinePattern?: boolean;
   onAddAnimation: (method: "to" | "from" | "set" | "fromTo") => void;
+  /** Preset WissMotion a aplicar (undefined lo oculta). */
+  onApplyPreset?: (presetId: string) => void;
 }
 
 export const GsapAnimationSection = memo(function GsapAnimationSection({
@@ -19,6 +21,7 @@ export const GsapAnimationSection = memo(function GsapAnimationSection({
   multipleTimelines,
   unsupportedTimelinePattern,
   onAddAnimation,
+  onApplyPreset,
   ...callbacks
 }: GsapAnimationSectionProps) {
   return (
@@ -42,6 +45,7 @@ export const GsapAnimationSection = memo(function GsapAnimationSection({
           elementId={elementId}
           animations={animations}
           onAddAnimation={onAddAnimation}
+          onApplyPreset={onApplyPreset}
           variant="classic"
         />
       )}

@@ -117,6 +117,7 @@ export function FlatMotionSection({
   onSetAttribute,
   onSetAttributes,
   onAddAnimation,
+  onApplyPreset,
   ...callbacks
 }: {
   element: DomEditSelection;
@@ -128,6 +129,8 @@ export function FlatMotionSection({
   onSetAttribute: (attr: string, value: string) => void | Promise<void>;
   onSetAttributes?: (selection: DomEditSelection, attrs: Record<string, string>) => Promise<void>;
   onAddAnimation: (method: "to" | "from" | "set" | "fromTo") => void;
+  /** Preset WissMotion a aplicar (undefined lo oculta). */
+  onApplyPreset?: (presetId: string) => void;
 } & GsapAnimationEditCallbacks) {
   // Only consume a focus request aimed at the element THIS panel renders (not
   // the store's selectedElementId, which flips synchronously during async
@@ -164,6 +167,7 @@ export function FlatMotionSection({
               elementId={renderedElementId}
               animations={animations}
               onAddAnimation={onAddAnimation}
+              onApplyPreset={onApplyPreset}
               variant="flat"
             />
           )}

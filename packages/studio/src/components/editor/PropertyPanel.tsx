@@ -95,6 +95,7 @@ export const PropertyPanel = memo(function PropertyPanel(props: PropertyPanelPro
     onAddGsapFromProperty,
     onRemoveGsapFromProperty,
     onAddGsapAnimation,
+    onApplyMotionPreset,
     onSetArcPath,
     onUpdateArcSegment,
     onUnroll,
@@ -549,6 +550,7 @@ export const PropertyPanel = memo(function PropertyPanel(props: PropertyPanelPro
               onAddFromProperty={onAddGsapFromProperty}
               onRemoveFromProperty={onRemoveGsapFromProperty}
               onAddAnimation={onAddGsapAnimation}
+              onApplyPreset={onApplyMotionPreset}
               onSetArcPath={onSetArcPath}
               onUpdateArcSegment={onUpdateArcSegment}
               onUnroll={onUnroll}

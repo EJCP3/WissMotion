@@ -10,6 +10,7 @@ import {
 } from "../utils/studioSaveDiagnostics";
 import { trackStudioEvent } from "../utils/studioTelemetry";
 import type { CommitMutationOptions } from "./gsapScriptCommitTypes";
+import { loadMotionPresets, type MotionPreset } from "../motion/wissmotionPresets";
 
 /**
  * Thin useCallback wrappers that guard on `domEditSelection` before
@@ -58,6 +59,7 @@ export function useGsapSelectionHandlers({
     sel: DomEditSelection,
     method: "to" | "from" | "set" | "fromTo",
     time: number,
+    preset?: MotionPreset,
   ) => Promise<void>;
   addGsapProperty: (sel: DomEditSelection, animId: string, prop: string) => Promise<void>;
   removeGsapProperty: (sel: DomEditSelection, animId: string, prop: string) => Promise<void>;
@@ -253,6 +255,32 @@ export function useGsapSelectionHandlers({
       return landed;
     },
     [resolveWriteSelection, addGsapAnimation, handleDomManualEditsReset, observeGsapMutation],
+  );
+
+  const handleGsapApplyPreset = useCallback(
+    (presetId: string, selectionOverride?: DomEditSelection | null) => {
+      const selection = resolveWriteSelection(selectionOverride);
+      if (!selection) return Promise.resolve(false);
+      const preset = loadMotionPresets().find((p) => p.id === presetId);
+      if (!preset) {
+        showToast(`Preset desconocido: ${presetId}`, "error");
+        return Promise.resolve(false);
+      }
+      const landed = observeGsapMutation(
+        addGsapAnimation(selection, preset.method, usePlayerStore.getState().currentTime, preset),
+        selection,
+        "add",
+        `Apply ${presetId} preset`,
+      );
+      if (selection.element.hasAttribute("data-hf-studio-path-offset")) {
+        // Igual que el alta manual: el reset owns rollback.
+        void landed.then((didLand) => {
+          if (didLand) void handleDomManualEditsReset(selection).catch(() => undefined);
+        });
+      }
+      return landed;
+    },
+    [resolveWriteSelection, addGsapAnimation, handleDomManualEditsReset, observeGsapMutation, showToast],
   );
 
   const handleGsapAddProperty = useCallback(
@@ -479,6 +507,7 @@ export function useGsapSelectionHandlers({
     handleGsapDeleteAnimation,
     handleGsapDeleteAllForElement,
     handleGsapAddAnimation,
+    handleGsapApplyPreset,
     handleGsapAddProperty,
     handleGsapRemoveProperty,
     handleGsapUpdateFromProperty,

@@ -120,6 +120,8 @@ export interface PropertyPanelProps {
   onAddGsapFromProperty?: (animId: string, prop: string) => void;
   onRemoveGsapFromProperty?: (animId: string, prop: string) => void;
   onAddGsapAnimation?: (method: "to" | "from" | "set" | "fromTo") => void;
+  /** Aplica un preset de movimiento WissMotion (undefined lo oculta). */
+  onApplyMotionPreset?: (presetId: string) => void;
   onSetArcPath?: (
     animId: string,
     config: {

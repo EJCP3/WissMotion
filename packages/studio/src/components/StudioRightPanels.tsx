@@ -81,6 +81,7 @@ export const StudioRightPanels = memo(function StudioRightPanels({
     handleGsapUpdateMeta,
     handleGsapDeleteAnimation,
     handleGsapAddAnimation,
+    handleGsapApplyPreset,
     handleGsapAddProperty,
     handleGsapRemoveProperty,
     handleGsapUpdateFromProperty,
@@ -247,6 +248,7 @@ export const StudioRightPanels = memo(function StudioRightPanels({
         onAddGsapFromProperty={handleGsapAddFromProperty}
         onRemoveGsapFromProperty={handleGsapRemoveFromProperty}
         onAddGsapAnimation={handleGsapAddAnimation}
+        onApplyMotionPreset={handleGsapApplyPreset}
         onCommitAnimatedProperty={commitAnimatedProperty}
         onCommitAnimatedProperties={commitAnimatedProperties}
         onAddKeyframe={handleGsapAddKeyframe}

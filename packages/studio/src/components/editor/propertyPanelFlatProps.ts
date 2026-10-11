@@ -45,6 +45,7 @@ export type PropertyPanelFlatProps = Pick<
   | "onAddGsapFromProperty"
   | "onRemoveGsapFromProperty"
   | "onAddGsapAnimation"
+  | "onApplyMotionPreset"
   | "onSetArcPath"
   | "onUpdateArcSegment"
   | "onUnroll"

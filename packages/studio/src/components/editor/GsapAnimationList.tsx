@@ -6,6 +6,7 @@ import { usePlayerStore } from "../../player";
 import { isFocusedEaseRequestCurrent } from "../../player/store/keyframeSlice";
 import { AnimationCard } from "./AnimationCard";
 import { GsapAddAnimationControl } from "./GsapAddAnimationControl";
+import { GsapPresetPicker } from "./GsapPresetPicker";
 import {
   type GsapAnimationEditCallbacks,
   withTrackedGsapAnimationCallbacks,
@@ -15,6 +16,8 @@ interface GsapAnimationListProps extends GsapAnimationEditCallbacks {
   elementId: string;
   animations: GsapAnimation[];
   onAddAnimation: (method: "to" | "from" | "set" | "fromTo") => void;
+  /** Preset WissMotion a aplicar (undefined lo oculta). */
+  onApplyPreset?: (presetId: string) => void;
   variant: "classic" | "flat";
 }
 
@@ -23,6 +26,7 @@ export function GsapAnimationList({
   elementId,
   animations,
   onAddAnimation,
+  onApplyPreset,
   variant,
   ...callbacks
 }: GsapAnimationListProps) {
@@ -84,6 +88,7 @@ export function GsapAnimationList({
         track={track}
         variant={variant}
       />
+      {onApplyPreset ? <GsapPresetPicker onApplyPreset={onApplyPreset} /> : null}
     </div>
   );
 }
