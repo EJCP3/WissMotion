@@ -341,6 +341,13 @@ export default defineConfig({
   },
   server: {
     port: 5190,
+    fs: {
+      // Las plantillas WissMotion viven en wissmotion/templates (fuera del
+      // root del paquete) y se importan al bundle (?raw + PNG). En dev, Vite
+      // solo sirve ficheros bajo el root salvo allow explícito; en build,
+      // rollup las incrusta igual. Sin esto, el import falla en dev con 403.
+      allow: [resolve(__dirname), resolve(__dirname, "../..")],
+    },
     watch: {
       // A composition lives under this package's root, so Vite's HMR sees a
       // write to one as an html page dependency changing and full-reloads the

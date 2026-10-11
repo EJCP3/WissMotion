@@ -12,8 +12,21 @@ const STORAGE_PREFIX = "wissmotion-studio:brand:";
 const FONT_LINK_ID = "wm-brand-fonts";
 export const MAX_LOGO_BYTES = 800_000;
 
-function storageKey(projectId: string): string {
+export function brandStorageKey(projectId: string): string {
   return `${STORAGE_PREFIX}${projectId}`;
+}
+
+/** Marca guardada del proyecto, o null si no hay o no valida. */
+export function readStoredBrand(projectId: string): BrandV1 | null {
+  try {
+    const raw = localStorage.getItem(brandStorageKey(projectId));
+    if (!raw) return null;
+    const parsed: unknown = JSON.parse(raw);
+    if (validateBrandStructure(parsed).length > 0) return null;
+    return parsed as BrandV1;
+  } catch {
+    return null;
+  }
 }
 
 function familyParam(name: string): string {
@@ -26,15 +39,7 @@ function fontsHref(heading: string, body: string): string {
 }
 
 function loadStored(projectId: string): BrandV1 {
-  try {
-    const raw = localStorage.getItem(storageKey(projectId));
-    if (!raw) return { ...DEFAULT_BRAND };
-    const parsed: unknown = JSON.parse(raw);
-    if (validateBrandStructure(parsed).length > 0) return { ...DEFAULT_BRAND };
-    return parsed as BrandV1;
-  } catch {
-    return { ...DEFAULT_BRAND };
-  }
+  return readStoredBrand(projectId) ?? { ...DEFAULT_BRAND };
 }
 
 export interface BrandKit {
@@ -58,7 +63,7 @@ export function useBrandKit(projectId: string): BrandKit {
 
   useEffect(() => {
     try {
-      localStorage.setItem(storageKey(projectId), JSON.stringify(brand));
+      localStorage.setItem(brandStorageKey(projectId), JSON.stringify(brand));
     } catch {
       // Cuota llena o almacenamiento bloqueado: la edición en memoria sigue.
     }

@@ -8,6 +8,7 @@ import { useLanguage } from "../i18n/LanguageContext";
 import { useBlockCatalog } from "../hooks/useBlockCatalog";
 import { BLOCK_CATEGORIES, type BlockCategory } from "../utils/blockCategories";
 import { installTemplateBlock, type HomeProject } from "./homeApi";
+import { WissmotionSection } from "./WissmotionSection";
 import type { HomeProjectsStatus } from "./useHomeProjects";
 import { HomeStateMessage, ProjectTargetSelect } from "./homeShared";
 
@@ -129,6 +130,15 @@ export function TemplatesView({
   return (
     <div>
       <h1 className="text-5xl font-bold tracking-tight text-text-0">{t("home.templates")}</h1>
+      <div className="mt-8">
+        <WissmotionSection
+          projects={projects}
+          status={status}
+          search={search}
+          visible={category === null}
+          onOpenProject={onOpenProject}
+        />
+      </div>
       {projects.length > 1 ? (
         <div className="mt-7">
           <ProjectTargetSelect

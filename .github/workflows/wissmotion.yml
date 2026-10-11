@@ -40,18 +40,18 @@ jobs:
 
       - name: Lint producto
         run: |
-          bunx oxlint wissmotion packages/studio/src/brand packages/studio/src/i18n packages/studio/src/components/LanguageToggle.tsx packages/studio/src/components/ui/WissMotionLogo.tsx packages/studio/src/components/StudioHeader.tsx packages/studio/src/components/StudioSplash.tsx packages/studio/src/telemetry/policy.ts packages/studio/src/components/OpenInDesktopButton.tsx packages/studio/src/components/StudioRightPanels.tsx packages/studio/src/components/dock/panelRegistry.ts packages/studio/src/components/dock/dockLayout.ts packages/studio/src/components/dock/DockTab.tsx
+          bunx oxlint wissmotion packages/studio/src/brand packages/studio/src/i18n packages/studio/src/home/wissmotionTemplates.ts packages/studio/src/home/wissmotionInstall.ts packages/studio/src/home/WissmotionSection.tsx packages/studio/src/home/TemplatesView.tsx packages/studio/src/components/LanguageToggle.tsx packages/studio/src/components/ui/WissMotionLogo.tsx packages/studio/src/components/StudioHeader.tsx packages/studio/src/components/StudioSplash.tsx packages/studio/src/telemetry/policy.ts packages/studio/src/components/OpenInDesktopButton.tsx packages/studio/src/components/StudioRightPanels.tsx packages/studio/src/components/dock/panelRegistry.ts packages/studio/src/components/dock/dockLayout.ts packages/studio/src/components/dock/DockTab.tsx
 
       - name: Formato producto
         run: |
-          bunx oxfmt --check wissmotion packages/studio/src/brand packages/studio/src/i18n packages/studio/src/components/LanguageToggle.tsx packages/studio/src/components/ui/WissMotionLogo.tsx packages/studio/src/components/StudioHeader.tsx packages/studio/src/components/StudioSplash.tsx packages/studio/src/telemetry/policy.ts packages/studio/src/components/OpenInDesktopButton.tsx packages/studio/src/components/StudioRightPanels.tsx packages/studio/src/components/dock/panelRegistry.ts packages/studio/src/components/dock/dockLayout.ts packages/studio/src/components/dock/DockTab.tsx packages/studio/index.html packages/studio/public/favicon.svg
+          bunx oxfmt --check wissmotion packages/studio/src/brand packages/studio/src/i18n packages/studio/src/home/wissmotionTemplates.ts packages/studio/src/home/wissmotionInstall.ts packages/studio/src/home/WissmotionSection.tsx packages/studio/src/home/TemplatesView.tsx packages/studio/src/components/LanguageToggle.tsx packages/studio/src/components/ui/WissMotionLogo.tsx packages/studio/src/components/StudioHeader.tsx packages/studio/src/components/StudioSplash.tsx packages/studio/src/telemetry/policy.ts packages/studio/src/components/OpenInDesktopButton.tsx packages/studio/src/components/StudioRightPanels.tsx packages/studio/src/components/dock/panelRegistry.ts packages/studio/src/components/dock/dockLayout.ts packages/studio/src/components/dock/DockTab.tsx packages/studio/index.html packages/studio/public/favicon.svg packages/studio/vite.config.ts
 
       - name: Tests Brand Kit
-        run: node --test wissmotion/brand-kit/brand.test.mjs wissmotion/brand-kit/extract.test.mjs
+        run: node --test wissmotion/brand-kit/brand.test.mjs wissmotion/brand-kit/extract.test.mjs wissmotion/brand-kit/library.test.mjs wissmotion/presets/motion/motion.test.mjs wissmotion/templates/templates.test.mjs wissmotion/render/render-batch.test.mjs wissmotion/server/server.test.mjs wissmotion/server/agents-setup.test.mjs wissmotion/export/package.test.mjs wissmotion/audio/audio.test.mjs wissmotion/cli.test.mjs
 
       - name: Typecheck Studio
         run: cd packages/studio && bunx tsc --noEmit
 
-      - name: Tests Studio (marca, i18n, flags)
+      - name: Tests Studio (marca, i18n, flags, galería)
         run: |
-          bun run --cwd packages/studio test src/i18n src/headerExports.test.tsx src/components/StudioHeader.dom.test.tsx src/telemetry/policy.test.ts src/components/OpenInDesktopButton.dom.test.tsx -- --maxWorkers=2
+          bun run --cwd packages/studio test src/i18n src/brand src/headerExports.test.tsx src/components/StudioHeader.dom.test.tsx src/telemetry/policy.test.ts src/components/OpenInDesktopButton.dom.test.tsx src/home/wissmotionTemplates.test.ts src/home/wissmotionInstall.test.ts src/home/WissmotionSection.dom.test.tsx -- --maxWorkers=2

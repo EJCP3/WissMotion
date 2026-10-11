@@ -59,7 +59,7 @@
 
 ## Fase 3 — Plantillas promocionales
 
-- [ ] **Galería de plantillas** con miniaturas animadas, categorías, búsqueda y filtros por formato/duración.
+- [x] **Galería de plantillas** con miniaturas animadas, categorías, búsqueda y filtros por formato/duración.
 - [x] Plantillas iniciales:
   - [x] Promo de app móvil (capturas en mockup de teléfono)
   - [x] Promo de web / SaaS (navegador + features)
