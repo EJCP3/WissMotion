@@ -9,12 +9,13 @@
    * colour-scheme decides: Studio is dark, `data-theme="paper"` makes it light, and the player
    * keeps a dark scheme in both. Text clears 4.5:1 and icons 3:1 on every surface below. */
 
-  /* Surfaces: the app shell first, menus and popovers last. */
-  --color-bg-0: light-dark(oklch(0.955 0.005 70), oklch(0.235 0.007 70));
+  /* Surfaces: the app shell first, menus and popovers last. Jitter-clean:
+   * near-white shell, pure-white cards. */
+  --color-bg-0: light-dark(oklch(0.99 0.002 70), oklch(0.235 0.007 70));
   --color-bg-1: var(--color-bg-0);
   --color-bg-2: var(--color-surface);
   --color-input: light-dark(oklch(1 0 70), oklch(0.25 0.007 70));
-  --color-surface: light-dark(oklch(0.987 0.005 70), oklch(0.265 0.007 70));
+  --color-surface: light-dark(oklch(1 0 70), oklch(0.265 0.007 70));
   --color-surface-alt: var(--color-surface);
   /* Menus, popovers and tooltips. */
   --color-raised: light-dark(oklch(1 0 70), oklch(0.295 0.007 70));
@@ -62,13 +63,14 @@
 
   /* Roles. Selection and playhead are reserved and differ from the accent so a
    * selected clip, the playhead and an accented control stay tellable apart.
-   * `accent-ink` is accent text on a surface; `on-accent` is text on an accent fill. */
-  --color-accent: light-dark(oklch(0.536 0.114 164), oklch(0.82 0.159 164));
-  --color-accent-hover: light-dark(oklch(0.486 0.103 164), oklch(0.87 0.159 164));
-  --color-on-accent: light-dark(oklch(1 0 0), oklch(0.2 0.043 164));
-  --color-accent-ink: light-dark(oklch(0.45 0.096 164), oklch(0.827 0.159 164));
+   * `accent-ink` is accent text on a surface; `on-accent` is text on an accent fill.
+   * WissMotion wears Jitter's violet accent instead of the inherited green. */
+  --color-accent: light-dark(oklch(0.55 0.26 294), oklch(0.72 0.21 294));
+  --color-accent-hover: light-dark(oklch(0.5 0.24 294), oklch(0.77 0.21 294));
+  --color-on-accent: light-dark(oklch(1 0 0), oklch(0.25 0.06 294));
+  --color-accent-ink: light-dark(oklch(0.5 0.23 294), oklch(0.78 0.2 294));
   --color-ring: var(--color-accent-ink);
-  --color-selection: light-dark(oklch(0.5 0.13 240), #4ba3d2);
+  --color-selection: light-dark(oklch(0.55 0.22 294), oklch(0.7 0.2 294));
   --color-playhead: var(--color-text-0);
   --color-danger: oklch(0.56 0.19 25);
   --color-danger-ink: light-dark(oklch(0.45 0.17 25), oklch(0.791 0.12 25));

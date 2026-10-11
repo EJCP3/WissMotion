@@ -7,7 +7,7 @@
 import React, { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
-import { buttonSizes, buttonVariants } from "./ui";
+import { buttonVariants } from "./ui";
 import { isTypingTarget } from "../utils/typingTarget";
 import { shouldIgnorePlaybackShortcutTarget } from "../player/lib/playbackShortcuts";
 
@@ -110,13 +110,15 @@ function expectRecipe(el: HTMLElement, ...recipes: string[]): void {
   }
 }
 
-it("renders Export as the shared primary Button at the medium size", () => {
+it("renders Export as the shared primary Button, squared Jitter-style", () => {
   const host = mount();
 
+  // Variante primaria compartida intacta (sin deriva); el tamaño medio aporta
+  // h-ctl y gap, con px/ancho/radio/tipo sobrescritos a propósito al estilo Jitter.
   expectRecipe(
     query(host, '[data-testid="header-export"]'),
     buttonVariants.primary,
-    buttonSizes.md,
+    "h-ctl gap-1.5 rounded-none px-5 text-step-13",
   );
 });
 

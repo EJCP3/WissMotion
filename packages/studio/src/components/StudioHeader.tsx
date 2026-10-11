@@ -2,6 +2,7 @@ import { memo, useContext, type MouseEvent } from "react";
 import { Camera } from "../icons/SystemIcons";
 import { useStudioShellContext } from "../contexts/StudioContext";
 import { usePanelLayoutContext } from "../contexts/PanelLayoutContext";
+import { buildHomeHash } from "../home/homeRoutes";
 import { trackStudioEvent } from "../utils/studioTelemetry";
 import { Button, buttonBase, buttonSizes, buttonVariants, cn, Tooltip } from "./ui";
 import { Dock } from "./dock/Dock";
@@ -56,18 +57,25 @@ export const StudioHeader = memo(function StudioHeader({
   const ffmpegMissing = renderQueue.ffmpegMissing;
 
   return (
-    <div className="flex items-center justify-between h-10 px-3 bg-surface border-b border-border-strong shrink-0">
+    <div className="flex items-center justify-between h-14 px-5 bg-surface border-b border-border shrink-0">
       {/* Left: logo + project name */}
       <div className="flex items-center gap-3">
-        <WissMotionLogo />
-        <span className="text-text-5 select-none" aria-hidden="true">
-          |
-        </span>
-        <span className="text-step-11 font-medium text-text-1">{projectId}</span>
+        <a
+          href={buildHomeHash("drafts")}
+          onClick={(event) => {
+            event.preventDefault();
+            window.location.hash = buildHomeHash("drafts");
+          }}
+          aria-label={t("header.home")}
+          className="rounded-sm focus-visible:outline-2 focus-visible:outline-accent"
+        >
+          <WissMotionLogo />
+        </a>
+        <span className="text-step-13 font-semibold text-text-1">{projectId}</span>
       </div>
       {/* Right: toolbar buttons */}
       <div className="flex items-center gap-3">
-        <div className="flex h-ctl items-center divide-x divide-border-strong overflow-hidden rounded-md border border-border-strong bg-bg-2">
+        <div className="flex h-ctl items-center divide-x divide-border-strong overflow-hidden rounded-full border border-border-strong bg-bg-2">
           <Tooltip
             label={capturing ? t("header.capturingTooltip") : t("header.captureTooltip")}
             side="bottom"
@@ -176,6 +184,7 @@ export const StudioHeader = memo(function StudioHeader({
             variant="primary"
             data-testid="header-export"
             disabled={isRendering}
+            className="rounded-none px-5 text-step-13"
             onClick={() => {
               if (isRendering) return;
               setRightPanelTab("renders");

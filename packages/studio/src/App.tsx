@@ -47,6 +47,8 @@ import {
 } from "./hooks/useStudioContextValue";
 import type { DomEditSelection } from "./components/editor/domEditing";
 import { StudioHeader } from "./components/StudioHeader";
+import { HomePage } from "./home/HomePage";
+import { useHomeRoute } from "./home/useHomeRoute";
 import { useGestureCommit } from "./hooks/useGestureCommit";
 import { useGestureTrailOverlay } from "./hooks/useGestureTrailOverlay";
 import { EditorShell } from "./components/EditorShell";
@@ -75,6 +77,7 @@ export interface StudioAppProps {
 // fallow-ignore-next-line complexity
 export function StudioApp({ readOnlyPreview = false, readOnlyPreviewReason }: StudioAppProps = {}) {
   const { projectId, resolving, waitingForServer } = useServerConnection();
+  const homeRoute = useHomeRoute();
   const initialUrlStateRef = useRef(readStudioUrlStateFromWindow());
   useStudioSessionStart(projectId, resolving, waitingForServer);
   const [compIdToSrc, setCompIdToSrc] = useState<Map<string, string>>(new Map());
@@ -495,6 +498,10 @@ export function StudioApp({ readOnlyPreview = false, readOnlyPreviewReason }: St
     },
     projectId,
   );
+  if (homeRoute.view)
+    return (
+      <HomePage view={homeRoute.view} onNavigate={homeRoute.go} onOpenProject={homeRoute.open} />
+    );
   if (resolving || waitingForServer || !projectId)
     return <StudioSplash waiting={waitingForServer} />;
   return (
@@ -504,7 +511,7 @@ export function StudioApp({ readOnlyPreview = false, readOnlyPreviewReason }: St
           <FileManagerProvider value={fileManager}>
             <DomEditProvider value={domEditSession}>
               <div
-                className="flex flex-col h-full w-full bg-neutral-950 relative"
+                className="flex flex-col h-full w-full bg-bg-0 relative"
                 onDragOver={fileDrop.onDragOver}
                 onDrop={fileDrop.onDrop}
               >

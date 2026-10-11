@@ -21,7 +21,7 @@ export function WissMotionLogo() {
         <rect x="1" y="1" width="30" height="30" rx="8" fill="url(#wm-logo-g)" />
         <path d="M13 10.5v11l9-5.5-9-5.5Z" fill="#ffffff" />
       </svg>
-      <span className="text-step-14 font-semibold tracking-tight">WissMotion</span>
+      <span className="text-step-18 font-bold tracking-tight">WissMotion</span>
     </span>
   );
 }

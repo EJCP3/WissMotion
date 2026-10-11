@@ -95,6 +95,15 @@ describe("useServerConnection hash project id", () => {
     expect(captured.projectId).toBe("server-erroring");
     await act(async () => root.unmount());
   });
+
+  it("stays project-less on the home route without touching the server", async () => {
+    stubFetch({ status: 200 });
+    const root = await renderWithHash("#home");
+
+    expect(captured.projectId).toBeNull();
+    expect(window.location.hash).toBe("#home");
+    await act(async () => root.unmount());
+  });
 });
 
 /** Per-project status, so one test can hold two projects in different states. */

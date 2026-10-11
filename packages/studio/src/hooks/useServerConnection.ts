@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { buildProjectHash, parseProjectIdFromHash } from "../utils/projectRouting";
+import { isHomeHash } from "../home/homeRoutes";
 import { useMountEffect } from "./useMountEffect";
 import { trackStudioEvent } from "../utils/studioTelemetry";
 import { studioApiFetch } from "../utils/studioApiFetch";
@@ -108,6 +109,14 @@ export function useServerConnection(): ServerConnectionState {
     }
 
     function tryConnect() {
+      // El Home (#home*) no es un proyecto: quedarse sin proyecto y sin
+      // redirigir, para que el shell pinte el Home en vez del editor.
+      if (isHomeHash(window.location.hash)) {
+        if (cancelled) return;
+        setResolving(false);
+        setWaitingForServer(false);
+        return;
+      }
       studioApiFetch("/api/projects")
         .then((r) => r.json())
         .then(async (data) => {
