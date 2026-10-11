@@ -1,0 +1,147 @@
+<!doctype html>
+<html
+  lang="es"
+  data-composition-variables='[
+    {"id":"eventKicker","type":"string","label":"Kicker","default":"WEBINAR EN VIVO"},
+    {"id":"eventTitle","type":"string","label":"Título del evento","default":"Diseña tu primer video"},
+    {"id":"eventDate","type":"string","label":"Fecha y hora","default":"Jueves 20:00 (GMT-4)"},
+    {"id":"ctaLabel","type":"string","label":"Texto del CTA","default":"Reservar lugar"},
+    {"id":"brandPrimary","type":"color","label":"Primario","default":"#0ea5e9"},
+    {"id":"brandAccent","type":"color","label":"Acento","default":"#f59e0b"},
+    {"id":"brandBackground","type":"color","label":"Fondo","default":"#0b1220"},
+    {"id":"brandText","type":"color","label":"Texto","default":"#f5f5f4"},
+    {"id":"brandHeading","type":"string","label":"Fuente titulares","default":"Inter"},
+    {"id":"brandBody","type":"string","label":"Fuente texto","default":"Inter"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Evento · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: var(--brandBackground);
+      }
+      #live {
+        position: absolute;
+        left: 140px;
+        top: 150px;
+        padding: 8px 24px;
+        border-radius: 999px;
+        background: #b91c1c;
+        color: #fff;
+        font: 700 26px var(--brandBody);
+        letter-spacing: 3px;
+      }
+      #kicker {
+        position: absolute;
+        left: 140px;
+        top: 220px;
+        margin: 0;
+        font: 700 28px var(--brandHeading);
+        letter-spacing: 5px;
+        color: var(--brandAccent);
+      }
+      #title {
+        position: absolute;
+        left: 140px;
+        top: 265px;
+        width: 1000px;
+        margin: 0;
+        font: 700 88px/1.05 var(--brandHeading);
+        color: var(--brandText);
+        overflow: hidden;
+      }
+      #date {
+        position: absolute;
+        left: 140px;
+        top: 500px;
+        margin: 0;
+        font: 400 36px var(--brandBody);
+        color: var(--brandText);
+        opacity: 0.8;
+      }
+      #cta {
+        position: absolute;
+        left: 140px;
+        top: 570px;
+        padding: 14px 44px;
+        border-radius: 999px;
+        background: var(--brandPrimary);
+        color: #fff;
+        font: 700 30px var(--brandBody);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage" data-composition-id="evento" data-start="0" data-width="1280" data-height="720">
+      <div id="live" class="clip" data-start="0.3" data-duration="5.7" data-track-index="0">
+        ● EN VIVO
+      </div>
+      <p
+        id="kicker"
+        class="clip"
+        data-start="0.4"
+        data-duration="5.6"
+        data-track-index="0"
+        data-var-text="eventKicker"
+      >
+        WEBINAR EN VIVO
+      </p>
+      <h1
+        id="title"
+        class="clip"
+        data-start="0.5"
+        data-duration="5.5"
+        data-track-index="0"
+        data-var-text="eventTitle"
+      >
+        Diseña tu primer video
+      </h1>
+      <p
+        id="date"
+        class="clip"
+        data-start="0.9"
+        data-duration="5.1"
+        data-track-index="0"
+        data-var-text="eventDate"
+      >
+        Jueves 20:00 (GMT-4)
+      </p>
+      <div
+        id="cta"
+        class="clip"
+        data-start="1.2"
+        data-duration="4.8"
+        data-track-index="1"
+        data-var-text="ctaLabel"
+      >
+        Reservar lugar
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from("#live", { opacity: 0, scale: 0.7, duration: 0.5, ease: "back.out(1.7)" }, 0.3);
+        tl.from("#kicker", { opacity: 0, x: -30, duration: 0.5, ease: "power2.out" }, 0.4);
+        tl.from("#title", { y: "100%", duration: 0.8, ease: "power3.out" }, 0.5);
+        tl.from("#date", { opacity: 0, duration: 0.6, ease: "power2.out" }, 0.9);
+        tl.from("#cta", { scale: 0.6, opacity: 0, duration: 0.6, ease: "back.out(1.7)" }, 1.2);
+        tl.to(
+          "#live",
+          { opacity: 0.55, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 5 },
+          2.0,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["evento"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

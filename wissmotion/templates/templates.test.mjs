@@ -17,6 +17,8 @@ const IDS = [
   "stats",
   "testimonios",
   "oferta",
+  "precios",
+  "evento",
 ];
 
 function lintDir(dir) {

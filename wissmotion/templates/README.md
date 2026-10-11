@@ -13,6 +13,8 @@ el mismo `index.html` sirve a todas las marcas vía `--variables-file`
 | `stats/`             | 3 cifras con etiquetas en grilla. 6 s. ![stats](stats/preview.png)                                                           |
 | `testimonios/`       | Cita con autor, cargo y estrellas. 6 s. ![testimonios](testimonios/preview.png)                                              |
 | `oferta/`            | Badge, titular con descuento, descripción y CTA con pulse. 6 s. ![oferta](oferta/preview.png)                                |
+| `precios/`           | 3 planes con destacado central y CTA. 6 s. ![precios](precios/preview.png)                                                   |
+| `evento/`            | Anuncio de evento en vivo con fecha y CTA. 6 s. ![evento](evento/preview.png)                                                |
 
 ## Convención de variables
 

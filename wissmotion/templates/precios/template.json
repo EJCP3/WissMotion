@@ -1,0 +1,9 @@
+{
+  "id": "precios",
+  "name": "Precios / planes",
+  "description": "3 planes con destacado central y CTA. 6 s, 16:9.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 6
+}

@@ -68,10 +68,10 @@
   - [x] Feature highlight (1 función, 6–10 s)
   - [ ] Antes / después
   - [x] Testimonios / reseñas
-  - [ ] Precios / planes
+  - [x] Precios / planes
   - [x] Estadísticas / métricas (contadores, gráficas)
   - [x] Oferta / promoción (descuento, CTA)
-  - [ ] Evento / webinar
+  - [x] Evento / webinar
   - [ ] Historia corta para redes (9:16)
 - [x] **Variables de plantilla**: textos, imágenes, colores, duración, número de escenas → formulario sin código.
 - [ ] Multi-formato desde la misma plantilla: 16:9, 9:16, 1:1, 4:5 con layouts adaptativos (safe zones).

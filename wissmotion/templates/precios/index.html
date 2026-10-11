@@ -1,0 +1,139 @@
+<!doctype html>
+<html
+  lang="es"
+  data-composition-variables='[
+    {"id":"plan1Name","type":"string","label":"Plan 1 nombre","default":"Básico"},
+    {"id":"plan1Price","type":"string","label":"Plan 1 precio","default":"$9"},
+    {"id":"plan1Feat","type":"string","label":"Plan 1 detalle","default":"1 proyecto"},
+    {"id":"plan2Name","type":"string","label":"Plan 2 nombre","default":"Pro"},
+    {"id":"plan2Price","type":"string","label":"Plan 2 precio","default":"$29"},
+    {"id":"plan2Feat","type":"string","label":"Plan 2 detalle","default":"Proyectos ilimitados"},
+    {"id":"plan3Name","type":"string","label":"Plan 3 nombre","default":"Equipo"},
+    {"id":"plan3Price","type":"string","label":"Plan 3 precio","default":"$99"},
+    {"id":"plan3Feat","type":"string","label":"Plan 3 detalle","default":"Todo + soporte"},
+    {"id":"ctaLabel","type":"string","label":"Texto del CTA","default":"Empezar gratis"},
+    {"id":"brandPrimary","type":"color","label":"Primario","default":"#6d28d9"},
+    {"id":"brandBackground","type":"color","label":"Fondo","default":"#faf9f7"},
+    {"id":"brandSurface","type":"color","label":"Superficie","default":"#ffffff"},
+    {"id":"brandText","type":"color","label":"Texto","default":"#1c1917"},
+    {"id":"brandHeading","type":"string","label":"Fuente titulares","default":"Inter"},
+    {"id":"brandBody","type":"string","label":"Fuente texto","default":"Inter"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Precios · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: var(--brandBackground);
+      }
+      .plan {
+        position: absolute;
+        top: 150px;
+        width: 300px;
+        padding: 36px 28px;
+        border-radius: 20px;
+        background: var(--brandSurface);
+        text-align: center;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+      }
+      #p1 {
+        left: 110px;
+      }
+      #p2 {
+        left: 490px;
+        background: var(--brandPrimary);
+      }
+      #p3 {
+        left: 870px;
+      }
+      .pname {
+        margin: 0;
+        font: 600 26px var(--brandBody);
+        opacity: 0.7;
+      }
+      .pprice {
+        margin: 8px 0;
+        font: 700 64px var(--brandHeading);
+      }
+      .pfeat {
+        margin: 0;
+        font: 400 22px var(--brandBody);
+        opacity: 0.7;
+      }
+      #p1,
+      #p3 {
+        color: var(--brandText);
+      }
+      #p2 {
+        color: #fff;
+      }
+      #cta {
+        position: absolute;
+        left: 500px;
+        top: 560px;
+        padding: 14px 48px;
+        border-radius: 999px;
+        background: var(--brandPrimary);
+        color: #fff;
+        font: 700 30px var(--brandBody);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="precios"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="p1" class="plan clip" data-start="0.4" data-duration="5.6" data-track-index="0">
+        <p class="pname" data-var-text="plan1Name">Básico</p>
+        <p class="pprice" data-var-text="plan1Price">$9</p>
+        <p class="pfeat" data-var-text="plan1Feat">1 proyecto</p>
+      </div>
+      <div id="p2" class="plan clip" data-start="0.4" data-duration="5.6" data-track-index="1">
+        <p class="pname" data-var-text="plan2Name">Pro</p>
+        <p class="pprice" data-var-text="plan2Price">$29</p>
+        <p class="pfeat" data-var-text="plan2Feat">Proyectos ilimitados</p>
+      </div>
+      <div id="p3" class="plan clip" data-start="0.4" data-duration="5.6" data-track-index="2">
+        <p class="pname" data-var-text="plan3Name">Equipo</p>
+        <p class="pprice" data-var-text="plan3Price">$99</p>
+        <p class="pfeat" data-var-text="plan3Feat">Todo + soporte</p>
+      </div>
+      <div
+        id="cta"
+        class="clip"
+        data-start="1.4"
+        data-duration="4.6"
+        data-track-index="3"
+        data-var-text="ctaLabel"
+      >
+        Empezar gratis
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from(
+          ".plan",
+          { y: 60, opacity: 0, duration: 0.7, ease: "power3.out", stagger: 0.15 },
+          0.4,
+        );
+        tl.from("#cta", { scale: 0.6, opacity: 0, duration: 0.6, ease: "back.out(1.7)" }, 1.4);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["precios"] = tl;
+      </script>
+    </div>
+  </body>
+</html>
