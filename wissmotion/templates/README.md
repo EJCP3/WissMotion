@@ -35,6 +35,19 @@ node packages/cli/dist/cli.js render ./mi-promo --variables-file ./mi-promo/vari
 
 `vars.json` ejemplo: `{"brandName":"Acme","ctaLabel":"Instalar ya"}`.
 
+## Nota de build (galería del Studio)
+
+El Home del Studio incrusta las plantillas vía
+`packages/studio/src/home/wissmotionTemplates.ts`, pero tsup no entiende
+`?raw`: el HTML viaja en `wissmotionTemplates.generated.ts`. Tras editar
+cualquier `templates/<id>/index.html`:
+
+```bash
+node wissmotion/sync-templates.mjs
+```
+
+El test de frescura falla si lo olvidas.
+
 ## Guardar un proyecto como plantilla
 
 ```bash

@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 import { WISSMOTION_TEMPLATES, parseTemplateVariables } from "./wissmotionTemplates";
+import { TEMPLATE_HTML } from "./wissmotionTemplates.generated";
 
 describe("wissmotionTemplates", () => {
   it("expone las 12 plantillas con manifiesto, póster y variables", () => {
@@ -41,5 +43,15 @@ describe("wissmotionTemplates", () => {
     expect(() =>
       parseTemplateVariables(`<html data-composition-variables='[{"id":"a","type":"string"}]'>`),
     ).toThrow();
+  });
+
+  it("el HTML generado está al día con wissmotion/templates (corre sync-templates.mjs si falla)", () => {
+    for (const t of WISSMOTION_TEMPLATES) {
+      const disk = readFileSync(
+        new URL(`../../../../wissmotion/templates/${t.id}/index.html`, import.meta.url),
+        "utf8",
+      );
+      expect(TEMPLATE_HTML[t.id], t.id).toBe(disk);
+    }
   });
 });
