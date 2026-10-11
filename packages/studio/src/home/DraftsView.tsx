@@ -2,7 +2,7 @@
 // cuadrada y rejilla de proyectos con miniatura del servidor.
 
 import { useEffect, useState } from "react";
-import { FilmStrip, Globe, Plus, SpinnerGap, WarningCircle } from "@phosphor-icons/react";
+import { FilmStrip, Globe, Plus, Sparkle, SpinnerGap, WarningCircle } from "@phosphor-icons/react";
 import { useLanguage } from "../i18n/LanguageContext";
 import {
   createBlankComposition,
@@ -13,6 +13,7 @@ import {
 } from "./homeApi";
 import type { HomeProjectsStatus } from "./useHomeProjects";
 import { CreateFromUrlDialog } from "./CreateFromUrlDialog";
+import { NuevoVideoWizard } from "./NuevoVideoWizard";
 import { HomeStateMessage, ProjectTargetSelect } from "./homeShared";
 
 function ProjectCard({
@@ -99,6 +100,7 @@ export function DraftsView({
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState(false);
   const [fromUrlOpen, setFromUrlOpen] = useState(false);
+  const [wizardOpen, setWizardOpen] = useState(false);
 
   const query = search.trim().toLowerCase();
   const visible = query
@@ -138,6 +140,15 @@ export function DraftsView({
             <Plus size={16} weight="bold" aria-hidden="true" />
           )}
           {creating ? t("home.creating") : t("home.createNew")}
+        </button>
+        <button
+          type="button"
+          onClick={() => setWizardOpen(true)}
+          disabled={!target}
+          className="flex h-ctl-lg items-center gap-2 rounded-none border border-border-strong px-5 text-step-13 font-semibold text-text-1 transition-transform duration-press enabled:active:scale-[0.98] enabled:hover:text-text-0 disabled:opacity-40"
+        >
+          <Sparkle size={16} aria-hidden="true" />
+          {t("wizard.title")}
         </button>
         <button
           type="button"
@@ -190,6 +201,16 @@ export function DraftsView({
           onOpenProject={(projectId) => {
             setFromUrlOpen(false);
             onOpenProject(projectId);
+          }}
+        />
+      ) : null}
+      {wizardOpen ? (
+        <NuevoVideoWizard
+          targetId={target}
+          onClose={() => setWizardOpen(false)}
+          onOpenProject={(projectId, compPath) => {
+            setWizardOpen(false);
+            onOpenProject(projectId, compPath);
           }}
         />
       ) : null}

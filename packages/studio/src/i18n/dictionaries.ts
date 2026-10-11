@@ -121,6 +121,17 @@ const es = {
   "home.extractError": "No se pudo extraer la marca",
   "home.close": "Cerrar",
   "home.cancel": "Cancelar",
+  "wizard.title": "Nuevo video",
+  "wizard.stepBrand": "1 · Marca",
+  "wizard.stepTemplate": "2 · Plantilla",
+  "wizard.stepContent": "3 · Contenido",
+  "wizard.pickBrand": "Marca (de la biblioteca)",
+  "wizard.noBrand": "Sin marca (defaults)",
+  "wizard.brandColors": "Colores de la marca",
+  "wizard.back": "Atrás",
+  "wizard.next": "Siguiente",
+  "wizard.create": "Crear video",
+  "wizard.creating": "Creando…",
 } as const;
 
 const en: Record<keyof typeof es, string> = {
@@ -237,6 +248,17 @@ const en: Record<keyof typeof es, string> = {
   "home.extractError": "Could not extract the brand",
   "home.close": "Close",
   "home.cancel": "Cancel",
+  "wizard.title": "New video",
+  "wizard.stepBrand": "1 · Brand",
+  "wizard.stepTemplate": "2 · Template",
+  "wizard.stepContent": "3 · Content",
+  "wizard.pickBrand": "Brand (from library)",
+  "wizard.noBrand": "No brand (defaults)",
+  "wizard.brandColors": "Brand colors",
+  "wizard.back": "Back",
+  "wizard.next": "Next",
+  "wizard.create": "Create video",
+  "wizard.creating": "Creating…",
 };
 
 export type StudioStringKey = keyof typeof es;

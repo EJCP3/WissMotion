@@ -86,14 +86,15 @@ async function putNewFile(
 /**
  * Instala una plantilla WissMotion en el proyecto: HTML con la marca
  * horneada + variables.json (solo si no existe). Devuelve la ruta para
- * abrirla en el editor.
+ * abrirla en el editor. `overrides` (wizard) gana a marca y defaults.
  */
 export async function installWissmotionTemplate(
   projectId: string,
   template: WissmotionTemplate,
+  opts?: { brand?: BrandV1 | null; vars?: Record<string, unknown> },
 ): Promise<string> {
-  const brand = readStoredBrand(projectId);
-  const values = mergeTemplateVariables(template, brand);
+  const brand = opts && "brand" in opts ? (opts.brand ?? null) : readStoredBrand(projectId);
+  const values = { ...mergeTemplateVariables(template, brand), ...(opts?.vars ?? {}) };
   const compPath = await putNewFile(
     projectId,
     `compositions/${template.id}.html`,

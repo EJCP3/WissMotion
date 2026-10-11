@@ -82,7 +82,7 @@
 ## Fase 4 — Estudio de edición (React)
 
 - [ ] **Home / dashboard**: proyectos recientes, crear desde plantilla, desde URL, desde cero o desde prompt.
-- [ ] Flujo guiado "Nuevo video promo": marca → plantilla/IA → contenido → preview → render.
+- [x] Flujo guiado "Nuevo video promo": marca → plantilla/IA → contenido → preview → render.
 - [ ] **Panel de marca** integrado (Fase 1).
 - [ ] **Inspector de propiedades** estilo Jitter: posición, tamaño, rotación, opacidad, blur, radio, sombras, relleno, borde.
 - [ ] **Inspector de animación**: lista de animaciones del elemento, preset, duración, delay, easing (editor de curvas), stagger.
