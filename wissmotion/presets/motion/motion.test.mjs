@@ -89,9 +89,9 @@ describe("motion/personalities.json", () => {
 });
 
 describe("motion/presets.json", () => {
-  it("24 presets con contrato válido y easings conocidos", () => {
+  it("30 presets con contrato válido y easings conocidos", () => {
     const ids = Object.keys(presets.presets);
-    assert.equal(ids.length, 24);
+    assert.equal(ids.length, 30);
     for (const [id, p] of Object.entries(presets.presets)) {
       assert.ok(["entrada", "salida", "énfasis", "escena"].includes(p.kind), `${id}: kind`);
       assert.ok(

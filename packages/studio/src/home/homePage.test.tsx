@@ -60,12 +60,42 @@ describe("HomePage", () => {
     host.remove();
   });
 
-  it("renders the templates view with its sidebar categories", async () => {
+  it("separates WissMotion and HyperFrames templates into two tabs", async () => {
     stubHomeFetch();
     const { host, root } = await renderHome("templates");
+    const tab = (label: string) =>
+      [...host.querySelectorAll("aside button")].find((b) => b.textContent === label) as
+        | HTMLButtonElement
+        | undefined;
 
     expect(host.textContent).toContain("Plantillas");
+    expect(tab("WissMotion")?.getAttribute("aria-current")).toBe("true");
+    expect(host.querySelector('[data-testid="wissmotion-grid"]')).not.toBeNull();
+    expect(host.textContent).not.toContain("Todas las plantillas");
+
+    await act(async () => tab("HyperFrames")?.click());
+    expect(host.querySelector('[data-testid="wissmotion-grid"]')).toBeNull();
     expect(host.textContent).toContain("Todas las plantillas");
+    expect(host.textContent).toContain("Captions");
+    await act(async () => root.unmount());
+    host.remove();
+  });
+
+  it("shows the references tab and opens a reference with its brief", async () => {
+    stubHomeFetch();
+    const { host, root } = await renderHome("templates");
+    const tab = [...host.querySelectorAll("aside button")].find(
+      (b) => b.textContent === "Referencias",
+    ) as HTMLButtonElement;
+
+    await act(async () => tab.click());
+    const cards = host.querySelectorAll('[data-testid="references-grid"] > button');
+    expect(cards.length).toBe(21);
+
+    await act(async () => (cards[0] as HTMLButtonElement).click());
+    const detail = host.querySelector('[data-testid="reference-detail"]');
+    expect(detail?.textContent).toContain("Copiar brief");
+    expect(detail?.textContent).toContain("Se recrea con");
     await act(async () => root.unmount());
     host.remove();
   });

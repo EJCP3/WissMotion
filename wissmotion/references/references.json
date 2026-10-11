@@ -1,0 +1,407 @@
+{
+  "version": 1,
+  "references": [
+    {
+      "id": "activity-chart",
+      "title": "Activity history (gráfica que se transforma)",
+      "files": ["examples/plantilla/16-10.mp4"],
+      "origin": "jitter.video",
+      "aspect": ["16:10"],
+      "duration": 10.3,
+      "description": "Tarjeta «Activity history»: la gráfica de área cambia de rango de datos, la tarjeta se encoge, la gráfica se transforma en radar y el tema pasa de rosa a azul.",
+      "techniques": [
+        "gráfica con datos animables",
+        "morph área → radar",
+        "cambio de tema de color",
+        "redimensionar tarjeta"
+      ],
+      "recreate": {
+        "templates": ["stats"],
+        "presets": ["scale-fade", "morph-box"],
+        "transitions": []
+      },
+      "status": "parcial",
+      "missing": [
+        "gráficas SVG con datos interpolables (área, barras, radar)",
+        "morph de forma entre tipos de gráfica"
+      ]
+    },
+    {
+      "id": "antes-despues-boceto",
+      "title": "Boceto ↔ render (antes/después)",
+      "files": ["examples/plantilla/16-9.mp4"],
+      "origin": "jitter.video",
+      "aspect": ["16:9"],
+      "duration": 10,
+      "description": "Boceto de líneas naranja contra render fotográfico con divisor deslizante y titular serif.",
+      "techniques": ["antes/después con divisor deslizante"],
+      "recreate": {
+        "templates": ["antes-despues"],
+        "presets": ["wipe"],
+        "transitions": []
+      },
+      "status": "lista",
+      "missing": []
+    },
+    {
+      "id": "flight-tracker",
+      "title": "Flight Tracker (píldora → widget)",
+      "files": [
+        "examples/plantilla/3-Flight-Tracker-16-9.mp4",
+        "examples/plantilla/3-Flight-Tracker-9-16.mp4"
+      ],
+      "origin": "jitter.video",
+      "aspect": ["16:9", "9:16"],
+      "duration": 16.5,
+      "description": "Píldora tipo Dynamic Island que se expande a widget de vuelo, avión cruzando nubes, barra de progreso y vuelta a píldora. La misma pieza en 16:9 y 9:16.",
+      "techniques": [
+        "morph de contenedor (píldora → tarjeta)",
+        "capas con profundidad (nubes delante y detrás)",
+        "fondo desenfocado",
+        "multiformato"
+      ],
+      "recreate": {
+        "templates": ["promo-app"],
+        "presets": ["morph-box", "spring-pop", "blur-in"],
+        "transitions": []
+      },
+      "status": "parcial",
+      "missing": ["multiformato desde una plantilla (16:9 ↔ 9:16)"]
+    },
+    {
+      "id": "ruleta-colores",
+      "title": "Ruleta de colores",
+      "files": ["examples/plantilla/4-5-Master-Scene.mp4"],
+      "origin": "jitter.video",
+      "aspect": ["4:5"],
+      "duration": 9.8,
+      "description": "Ruleta vertical de nombres de colores; el fondo cambia al color de la palabra activa y el HEX de la esquina se actualiza.",
+      "techniques": ["lista con snap", "fondo sincronizado con el ítem activo"],
+      "recreate": {
+        "templates": ["lista-cinetica"],
+        "presets": [],
+        "transitions": []
+      },
+      "status": "parcial",
+      "missing": ["variante de lista-cinetica con el fondo ligado a cada ítem"]
+    },
+    {
+      "id": "app-metricas",
+      "title": "App de running (tarjetas de métricas)",
+      "files": ["examples/plantilla/APP.mp4"],
+      "origin": "jitter.video",
+      "aspect": ["4:5"],
+      "duration": 5,
+      "description": "Video de fondo (zapatillas) con tarjetas de métricas que se apilan y rotan (km, tiempo, bpm, kcal), puntos de página y CTA final palabra a palabra.",
+      "techniques": [
+        "pila de tarjetas que se intercambian",
+        "contadores",
+        "video de fondo",
+        "CTA palabra a palabra"
+      ],
+      "recreate": {
+        "templates": ["stats"],
+        "presets": ["card-stack", "counter-up", "slide-stack", "stagger-words"],
+        "transitions": []
+      },
+      "status": "lista",
+      "missing": []
+    },
+    {
+      "id": "lista-cinetica",
+      "title": "Jitter List 9:16",
+      "files": ["examples/plantilla/List-9-16.mp4"],
+      "origin": "jitter.video",
+      "aspect": ["9:16"],
+      "duration": 9,
+      "description": "Columna inclinada de palabras con foco nítido y flecha; el resto con desenfoque por profundidad.",
+      "techniques": ["lista con foco y desenfoque por profundidad"],
+      "recreate": {
+        "templates": ["lista-cinetica"],
+        "presets": [],
+        "transitions": []
+      },
+      "status": "lista",
+      "missing": []
+    },
+    {
+      "id": "mascara-negativa",
+      "title": "Máscara negativa",
+      "files": ["examples/plantilla/Negative-mask-effect.mp4"],
+      "origin": "jitter.video",
+      "aspect": ["4:3"],
+      "duration": 4,
+      "description": "Círculo que recorre «Design» invirtiendo los colores donde se cruza.",
+      "techniques": ["máscara negativa (mix-blend-mode: difference)"],
+      "recreate": {
+        "templates": [],
+        "presets": ["negative-mask"],
+        "transitions": []
+      },
+      "status": "lista",
+      "missing": []
+    },
+    {
+      "id": "orbit-carrusel",
+      "title": "ORBIT (carrusel en anillo)",
+      "files": ["examples/plantilla/ORBIT-5-01-LITE.mp4"],
+      "origin": "jitter.video",
+      "aspect": ["4:3"],
+      "duration": 5.3,
+      "description": "Arco 3D de tarjetas (foto, tipografía, logos) girando como un carrusel en anillo.",
+      "techniques": ["carrusel en anillo 3D", "tarjetas de medios mixtos"],
+      "recreate": {
+        "templates": [],
+        "presets": ["card-carousel"],
+        "transitions": []
+      },
+      "status": "parcial",
+      "missing": ["carrusel 3D en anillo (perspectiva + rotationY por tarjeta)"]
+    },
+    {
+      "id": "degradado-procedural",
+      "title": "Fondo de degradados procedural",
+      "files": ["examples/plantilla/Procedural-Gradient-Background.mp4"],
+      "origin": "jitter.video",
+      "aspect": ["16:9"],
+      "duration": 4,
+      "description": "Columnas de degradados que se desplazan detrás de «Love wins.».",
+      "techniques": ["fondo procedural de degradados"],
+      "recreate": {
+        "templates": [],
+        "presets": [],
+        "transitions": []
+      },
+      "status": "falta",
+      "missing": ["fondos generativos (CSS animado o shader)"]
+    },
+    {
+      "id": "identidad-bento",
+      "title": "Reel de identidad (bento)",
+      "files": ["examples/plantilla/Scene (1).mp4"],
+      "origin": "jitter.video",
+      "aspect": ["16:9"],
+      "duration": 20,
+      "description": "Punto → «Clint.» → «Clever internet.», luego cuadrículas bento con mockups (reloj, laptop, gorra, funda, stickers) que se reacomodan.",
+      "techniques": ["construcción de logo", "bento que se reacomoda", "mockups de producto"],
+      "recreate": {
+        "templates": ["logo-sting"],
+        "presets": ["logo-build", "feature-grid"],
+        "transitions": []
+      },
+      "status": "parcial",
+      "missing": ["bento con transiciones de layout (FLIP)", "mockups de dispositivos y productos"]
+    },
+    {
+      "id": "editorial-letra",
+      "title": "Editorial con letra invertida",
+      "files": ["examples/plantilla/Scene (2).mp4"],
+      "origin": "jitter.video",
+      "aspect": ["4:5"],
+      "duration": 5,
+      "description": "Editorial de moda: la foto crece detrás de una «A» gigante que invierte el color donde se cruza; cierre con titular serif.",
+      "techniques": ["máscara negativa sobre foto", "imagen que escala a sangre"],
+      "recreate": {
+        "templates": [],
+        "presets": ["negative-mask", "scale-fade"],
+        "transitions": []
+      },
+      "status": "lista",
+      "missing": []
+    },
+    {
+      "id": "widget-sueno",
+      "title": "Widget Sleep (giro 3D)",
+      "files": ["examples/plantilla/Scene (3).mp4"],
+      "origin": "jitter.video",
+      "aspect": ["3:2"],
+      "duration": 5,
+      "description": "Widget «Sleep» que entra girando en 3D, barras, cambio de pestaña a fases de sueño y salida girando.",
+      "techniques": ["giro 3D de tarjeta", "gráfica de barras", "cambio de pestaña"],
+      "recreate": {
+        "templates": ["stats"],
+        "presets": ["flip-3d"],
+        "transitions": []
+      },
+      "status": "parcial",
+      "missing": ["gráficas UI con datos interpolables"]
+    },
+    {
+      "id": "motion-letras",
+      "title": "MOTION letra a letra",
+      "files": ["examples/plantilla/Scene (4).mp4"],
+      "origin": "jitter.video",
+      "aspect": ["4:3"],
+      "duration": 2.8,
+      "description": "«MOTION» con letras que suben girando en cascada.",
+      "techniques": ["cascada letra a letra con rotación"],
+      "recreate": {
+        "templates": [],
+        "presets": ["stagger-chars"],
+        "transitions": []
+      },
+      "status": "lista",
+      "missing": []
+    },
+    {
+      "id": "tour-web",
+      "title": "Tour de web de estudio",
+      "files": ["examples/plantilla/Scene (5).mp4"],
+      "origin": "jitter.video",
+      "aspect": ["16:9"],
+      "duration": 9,
+      "description": "Recorrido por la web de un estudio: hero, URL tecleada, menú en scroll, secciones oscuras y trabajos destacados.",
+      "techniques": [
+        "navegador con scroll",
+        "URL tecleada",
+        "capturas reales (hyperframes capture)"
+      ],
+      "recreate": {
+        "templates": ["promo-web"],
+        "presets": ["browser-scroll", "typewriter"],
+        "transitions": []
+      },
+      "status": "lista",
+      "missing": []
+    },
+    {
+      "id": "tracking-titular",
+      "title": "HELLO MONDAY (tracking)",
+      "files": ["examples/plantilla/Scene (6).mp4"],
+      "origin": "jitter.video",
+      "aspect": ["16:10"],
+      "duration": 1.7,
+      "description": "«HELLO MONDAY GOODBYE WEEKEND.» línea a línea con el tracking que se cierra.",
+      "techniques": ["tracking que se cierra"],
+      "recreate": {
+        "templates": [],
+        "presets": ["tracking-in"],
+        "transitions": []
+      },
+      "status": "lista",
+      "missing": []
+    },
+    {
+      "id": "morph-letras",
+      "title": "MORPH (letras que se inflan)",
+      "files": ["examples/plantilla/Scene-1.mp4", "examples/plantilla/Scene-1.gif"],
+      "origin": "jitter.video",
+      "aspect": ["16:10"],
+      "duration": 2.7,
+      "description": "«MORPH» con letras que se inflan hacia una tipografía gruesa y luego llenan el cuadro.",
+      "techniques": ["morph de tipografía", "escala a pantalla completa"],
+      "recreate": {
+        "templates": [],
+        "presets": [],
+        "transitions": []
+      },
+      "status": "falta",
+      "missing": ["animar ejes de una fuente variable o morph SVG de letras"]
+    },
+    {
+      "id": "zoom-marcos",
+      "title": "Zoom infinito de marcos",
+      "files": ["examples/plantilla/Scene-13.mp4"],
+      "origin": "jitter.video",
+      "aspect": ["16:9"],
+      "duration": 5.2,
+      "description": "Marcos dentro de marcos (círculos, retícula) en zoom infinito hasta una foto con «Brand Guideline — Version 0.1».",
+      "techniques": ["zoom-through encadenado", "texto tecleado"],
+      "recreate": {
+        "templates": [],
+        "presets": ["typewriter"],
+        "transitions": ["tr-zoom-through"]
+      },
+      "status": "lista",
+      "missing": []
+    },
+    {
+      "id": "muro-mockups",
+      "title": "Muro de mockups",
+      "files": ["examples/plantilla/Scene.mp4"],
+      "origin": "jitter.video",
+      "aspect": ["4:3"],
+      "duration": 7,
+      "description": "Muro infinito de pósters y mockups; la cámara se aleja de una tarjeta hasta ver la pared entera.",
+      "techniques": ["muro en cuadrícula", "movimiento de cámara (zoom out + paneo)"],
+      "recreate": {
+        "templates": [],
+        "presets": ["scale-fade"],
+        "transitions": []
+      },
+      "status": "parcial",
+      "missing": ["preset de muro / masonry", "movimiento de cámara (skill hyperframes-keyframes)"]
+    },
+    {
+      "id": "launch-skills-blur",
+      "title": "Película de lanzamiento (palabras con blur)",
+      "files": ["examples/plantilla/remake.mp4"],
+      "origin": "sin marca de agua",
+      "aspect": ["16:9"],
+      "duration": 23.9,
+      "description": "Palabras con desenfoque de movimiento sobre fondos que alternan (browse, motion, copy, connect, ships) y mockups de chat y deck.",
+      "techniques": [
+        "palabras con motion blur",
+        "fondos que alternan",
+        "mockups de UI",
+        "película multi-escena"
+      ],
+      "recreate": {
+        "templates": [],
+        "presets": ["blur-in", "blur-out"],
+        "transitions": ["tr-whip"]
+      },
+      "status": "parcial",
+      "missing": [
+        "película multi-escena (hoy: agente + /product-launch-video)",
+        "IA que revisa sus propios frames"
+      ]
+    },
+    {
+      "id": "launch-skills-tabla",
+      "title": "Película de lanzamiento (tabla y filtros)",
+      "files": ["examples/plantilla/remake (1).mp4"],
+      "origin": "sin marca de agua",
+      "aspect": ["16:9"],
+      "duration": 32.4,
+      "description": "Titulares, avatares, tabla y filtros de UI animados; cierre «Agent Skills with taste».",
+      "techniques": [
+        "UI de tabla y filtros animada",
+        "titulares cinéticos",
+        "película multi-escena"
+      ],
+      "recreate": {
+        "templates": [],
+        "presets": ["stagger-words", "highlight-sweep"],
+        "transitions": []
+      },
+      "status": "parcial",
+      "missing": ["película multi-escena (hoy: agente + /product-launch-video)"]
+    },
+    {
+      "id": "launch-skillry",
+      "title": "Película de marca Skillry",
+      "files": ["examples/plantilla/remake (2).mp4"],
+      "origin": "sin marca de agua",
+      "aspect": ["16:9"],
+      "duration": 15,
+      "description": "Punto → «AGENT» con contorno, rejilla de formas, marquesina diagonal, logo letra a letra en fichas y cierre con logo.",
+      "techniques": [
+        "marquesina diagonal",
+        "rejilla de formas",
+        "logo letra a letra",
+        "texto con contorno"
+      ],
+      "recreate": {
+        "templates": [],
+        "presets": ["kinetic-type", "logo-build", "spring-pop"],
+        "transitions": []
+      },
+      "status": "parcial",
+      "missing": [
+        "preset de marquesina",
+        "película multi-escena (hoy: agente + /product-launch-video)"
+      ]
+    }
+  ]
+}

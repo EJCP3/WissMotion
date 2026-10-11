@@ -3,38 +3,19 @@
 
 import { useState } from "react";
 import {
-  ArrowsLeftRight,
-  ChartBar,
-  Code,
   FileText,
-  FilmStrip,
-  MagicWand,
+  FilmReel,
   MagnifyingGlass,
-  ShareNetwork,
   Sparkle,
   SquaresFour,
-  TextAa,
-  TextT,
+  Stack,
 } from "@phosphor-icons/react";
 import { useLanguage } from "../i18n/LanguageContext";
 import { WissMotionLogo } from "../components/ui/WissMotionLogo";
-import { BLOCK_CATEGORIES, type BlockCategory } from "../utils/blockCategories";
 import { buildHomeHash, type HomeView } from "./homeRoutes";
 import { useHomeProjects } from "./useHomeProjects";
 import { DraftsView } from "./DraftsView";
-import { TemplatesView } from "./TemplatesView";
-
-const CATEGORY_ICONS: Record<BlockCategory, typeof SquaresFour> = {
-  captions: TextT,
-  "code-animation": Code,
-  vfx: MagicWand,
-  transitions: ArrowsLeftRight,
-  effects: Sparkle,
-  "text-effects": TextAa,
-  social: ShareNetwork,
-  data: ChartBar,
-  scenes: FilmStrip,
-};
+import { TemplatesView, type TemplateSource } from "./TemplatesView";
 
 interface HomePageProps {
   view: HomeView;
@@ -74,15 +55,15 @@ function HomeSidebar({
   view,
   search,
   onSearch,
-  category,
-  onCategory,
+  source,
+  onSource,
   onNavigate,
 }: {
   view: HomeView;
   search: string;
   onSearch: (value: string) => void;
-  category: BlockCategory | null;
-  onCategory: (category: BlockCategory | null) => void;
+  source: TemplateSource;
+  onSource: (source: TemplateSource) => void;
   onNavigate: (view: HomeView) => void;
 }) {
   const { t } = useLanguage();
@@ -120,23 +101,23 @@ function HomeSidebar({
           <div className="mx-3 my-3 border-t border-border" aria-hidden="true" />
           <nav className="flex flex-col gap-0.5" aria-label={t("home.templates")}>
             <NavItem
-              icon={SquaresFour}
-              label={t("home.allTemplates")}
-              active={category === null}
-              onClick={() => onCategory(null)}
+              icon={Sparkle}
+              label="WissMotion"
+              active={source === "wissmotion"}
+              onClick={() => onSource("wissmotion")}
             />
-            {BLOCK_CATEGORIES.map((meta) => {
-              const CategoryIcon = CATEGORY_ICONS[meta.id];
-              return (
-                <NavItem
-                  key={meta.id}
-                  icon={CategoryIcon}
-                  label={meta.label}
-                  active={category === meta.id}
-                  onClick={() => onCategory(category === meta.id ? null : meta.id)}
-                />
-              );
-            })}
+            <NavItem
+              icon={Stack}
+              label="HyperFrames"
+              active={source === "hyperframes"}
+              onClick={() => onSource("hyperframes")}
+            />
+            <NavItem
+              icon={FilmReel}
+              label={t("home.references")}
+              active={source === "references"}
+              onClick={() => onSource("references")}
+            />
           </nav>
         </>
       ) : null}
@@ -148,7 +129,7 @@ export function HomePage({ view, onNavigate, onOpenProject }: HomePageProps) {
   const { t } = useLanguage();
   const { projects, status, retry } = useHomeProjects();
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState<BlockCategory | null>(null);
+  const [source, setSource] = useState<TemplateSource>("wissmotion");
 
   return (
     <div className="flex h-full w-full flex-col overflow-y-auto bg-bg-0 text-text-0">
@@ -186,8 +167,8 @@ export function HomePage({ view, onNavigate, onOpenProject }: HomePageProps) {
           view={view}
           search={search}
           onSearch={setSearch}
-          category={category}
-          onCategory={setCategory}
+          source={source}
+          onSource={setSource}
           onNavigate={onNavigate}
         />
         <main className="min-w-0 flex-1 pt-1">
@@ -205,7 +186,7 @@ export function HomePage({ view, onNavigate, onOpenProject }: HomePageProps) {
               status={status}
               onRetry={retry}
               search={search}
-              category={category}
+              source={source}
               onOpenProject={onOpenProject}
             />
           )}

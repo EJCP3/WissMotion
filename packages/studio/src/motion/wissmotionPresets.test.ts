@@ -2,14 +2,19 @@ import { describe, expect, it } from "vitest";
 import { loadMotionPresets, presetAddSpec } from "./wissmotionPresets";
 
 describe("wissmotionPresets", () => {
-  it("expone los 9 tweens planos (escenas y compuestos quedan fuera)", () => {
+  it("expone los 14 tweens planos (escenas y compuestos quedan fuera)", () => {
     const presets = loadMotionPresets();
     expect(presets.map((p) => p.id).sort()).toEqual(
       [
         "blur-in",
         "blur-out",
         "fade-slide-out",
+        "flip-3d",
         "mask-reveal",
+        "morph-box",
+        "negative-mask",
+        "stagger-chars",
+        "tracking-in",
         "scale-fade",
         "slide-stack",
         "spring-pop",
@@ -36,5 +41,9 @@ describe("wissmotionPresets", () => {
     expect(byId["fade-slide-out"].method).toBe("to");
     expect(presetAddSpec(byId["fade-slide-out"]).fromProperties).toBeUndefined();
     expect(byId["spring-pop"].properties).toEqual({ scale: 1, opacity: 1 });
+    expect(byId["negative-mask"].fromProperties).toEqual({
+      xPercent: -150,
+      mixBlendMode: "difference",
+    });
   });
 });

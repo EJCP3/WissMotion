@@ -1,11 +1,11 @@
 ---
 name: wissmotion-templates
-description: Plantillas promocionales de WissMotion — 12 promos con variables, instanciador marca+contenido y render por lotes con presets de destino. Úsalo para crear videos promo sin escribir código.
+description: Plantillas promocionales de WissMotion — 13 promos con variables, instanciador marca+contenido y render por lotes con presets de destino. Úsalo para crear videos promo sin escribir código.
 ---
 
 # WissMotion Templates
 
-12 plantillas en `wissmotion/templates/<id>/` (`index.html` + `template.json` + `preview.png`): promo-app, promo-web, logo-sting, feature-highlight, stats, testimonios, oferta, precios, evento, lanzamiento, antes-después, historia (9:16).
+13 plantillas en `wissmotion/templates/<id>/` (`index.html` + `template.json` + `preview.png`): promo-app, promo-web, logo-sting, feature-highlight, stats, testimonios, oferta, precios, evento, lanzamiento, antes-después, historia (9:16), lista-cinetica (9:16).
 
 ## Anatomía
 

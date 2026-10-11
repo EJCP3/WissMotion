@@ -39,6 +39,12 @@ const TIMES = {
   "stagger-words": 0.8,
   "blur-in": 0.9,
   "scale-fade": 0.9,
+  "stagger-chars": 0.6,
+  "tracking-in": 0.9,
+  "flip-3d": 0.6,
+  "negative-mask": 1.2,
+  "morph-box": 0.85,
+  "card-stack": 1.75,
 };
 
 export function previewTime(id) {

@@ -10,15 +10,16 @@ Producto: videos promocionales adaptados a la marca del usuario, editables a man
 ## Pipeline canónico
 
 1. **Marca**: extraer (`brand_extract` / `extract-from-url.mjs`), validar, guardar en biblioteca, o editar en el panel Marca del Studio.
-2. **Plantilla**: elegir en `template_list` (12: promo-app, promo-web, logo-sting, feature-highlight, stats, testimonios, oferta, precios, evento, lanzamiento, antes-después, historia 9:16).
+2. **Plantilla**: elegir en `template_list` (13: promo-app, promo-web, logo-sting, feature-highlight, stats, testimonios, oferta, precios, evento, lanzamiento, antes-después, historia 9:16, lista-cinetica 9:16).
 3. **Instanciar**: `template_instantiate` (marca de biblioteca o inline + vars de contenido) → proyecto con `index.html` + `variables.json` + `brand.json`.
 4. **Render**: `render_plan` para ver destinos; `render-batch.mjs` para MP4/WebM/GIF por destino (youtube, reels, tiktok, shorts, linkedin, x, hero…).
 
 ## Dónde vive cada cosa
 
 - `wissmotion/brand-kit/` — esquema v1, validador Ajv, extractor, biblioteca, tokens CSS.
-- `wissmotion/presets/motion/` — 6 personalidades, 24 presets, 4 transiciones, 28 ejemplos lint-clean + pósters.
+- `wissmotion/presets/motion/` — 6 personalidades, 30 presets, 4 transiciones, 34 ejemplos lint-clean + pósters.
 - `wissmotion/templates/` — plantillas con `data-composition-variables` + instanciador.
+- `wissmotion/references/` — videos de referencia ya analizados: técnica, `recreate` (plantilla/preset/transición) y hoja de fotogramas. Si el usuario pide "como tal referencia", empieza aquí.
 - `wissmotion/render/` — lote por destinos con chequeo de aspecto.
 - `wissmotion/server/mcp.mjs` — 9 herramientas MCP stdio (este mismo pipeline por protocolo).
 

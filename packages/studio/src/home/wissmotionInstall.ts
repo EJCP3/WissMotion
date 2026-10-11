@@ -93,7 +93,7 @@ export async function installWissmotionTemplate(
   template: WissmotionTemplate,
   opts?: { brand?: BrandV1 | null; vars?: Record<string, unknown>; fileName?: string },
 ): Promise<string> {
-  const brand = opts && "brand" in opts ? opts.brand ?? null : readStoredBrand(projectId);
+  const brand = opts && "brand" in opts ? (opts.brand ?? null) : readStoredBrand(projectId);
   const values = { ...mergeTemplateVariables(template, brand), ...(opts?.vars ?? {}) };
   const baseName = opts?.fileName ?? `${template.id}.html`;
   const compPath = await putNewFile(

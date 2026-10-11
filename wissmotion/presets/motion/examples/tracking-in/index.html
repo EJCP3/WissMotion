@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>tracking-in · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: linear-gradient(180deg, #38aef5 0%, #9fd6fb 100%);
+      }
+      #t {
+        position: absolute;
+        left: 110px;
+        top: 150px;
+        margin: 0;
+        font:
+          800 104px/0.95 Inter,
+          sans-serif;
+        color: #ffffff;
+        white-space: nowrap;
+      }
+      .l {
+        display: block;
+      }
+      .ch {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="tracking-in"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <h1 id="t" class="clip" data-start="0.3" data-duration="2.7" data-track-index="0">
+        <span class="l"
+          ><span class="ch">H</span><span class="ch">E</span><span class="ch">L</span
+          ><span class="ch">L</span><span class="ch">O</span></span
+        ><span class="l"
+          ><span class="ch">M</span><span class="ch">O</span><span class="ch">N</span
+          ><span class="ch">D</span><span class="ch">A</span><span class="ch">Y</span></span
+        ><span class="l"
+          ><span class="ch">G</span><span class="ch">O</span><span class="ch">O</span
+          ><span class="ch">D</span><span class="ch">B</span><span class="ch">Y</span
+          ><span class="ch">E</span></span
+        ><span class="l"
+          ><span class="ch">W</span><span class="ch">E</span><span class="ch">E</span
+          ><span class="ch">K</span><span class="ch">E</span><span class="ch">N</span
+          ><span class="ch">D</span><span class="ch">.</span></span
+        >
+      </h1>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from(
+          "#t .ch",
+          { x: 140, opacity: 0, duration: 0.9, ease: "expo.out", stagger: 0.04 },
+          0.3,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["tracking-in"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

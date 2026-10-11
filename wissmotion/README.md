@@ -28,6 +28,7 @@ wissmotion/
   brand-kit/        → esquema brand.json, extractor, editor, biblioteca (Fase 1)
   templates/       → plantillas promocionales (Fase 3)
   presets/motion/  → personalidades y presets de movimiento (Fase 2)
+  references/      → videos de referencia analizados y cómo recrearlos
   render/          → render por lotes + destinos (Fase 6)
   server/          → servidor MCP de WissMotion (Fase 8)
   skills/          → skills del producto: wissmotion, -brand, -templates, -motion

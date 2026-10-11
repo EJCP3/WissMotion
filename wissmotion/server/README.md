@@ -14,9 +14,9 @@ node wissmotion/server/mcp.mjs   # los agentes lo lanzan como `npx wissmotion mc
 | `brand_validate`                          | Valida una marca inline contra el esquema v1              |
 | `brand_extract`                           | Marca desde URL (sin IA)                                  |
 | `brand_list` / `brand_save` / `brand_get` | Biblioteca (`--dir` o `WISSMOTION_BRANDS_DIR`)            |
-| `template_list`                           | 12 plantillas con sus variables                           |
+| `template_list`                           | 13 plantillas con sus variables                           |
 | `template_instantiate`                    | Proyecto desde plantilla + marca (nombre u objeto) + vars |
-| `motion_list`                             | Personalidades, 24 presets y 4 transiciones               |
+| `motion_list`                             | Personalidades, 30 presets y 4 transiciones               |
 | `render_plan`                             | Lote por destino con chequeo de aspecto (no renderiza)    |
 
 `server.test.mjs` levanta el servidor por stdio y prueba handshake,

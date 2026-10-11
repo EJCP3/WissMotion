@@ -25,7 +25,7 @@ O edítala visualmente en el panel **Marca** del Studio.
 
 ## 3. Instancia una plantilla (1 min)
 
-Mira las 12 plantillas en `wissmotion/templates/` (cada una trae su
+Mira las 13 plantillas en `wissmotion/templates/` (cada una trae su
 `preview.png`). Ejemplo con la promo de app:
 
 ```bash

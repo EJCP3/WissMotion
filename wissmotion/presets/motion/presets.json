@@ -84,6 +84,48 @@
         "to": { "opacity": 1 }
       }
     },
+    "stagger-chars": {
+      "kind": "entrada",
+      "description": "Letras que suben girando en cascada. Requiere partir el texto en <span class=ch> con display:inline-block (sin SplitText).",
+      "ease": "back.out(1.4)",
+      "duration": 0.6,
+      "stagger": 0.05,
+      "gsap": {
+        "from": { "y": "60%", "rotation": 20, "opacity": 0 },
+        "to": { "y": "0%", "rotation": 0, "opacity": 1 }
+      }
+    },
+    "tracking-in": {
+      "kind": "entrada",
+      "description": "Tracking que se cierra: letras (<span class=ch> inline-block) que llegan desde la derecha en cascada; el desfase entre ellas se lee como letras separadas que se juntan. Solo transforms (letterSpacing tartamudea en render).",
+      "ease": "expo.out",
+      "duration": 0.9,
+      "stagger": 0.04,
+      "gsap": {
+        "from": { "x": 140, "opacity": 0 },
+        "to": { "x": 0, "opacity": 1 }
+      }
+    },
+    "flip-3d": {
+      "kind": "entrada",
+      "description": "Tarjeta que gira en Y desde el canto con perspectiva. Widgets y tarjetas UI.",
+      "ease": "power3.out",
+      "duration": 0.9,
+      "gsap": {
+        "from": { "rotationY": 90, "transformPerspective": 1200, "opacity": 0 },
+        "to": { "rotationY": 0, "transformPerspective": 1200, "opacity": 1 }
+      }
+    },
+    "morph-box": {
+      "kind": "entrada",
+      "description": "Morph de contenedor: la tarjeta completa nace recortada como píldora (clip-path con radio) y se abre a su tamaño. Invierte from/to para cerrarla de vuelta. Solo clip-path (width/height tartamudean en render).",
+      "ease": "expo.inOut",
+      "duration": 0.9,
+      "gsap": {
+        "from": { "clipPath": "inset(44% 30% 44% 30% round 120px)" },
+        "to": { "clipPath": "inset(0% 0% 0% 0% round 32px)" }
+      }
+    },
     "fade-slide-out": {
       "kind": "salida",
       "description": "Salida estándar: sube y se disuelve.",
@@ -168,6 +210,16 @@
         "to": { "opacity": 1, "yoyo": true, "repeat": 1 }
       }
     },
+    "negative-mask": {
+      "kind": "énfasis",
+      "description": "Forma que recorre el texto invirtiendo colores (mix-blend-mode: difference). Píntala del color del fondo para el look Jitter, o blanca para negativo puro. Debe ir encima del texto.",
+      "ease": "power2.inOut",
+      "duration": 2.4,
+      "gsap": {
+        "from": { "xPercent": -150, "mixBlendMode": "difference" },
+        "to": { "xPercent": 150, "mixBlendMode": "difference" }
+      }
+    },
     "device-mockup-scroll": {
       "kind": "escena",
       "description": "Mockup de teléfono que entra y desplaza su pantalla. Promo de app.",
@@ -228,6 +280,17 @@
       "gsap": {
         "from": { "scale": 0 },
         "to": { "scale": 1 }
+      }
+    },
+    "card-stack": {
+      "kind": "escena",
+      "description": "Pila de tarjetas que rotan: la de delante sale hacia arriba y la siguiente sube desde detrás (escala + y). Métricas de app y features en serie.",
+      "ease": "power3.inOut",
+      "duration": 0.6,
+      "stagger": 1,
+      "gsap": {
+        "from": { "y": 36, "scale": 0.9, "opacity": 0.5 },
+        "to": { "y": -60, "scale": 1.04, "opacity": 0 }
       }
     },
     "kinetic-type": {

@@ -1,6 +1,6 @@
-// Sección WissMotion de la galería: las 12 plantillas del producto con su
+// Pestaña WissMotion de la galería: las plantillas del producto con su
 // póster, instalables en el proyecto destino con la marca del panel Marca
-// ya aplicada. Debajo del buscador, encima del catálogo upstream.
+// ya aplicada. El catálogo upstream vive en la pestaña HyperFrames.
 
 import { useMemo, useState } from "react";
 import { SpinnerGap, WarningCircle } from "@phosphor-icons/react";
@@ -114,7 +114,7 @@ export function WissmotionSection({
     );
   }, [query]);
 
-  if (!visible || items.length === 0) return null;
+  if (!visible) return null;
 
   return (
     <div className="mb-10">
@@ -131,11 +131,20 @@ export function WissmotionSection({
       ) : null}
       <div className="mt-5">
         <HomeStateMessage status={status} onRetry={() => window.location.reload()}>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-9" data-testid="wissmotion-grid">
-            {items.map((item) => (
-              <WissmotionCard key={item.id} item={item} targetId={target} onOpen={onOpenProject} />
-            ))}
-          </div>
+          {items.length === 0 ? (
+            <p className="py-10 text-step-15 font-semibold text-text-0">{t("home.noResults")}</p>
+          ) : (
+            <div className="grid grid-cols-2 gap-x-6 gap-y-9" data-testid="wissmotion-grid">
+              {items.map((item) => (
+                <WissmotionCard
+                  key={item.id}
+                  item={item}
+                  targetId={target}
+                  onOpen={onOpenProject}
+                />
+              ))}
+            </div>
+          )}
         </HomeStateMessage>
       </div>
     </div>

@@ -10,7 +10,8 @@ paquetes `packages/` de HyperFrames (no duplicar: reutilizar CLI/API).
 | -------------------------------------------------------------------- | ------------------------------------ |
 | Marca: esquema, extractor, biblioteca, tokens                        | `brand-kit/` + `brand-kit/README.md` |
 | Movimiento: personalidades, presets, transiciones, ejemplos, pósters | `presets/motion/` + `README.md`      |
-| Plantillas: 12 promos con variables + instanciador                   | `templates/` + `README.md`           |
+| Plantillas: 13 promos con variables + instanciador                   | `templates/` + `README.md`           |
+| Referencias de estilo: ficha, técnica y cómo recrear cada video      | `references/references.json`         |
 | Render por lotes + destinos                                          | `render/` + `README.md`              |
 | Servidor MCP (stdio, 9 herramientas)                                 | `server/` + `README.md`              |
 | Skills del producto                                                  | `skills/`                            |

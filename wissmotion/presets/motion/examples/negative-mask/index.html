@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>negative-mask · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #f5ef84;
+      }
+      #t {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 290px;
+        margin: 0;
+        text-align: center;
+        font:
+          700 128px Inter,
+          sans-serif;
+        color: #000000;
+      }
+      /* Encima del texto y del color del fondo: difference deja el fondo en
+         negro y el texto en el color del fondo. Blanca = negativo puro. */
+      #dot {
+        position: absolute;
+        left: 520px;
+        top: 240px;
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        background: #f5ef84;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="negative-mask"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <h1 id="t" class="clip" data-start="0" data-duration="3.2" data-track-index="0">Design</h1>
+      <div id="dot" class="clip" data-start="0.3" data-duration="2.9" data-track-index="1"></div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(
+          "#dot",
+          { xPercent: -150, mixBlendMode: "difference" },
+          { xPercent: 150, mixBlendMode: "difference", duration: 2.4, ease: "power2.inOut" },
+          0.3,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["negative-mask"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

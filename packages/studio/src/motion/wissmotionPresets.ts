@@ -42,6 +42,11 @@ const ELEMENT_PRESETS = new Set([
   "wipe",
   "fade-slide-out",
   "blur-out",
+  "stagger-chars",
+  "tracking-in",
+  "flip-3d",
+  "negative-mask",
+  "morph-box",
 ]);
 
 function toSpec(id: string, entry: PresetEntry): MotionPreset | null {

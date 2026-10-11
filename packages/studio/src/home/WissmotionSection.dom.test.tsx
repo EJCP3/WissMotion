@@ -46,7 +46,13 @@ describe("WissmotionSection", () => {
     expect(filtered.textContent).toContain("Intro de logo");
   });
 
-  it("oculta la sección cuando hay categoría de bloques activa", async () => {
+  it("sin coincidencias muestra 'Sin resultados' en vez de una página vacía", async () => {
+    const { host } = await mountSection("zzz-nada");
+    expect(host.querySelector('[data-testid="wissmotion-grid"]')).toBeNull();
+    expect(host.textContent).toContain("Sin resultados");
+  });
+
+  it("oculta la sección cuando la pestaña activa es HyperFrames", async () => {
     const host = document.createElement("div");
     document.body.append(host);
     const root = createRoot(host);
