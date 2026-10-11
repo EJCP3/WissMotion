@@ -29,6 +29,8 @@ import antesDespuesManifest from "../../../../wissmotion/templates/antes-despues
 import antesDespuesPoster from "../../../../wissmotion/templates/antes-despues/preview.png";
 import historiaManifest from "../../../../wissmotion/templates/historia/template.json";
 import historiaPoster from "../../../../wissmotion/templates/historia/preview.png";
+import listaCineticaManifest from "../../../../wissmotion/templates/lista-cinetica/template.json";
+import listaCineticaPoster from "../../../../wissmotion/templates/lista-cinetica/preview.png";
 
 export interface WissmotionTemplateVariable {
   id: string;
@@ -103,4 +105,5 @@ export const WISSMOTION_TEMPLATES: WissmotionTemplate[] = [
   entry("lanzamiento", lanzamientoManifest, lanzamientoPoster),
   entry("antes-despues", antesDespuesManifest, antesDespuesPoster),
   entry("historia", historiaManifest, historiaPoster),
+  entry("lista-cinetica", listaCineticaManifest, listaCineticaPoster),
 ];

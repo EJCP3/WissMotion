@@ -38,9 +38,9 @@ async function mountSection(search = "") {
 }
 
 describe("WissmotionSection", () => {
-  it("muestra las 12 plantillas y filtra por búsqueda", async () => {
+  it("muestra las 13 plantillas y filtra por búsqueda", async () => {
     const { host } = await mountSection();
-    expect(host.querySelectorAll('[data-testid="wissmotion-grid"] button')).toHaveLength(12);
+    expect(host.querySelectorAll('[data-testid="wissmotion-grid"] button')).toHaveLength(13);
     const { host: filtered } = await mountSection("logo");
     expect(filtered.querySelectorAll('[data-testid="wissmotion-grid"] button')).toHaveLength(1);
     expect(filtered.textContent).toContain("Intro de logo");
