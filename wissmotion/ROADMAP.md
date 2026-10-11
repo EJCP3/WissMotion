@@ -99,9 +99,9 @@
 ## Fase 5 — Audio y medios
 
 - [ ] Biblioteca de música libre de derechos y SFX (whoosh, click, pop, riser).
-- [ ] Sincronizar cortes y animaciones al **beat** (reutilizar `beats` / bpm-detective).
-- [ ] **Voz en off**: TTS local o por API (reutilizar `tts`), o subir grabación propia.
-- [ ] **Subtítulos** automáticos (reutilizar `transcribe`) con estilos de la marca.
+- [x] Sincronizar cortes y animaciones al **beat** (reutilizar `beats` / bpm-detective).
+- [x] **Voz en off**: TTS local o por API (reutilizar `tts`), o subir grabación propia.
+- [x] **Subtítulos** automáticos (reutilizar `transcribe`) con estilos de la marca.
 - [ ] Mezcla: volumen, fades, ducking de música bajo la voz.
 - [ ] Quitar fondo de imágenes/videos (reutilizar `remove-background`).
 - [ ] Grabación/importación de screencasts de la app o web para escenas reales.
