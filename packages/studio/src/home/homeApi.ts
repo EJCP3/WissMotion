@@ -107,6 +107,24 @@ export async function createBlankComposition(projectId: string): Promise<string>
   throw new Error(`create ${lastStatus}`);
 }
 
+/** POST /api/brand/extract — marca sin IA vía el servidor (501 si falta el extractor). */
+export async function extractBrandFromUrl(
+  url: string,
+): Promise<{ brand: unknown; debug: unknown }> {
+  const response = await studioApiFetch("/api/brand/extract", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url }),
+  });
+  const data = (await response.json().catch(() => null)) as {
+    brand?: unknown;
+    error?: unknown;
+  } | null;
+  if (!response.ok || !data || data.brand == null) {
+    throw new Error(typeof data?.error === "string" ? data.error : `extract ${response.status}`);
+  }
+  return data as { brand: unknown; debug: unknown };
+}
 /** POST .../registry/install — devuelve la composición escrita para abrirla. */
 export async function installTemplateBlock(projectId: string, blockName: string): Promise<string> {
   const response = await studioApiFetch(buildProjectApiPath(projectId, "/registry/install"), {

@@ -96,4 +96,17 @@ describe("useBrandKit", () => {
     await a.rerender();
     expect(a.get().brand.name).toBe("");
   });
+
+  it("replace sustituye la marca y writeStoredBrand persiste validando", async () => {
+    const a = await mountKit("proj-a");
+    const { readStoredBrand, writeStoredBrand } = await import("./useBrandKit");
+    expect(readStoredBrand("proj-a")).toBeNull();
+    expect(writeStoredBrand("proj-a", { nope: true })).toBe(false);
+    const full = { ...a.get().brand, name: "Acme" };
+    expect(writeStoredBrand("proj-a", full)).toBe(true);
+    expect(readStoredBrand("proj-a")?.name).toBe("Acme");
+    act(() => a.get().replace({ ...full, tagline: "Hola" }));
+    await a.rerender();
+    expect(a.get().brand.tagline).toBe("Hola");
+  });
 });

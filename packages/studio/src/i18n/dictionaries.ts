@@ -115,6 +115,12 @@ const es = {
   "home.createError": "No se pudo crear el archivo",
   "home.installError": "No se pudo añadir la plantilla",
   "home.untitled": "Sin título",
+  "home.fromUrl": "Desde URL",
+  "home.urlLabel": "URL del sitio",
+  "home.extracting": "Extrayendo marca…",
+  "home.extractError": "No se pudo extraer la marca",
+  "home.close": "Cerrar",
+  "home.cancel": "Cancelar",
 } as const;
 
 const en: Record<keyof typeof es, string> = {
@@ -225,6 +231,12 @@ const en: Record<keyof typeof es, string> = {
   "home.createError": "Could not create the file",
   "home.installError": "Could not add the template",
   "home.untitled": "Untitled",
+  "home.fromUrl": "From URL",
+  "home.urlLabel": "Site URL",
+  "home.extracting": "Extracting brand…",
+  "home.extractError": "Could not extract the brand",
+  "home.close": "Close",
+  "home.cancel": "Cancel",
 };
 
 export type StudioStringKey = keyof typeof es;

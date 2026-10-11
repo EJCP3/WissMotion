@@ -16,6 +16,16 @@ export function brandStorageKey(projectId: string): string {
   return `${STORAGE_PREFIX}${projectId}`;
 }
 
+/** Guarda una marca validada como la del proyecto (la usa Crear-desde-URL). */
+export function writeStoredBrand(projectId: string, brand: unknown): boolean {
+  if (validateBrandStructure(brand).length > 0) return false;
+  try {
+    localStorage.setItem(brandStorageKey(projectId), JSON.stringify(brand));
+    return true;
+  } catch {
+    return false;
+  }
+}
 /** Marca guardada del proyecto, o null si no hay o no valida. */
 export function readStoredBrand(projectId: string): BrandV1 | null {
   try {
