@@ -180,8 +180,8 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 
 ## Fase 9 — Proyectos y colaboración
 
-- [ ] Paquete exportable `.wissmotion` (zip con composición, marca, assets) para compartir o respaldar.
-- [ ] Duplicar proyecto, variantes (A/B, idiomas, formatos).
+- [x] Paquete exportable `.wissmotion` (zip con composición, marca, assets) para compartir o respaldar.
+- [x] Duplicar proyecto, variantes (A/B, idiomas, formatos).
 - [ ] Versiones con nombre y comparación visual (reutilizar `compare`).
 - [ ] Videos multilingües: mismo proyecto, textos y voz por idioma.
 - [ ] Comentarios sobre frames para revisión (opcional).
