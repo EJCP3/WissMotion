@@ -28,6 +28,22 @@ export function registerProjectRoutes(api: Hono, adapter: StudioApiAdapter): voi
     return c.json({ projects });
   });
 
+  // Create a project (WissMotion: "Nuevo video" opens as its own draft)
+  api.post("/projects", async (c) => {
+    if (!adapter.createProject) return c.json({ error: "not available" }, 501);
+    const body = (await c.req.json().catch(() => null)) as {
+      name?: unknown;
+      html?: unknown;
+    } | null;
+    const name = typeof body?.name === "string" ? body.name : "";
+    const html = typeof body?.html === "string" ? body.html : "";
+    if (!html.includes("data-composition-id")) {
+      return c.json({ error: "html must contain a root composition" }, 400);
+    }
+    const project = await adapter.createProject(name, html);
+    return c.json({ id: project.id, title: project.title }, 201);
+  });
+
   // Resolve session to project (multi-project mode)
   api.get("/resolve-session/:sessionId", async (c) => {
     if (!adapter.resolveSession) {

@@ -15,7 +15,7 @@ const known = {
   mockups: new Set(
     [
       ...readFileSync(join(here, "..", "mockups", "mockups.css"), "utf8").matchAll(
-        /^.(wm-[a-z]+) {/gm,
+        /^\.(wm-[a-z]+) \{/gm,
       ),
     ].map((m) => m[1]),
   ),

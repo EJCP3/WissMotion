@@ -71,6 +71,9 @@ describe("NuevoVideoWizard", () => {
       "fetch",
       vi.fn(async (url: string, init?: RequestInit) => {
         puts.push({ url: String(url), body: String(init?.body ?? "") });
+        if (String(url) === "/api/projects" && init?.method === "POST") {
+          return new Response(JSON.stringify({ id: "acme-historia" }), { status: 201 });
+        }
         return new Response("ok", { status: 200 });
       }),
     );
@@ -103,10 +106,39 @@ describe("NuevoVideoWizard", () => {
     });
     await act(async () => clickText(host, "Crear video").click());
 
+    // Borrador propio: POST /api/projects con el HTML + variables.json una sola vez.
     expect(puts).toHaveLength(2);
-    expect(puts[0].body).toContain("Hola mundo");
-    expect(puts[0].body).toContain("#111111");
-    expect(opened).toEqual([{ id: "p1", comp: "compositions/historia.html" }]);
+    expect(puts[0].url).toBe("/api/projects");
+    const created = JSON.parse(puts[0].body) as { name: string; html: string };
+    expect(created.name).toContain("Historia corta");
+    expect(created.html).toContain("Hola mundo");
+    expect(created.html).toContain("#111111");
+    expect(puts[1].url).toContain("variables.json");
+    expect(opened).toEqual([{ id: "acme-historia", comp: "index.html" }]);
+  });
+
+  it("si el servidor no crea proyectos (CLI), lo añade al proyecto actual", async () => {
+    const urls: string[] = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string, init?: RequestInit) => {
+        urls.push(String(url));
+        if (String(url) === "/api/projects" && init?.method === "POST") {
+          return new Response("{}", { status: 501 });
+        }
+        return new Response("ok", { status: 200 });
+      }),
+    );
+    const opened: Array<{ id: string; comp?: string }> = [];
+    const host = await mountWizard((id, comp) => opened.push({ id, comp }));
+    await act(async () => clickText(host, "Siguiente").click());
+    await act(async () => clickText(host, "Siguiente").click());
+    await act(async () => clickText(host, "Crear video").click());
+    expect(opened).toEqual([{ id: "p1", comp: "compositions/promo-app.html" }]);
+    // variables.json se intenta una vez, sin copias numeradas.
+    expect(
+      urls.filter((u) => u.includes("variables")).every((u) => u.endsWith("variables.json")),
+    ).toBe(true);
   });
 
   it("sin marca usa defaults y navega atrás", async () => {

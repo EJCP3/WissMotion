@@ -5,6 +5,7 @@ import {
   readFileSync,
   readdirSync,
   existsSync,
+  mkdirSync,
   writeFileSync,
   realpathSync,
   unlinkSync,
@@ -187,6 +188,25 @@ export function createViteAdapter(
     // launches Vite. Direct `bun run dev` keeps the historical default-on
     // behavior when the child environment is absent.
     autoProxy: resolveViteAutoProxy(process.env.HYPERFRAMES_AUTO_PROXY),
+
+    createProject(name, indexHtml) {
+      const base =
+        name
+          .normalize("NFD")
+          .replace(/[̀-ͯ]/g, "")
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "")
+          .slice(0, 48) || "video";
+      let id = base;
+      for (let n = 2; existsSync(join(dataDir, id)) || !isServableProjectId(id); n += 1) {
+        id = `${base}-${n}`;
+      }
+      const dir = join(dataDir, id);
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(join(dir, "index.html"), indexHtml, "utf-8");
+      return { id, dir, title: id } satisfies ResolvedProject;
+    },
 
     // fallow-ignore-next-line complexity
     listProjects() {

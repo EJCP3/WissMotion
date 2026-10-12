@@ -7,7 +7,12 @@ import { ArrowLeft, SpinnerGap, WarningCircle, X } from "@phosphor-icons/react";
 import { useLanguage } from "../i18n/LanguageContext";
 import { listSavedBrands } from "../brand/brandLibrary";
 import type { BrandV1 } from "../brand/brandTypes";
-import { installWissmotionTemplate, mergeTemplateVariables } from "./wissmotionInstall";
+import {
+  ProjectCreationUnavailable,
+  createVideoProject,
+  installWissmotionTemplate,
+  mergeTemplateVariables,
+} from "./wissmotionInstall";
 import { WISSMOTION_TEMPLATES, type WissmotionTemplate } from "./wissmotionTemplates";
 
 const inputCls =
@@ -132,18 +137,27 @@ export function NuevoVideoWizard({
   };
 
   async function handleCreate() {
-    if (!targetId || working) return;
+    if (working) return;
     setWorking(true);
     setError(null);
+    const opts = { brand, vars: effective, format };
     try {
-      const compPath = await installWissmotionTemplate(targetId, template, {
-        brand,
-        vars: effective,
-        format,
-      });
-      onOpenProject(targetId, compPath);
+      // Cada video es su propio borrador (tarjeta en Borradores).
+      const name = `${String(effective.brandName ?? brand?.name ?? "video")} ${template.name}`;
+      const created = await createVideoProject(name, template, opts);
+      onOpenProject(created.projectId, created.compPath);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "error");
+      let failure: unknown = e;
+      if (e instanceof ProjectCreationUnavailable && targetId) {
+        // Host de un solo proyecto (CLI): se añade como composición, como antes.
+        try {
+          onOpenProject(targetId, await installWissmotionTemplate(targetId, template, opts));
+          return;
+        } catch (inner) {
+          failure = inner;
+        }
+      }
+      setError(failure instanceof Error ? failure.message : "error");
       setWorking(false);
     }
   }
@@ -321,7 +335,7 @@ export function NuevoVideoWizard({
             <button
               type="button"
               onClick={() => void handleCreate()}
-              disabled={!targetId || working}
+              disabled={working}
               className="flex h-10 items-center gap-2 rounded-none bg-accent px-6 text-step-13 font-semibold text-on-accent transition-transform duration-press enabled:active:scale-[0.98] disabled:opacity-40"
             >
               {working ? (

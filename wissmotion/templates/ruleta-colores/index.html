@@ -167,7 +167,7 @@
           }
           var words = list(vars.words, "Yellow, Green, Black, Grey, Purple, Orange, Blue").slice(
             0,
-            10,
+            40,
           );
           var colors = list(
             vars.colors,
@@ -204,6 +204,26 @@
             hx.style.opacity = i === 0 ? "0.8" : "0";
             hexes.appendChild(hx);
           });
+          // Una capa de color por palabra, debajo de todo: cada una se abre en
+          // círculo desde la palabra activa (centro) hasta cubrir el cuadro.
+          var cw = Number(stage.dataset.width) || 1280;
+          var ch = Number(stage.dataset.height) || 720;
+          // +15%: con expo.out las esquinas quedan cubiertas antes del final.
+          var radius = Math.ceil((Math.hypot(cw, ch) / 2) * 1.15);
+          var swatches = [];
+          words.forEach(function (_, i) {
+            if (i === 0) return;
+            var sw = document.createElement("div");
+            sw.style.cssText =
+              "position:absolute;inset:0;clip-path:circle(0px at 50% 50%);background:" +
+              colors[i % colors.length];
+            stage.insertBefore(sw, stage.firstChild);
+            swatches[i] = sw;
+          });
+          // insertBefore las deja en orden inverso: reordena para que la última quede encima.
+          swatches.forEach(function (sw) {
+            if (sw) stage.insertBefore(sw, reel);
+          });
           var items = reel.querySelectorAll(".w");
           var codes = hexes.querySelectorAll("span");
           var step = items[0] ? items[0].getBoundingClientRect().height : 140;
@@ -217,13 +237,22 @@
           words.forEach(function (_, i) {
             var at = i * hold;
             var bg = colors[i % colors.length];
-            var move = i === 0 ? 0.01 : 0.55;
+            // El giro ocupa ~55% del tiempo de cada palabra: con más palabras, más ágil.
+            var move = i === 0 ? 0.01 : Math.min(0.55, hold * 0.55);
             tl.to(reel, { y: -(n + i) * step, duration: move, ease: "expo.inOut" }, at);
-            tl.to(
-              stage,
-              { backgroundColor: bg, color: inkFor(bg), duration: move, ease: "power2.inOut" },
-              at,
-            );
+            if (i > 0) {
+              tl.fromTo(
+                swatches[i],
+                { clipPath: "circle(0px at 50% 50%)" },
+                {
+                  clipPath: "circle(" + radius + "px at 50% 50%)",
+                  duration: Math.min(0.7, hold * 0.9),
+                  ease: "expo.out",
+                },
+                at,
+              );
+            }
+            tl.to(stage, { color: inkFor(bg), duration: move * 0.5, ease: "none" }, at);
             tl.to(
               items,
               {
@@ -235,6 +264,15 @@
               },
               at,
             );
+            // Golpe de escala al llegar: la activa crece un poco y asienta.
+            if (i > 0) {
+              tl.fromTo(
+                items[n + i],
+                { scale: 1.12 },
+                { scale: 1, duration: Math.min(0.45, hold * 0.5), ease: "back.out(2.5)" },
+                at + move * 0.6,
+              );
+            }
             tl.to(
               codes,
               {

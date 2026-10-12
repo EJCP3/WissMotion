@@ -106,6 +106,12 @@ export interface StudioApiAdapter {
   /** List all available projects. */
   listProjects(): Promise<ResolvedProject[]> | ResolvedProject[];
 
+  /**
+   * Optional (WissMotion): create a new project folder whose index.html is `indexHtml`.
+   * The id is a slug of `name`, suffixed -2, -3… when taken. Without it, POST /projects is 501.
+   */
+  createProject?(name: string, indexHtml: string): Promise<ResolvedProject> | ResolvedProject;
+
   /** Resolve a project ID (or session ID) to its directory. Returns null if not found. */
   resolveProject(id: string): Promise<ResolvedProject | null> | ResolvedProject | null;
 

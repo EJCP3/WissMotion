@@ -8,6 +8,7 @@ revisión automática para corregir antes de entregar.
 ```bash
 node wissmotion/cli.mjs film --storyboard wissmotion/film/ejemplo.json --out ./mi-pelicula
 node wissmotion/cli.mjs film --storyboard pelicula.json --out ./vertical --format 9:16
+node wissmotion/cli.mjs film --storyboard pelicula.json --out ./mi-pelicula --studio   # además, borrador en el Studio
 node wissmotion/cli.mjs film --review ./mi-pelicula
 ```
 

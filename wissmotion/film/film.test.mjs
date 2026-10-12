@@ -94,3 +94,45 @@ describe("film", () => {
     );
   });
 });
+
+describe("film --studio", () => {
+  it("bakeVariables hornea valores (con apóstrofos) en los defaults", async () => {
+    const { bakeVariables } = await import("./film.mjs");
+    const html = `<html data-composition-variables='[{"id":"title","type":"string","default":"x"}]'><body></body></html>`;
+    const out = bakeVariables(html, { title: "It's ok" });
+    assert.match(out, /"default":"It&#39;s ok"/);
+    assert.doesNotMatch(out, /It's/);
+  });
+
+  it("exportToStudio deja index.html con la película y cada escena horneada", async () => {
+    const { exportToStudio } = await import("./film.mjs");
+    const { writeFile, mkdir } = await import("node:fs/promises");
+    const root = await mkdtemp(join(tmpdir(), "wm-studio-"));
+    const sceneDir = join(root, "escena");
+    await mkdir(sceneDir);
+    await writeFile(
+      join(sceneDir, "index.html"),
+      `<html data-composition-variables='[{"id":"word","type":"string","default":"motion"}]'><body><div data-composition-id="palabra"></div></body></html>`,
+    );
+    await writeFile(join(sceneDir, "variables.json"), JSON.stringify({ word: "ships" }));
+    const filmFile = join(root, "f.mp4");
+    await writeFile(filmFile, "fake");
+    const { dir, compositions } = await exportToStudio(
+      {
+        name: "mi-peli",
+        format: "9:16",
+        film: filmFile,
+        duration: 4.5,
+        scenes: [{ dir: sceneDir, template: "palabra" }],
+      },
+      { studioDir: join(root, "projects") },
+    );
+    const index = await readFile(join(dir, "index.html"), "utf8");
+    assert.match(index, /data-composition-id="mi-peli"/);
+    assert.match(index, /data-width="1080"/);
+    assert.match(index, /src="pelicula\.mp4"/);
+    assert.match(index, /data-duration="4.5"/);
+    assert.deepEqual(compositions, ["compositions/escena-01-palabra.html"]);
+    assert.match(await readFile(join(dir, compositions[0]), "utf8"), /"default":"ships"/);
+  });
+});

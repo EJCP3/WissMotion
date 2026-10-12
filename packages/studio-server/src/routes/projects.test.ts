@@ -181,3 +181,36 @@ describe("registerProjectRoutes — composition discovery (#1384)", () => {
     expect(payload.files).not.toContain(".waveform-cache/peaks.json");
   });
 });
+
+describe("POST /projects", () => {
+  const post = (app: Hono, body: unknown) =>
+    app.request("http://localhost/projects", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+  it("is 501 when the host cannot create projects", async () => {
+    const app = new Hono();
+    registerProjectRoutes(app, createAdapter(createProjectDir()));
+    const response = await post(app, { name: "x", html: COMPOSITION_HTML });
+    expect(response.status).toBe(501);
+  });
+
+  it("creates through the adapter and rejects html without a root composition", async () => {
+    const created: Array<{ name: string; html: string }> = [];
+    const app = new Hono();
+    registerProjectRoutes(app, {
+      ...createAdapter(createProjectDir()),
+      createProject: (name, html) => {
+        created.push({ name, html });
+        return { id: "mi-video", dir: "/tmp/mi-video", title: "mi-video" };
+      },
+    });
+    expect((await post(app, { name: "Mi video", html: "<p>no</p>" })).status).toBe(400);
+    const response = await post(app, { name: "Mi video", html: COMPOSITION_HTML });
+    expect(response.status).toBe(201);
+    expect(await response.json()).toEqual({ id: "mi-video", title: "mi-video" });
+    expect(created).toEqual([{ name: "Mi video", html: COMPOSITION_HTML }]);
+  });
+});

@@ -1,0 +1,33 @@
+{
+  "name": "mispesos-temas",
+  "format": "9:16",
+  "brand": {
+    "brandVersion": 1,
+    "name": "MisPesos",
+    "tagline": "Tu billetera inteligente en la nube",
+    "colors": {
+      "primary": "#2177ff",
+      "secondary": "#20d472",
+      "accent": "#20d472",
+      "background": "#f1f6fa",
+      "surface": "#ffffff",
+      "text": "#0f172a"
+    },
+    "fonts": {
+      "heading": "Inter",
+      "body": "Inter",
+      "weights": [400, 700, 900]
+    }
+  },
+  "scenes": [
+    {
+      "template": "ruleta-colores",
+      "vars": {
+        "words": "MisPesos, Light, Cupcake, Bumblebee, Emerald, Corporate, Garden, Lofi, Pastel, Wireframe, CMYK, Lemonade, Winter, Caramellatte, Silk, Dark, Synthwave, Halloween, Forest, Aqua, Black, Luxury, Dracula, Business, Night, Coffee, Dim, Nord, Sunset, Abyss, Retro, Cyberpunk, Valentine, Fantasy, Autumn, Acid",
+        "colors": "#20D472, #605DFF, #65C3C8, #E0A82E, #66CC8A, #4B6BFB, #5C7F67, #7D7D7D, #D1C1D7, #B8B8B8, #45AEEE, #519903, #047AFF, #D4955B, #49B0D4, #6D28F0, #E779C1, #F28C18, #1EB854, #09ECF3, #373737, #F2F0EA, #FF79C6, #1C4E80, #38BDF8, #DB924B, #9FC9EB, #5E81AC, #FF865B, #234B6E, #EF9995, #FF7598, #E96D7B, #6E0B75, #8C0327, #FF00F4",
+        "label": "TEMA",
+        "inactiveOpacity": 0.25
+      }
+    }
+  ]
+}

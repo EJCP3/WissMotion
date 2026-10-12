@@ -95,6 +95,37 @@ export function saveProjectJson(projectId: string, name: string, data: unknown):
   );
 }
 
+type InstallOptions = {
+  brand?: BrandV1 | null;
+  vars?: Record<string, unknown>;
+  fileName?: string;
+  format?: string;
+};
+
+/** HTML listo de una plantilla: formato, fuentes de marca y variables horneadas. */
+export function buildTemplateDocument(
+  projectId: string | null,
+  template: WissmotionTemplate,
+  opts?: InstallOptions,
+): { html: string; values: Record<string, unknown>; format: string | null } {
+  const brand =
+    opts && "brand" in opts ? (opts.brand ?? null) : projectId ? readStoredBrand(projectId) : null;
+  const values = { ...mergeTemplateVariables(template, brand), ...(opts?.vars ?? {}) };
+  const format = opts?.format && opts.format !== template.format ? opts.format : null;
+  const formatted = format ? applyFormat(template.html, format) : template.html;
+  const html = brandFontsLink(formatted, values, brand?.fonts?.weights);
+  return { html: bakeVariables(html, values), values, format };
+}
+
+/** Escribe variables.json solo si no existe (sin copias -2, -3…: nadie las lee). */
+async function putVariablesIfAbsent(projectId: string, values: Record<string, unknown>) {
+  await studioApiFetch(buildProjectApiPath(projectId, "/files/variables.json"), {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", "If-None-Match": "*" },
+    body: JSON.stringify(values, null, 2),
+  }).catch(() => null);
+}
+
 /**
  * Instala una plantilla WissMotion en el proyecto: HTML con la marca
  * horneada + variables.json (solo si no existe). Devuelve la ruta para
@@ -103,35 +134,38 @@ export function saveProjectJson(projectId: string, name: string, data: unknown):
 export async function installWissmotionTemplate(
   projectId: string,
   template: WissmotionTemplate,
-  opts?: {
-    brand?: BrandV1 | null;
-    vars?: Record<string, unknown>;
-    fileName?: string;
-    format?: string;
-  },
+  opts?: InstallOptions,
 ): Promise<string> {
-  const brand = opts && "brand" in opts ? (opts.brand ?? null) : readStoredBrand(projectId);
-  const values = { ...mergeTemplateVariables(template, brand), ...(opts?.vars ?? {}) };
-  const format = opts?.format && opts.format !== template.format ? opts.format : null;
-  const formatted = format ? applyFormat(template.html, format) : template.html;
-  const html = brandFontsLink(formatted, values, brand?.fonts?.weights);
+  const { html, values, format } = buildTemplateDocument(projectId, template, opts);
   const baseName =
     opts?.fileName ?? `${template.id}${format ? `-${format.replace(":", "x")}` : ""}.html`;
-  const compPath = await putNewFile(
-    projectId,
-    `compositions/${baseName}`,
-    bakeVariables(html, values),
-    "text/plain",
-  );
-  try {
-    await putNewFile(
-      projectId,
-      "variables.json",
-      JSON.stringify(values, null, 2),
-      "application/json",
-    );
-  } catch {
-    // Ya hay variables.json del proyecto: los horneados mandan igual.
-  }
+  const compPath = await putNewFile(projectId, `compositions/${baseName}`, html, "text/plain");
+  await putVariablesIfAbsent(projectId, values);
   return compPath;
+}
+
+/** El servidor no permite crear proyectos (modo CLI de un solo proyecto). */
+export class ProjectCreationUnavailable extends Error {}
+
+/**
+ * Crea un borrador nuevo (su propia tarjeta en Borradores) con la plantilla
+ * como index.html. Lanza ProjectCreationUnavailable si el host no lo admite.
+ */
+export async function createVideoProject(
+  name: string,
+  template: WissmotionTemplate,
+  opts?: InstallOptions,
+): Promise<{ projectId: string; compPath: string }> {
+  const { html, values } = buildTemplateDocument(null, template, opts);
+  const response = await studioApiFetch("/api/projects", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, html }),
+  });
+  if (response.status === 501 || response.status === 404) throw new ProjectCreationUnavailable();
+  if (!response.ok) throw new Error(`create project ${response.status}`);
+  const data = (await response.json()) as { id?: unknown };
+  if (typeof data.id !== "string") throw new Error("create project: sin id");
+  await putVariablesIfAbsent(data.id, values);
+  return { projectId: data.id, compPath: "index.html" };
 }

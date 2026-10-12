@@ -2,13 +2,14 @@
 // (instanciada con la marca y en el formato pedido) → render de cada escena →
 // unión con transiciones xfade de ffmpeg (+ música opcional) → revisión.
 //   node film.mjs --storyboard pelicula.json --out ./mi-pelicula [--format 9:16]
-//     [--quality draft|standard|delivery] [--workers 2] [--dry-run]
+//     [--quality draft|standard|delivery] [--workers 2] [--studio] [--dry-run]
+//   (--studio: además lo guarda como borrador en el Studio, Home → Borradores)
 //   node film.mjs --review ./mi-pelicula
 // Cada escena sigue siendo un proyecto normal (editable en el Studio); la
 // película se recompone en cada build. Unir clips ya renderizados evita que
 // los ids/clases de plantillas distintas choquen en un mismo documento.
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readdirSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readdirSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -17,6 +18,8 @@ import { FORMAT_SIZES } from "../templates/formats.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const CLI = join(here, "..", "..", "packages", "cli", "dist", "cli.js");
+/** Carpeta de borradores que lista el Studio (Home → Borradores). */
+export const STUDIO_PROJECTS = join(here, "..", "..", "packages", "studio", "data", "projects");
 
 /** Transiciones xfade de ffmpeg que admitimos (las que leen bien en promo). */
 export const TRANSITIONS = [
@@ -128,6 +131,8 @@ export async function buildFilm({
   quality = "standard",
   workers = 2,
   dryRun = false,
+  studio = false,
+  studioDir,
   cli = CLI,
 }) {
   const templateIds = readdirSync(join(here, "..", "templates"), { withFileTypes: true })
@@ -196,8 +201,116 @@ export async function buildFilm({
   const r = spawnSync("ffmpeg", ["-v", "error", ...args], { stdio: "inherit" });
   if (r.status !== 0 || !existsSync(filmFile)) throw new Error("falló la unión con ffmpeg");
   const result = { ...manifest, duration: Number(total.toFixed(3)) };
+  if (studio) {
+    result.studio = (await exportToStudio(result, { studioDir, hasAudio: Boolean(music) })).dir;
+  }
   await writeFile(join(out, "film.json"), `${JSON.stringify(result, null, 2)}\n`, "utf8");
   return result;
+}
+
+/** Hornea valores en los defaults de data-composition-variables (como el Studio). */
+export function bakeVariables(html, values) {
+  return html.replace(
+    /(<html[^>]*data-composition-variables=')(\[[\s\S]*?\])(')/,
+    (_m, prefix, json, suffix) => {
+      const declared = JSON.parse(json.replace(/&#39;/g, "'"));
+      for (const v of declared) if (values[v.id] !== undefined) v.default = values[v.id];
+      return `${prefix}${JSON.stringify(declared).replace(/'/g, "&#39;")}${suffix}`;
+    },
+  );
+}
+
+/** index.html del borrador: la película final como un clip de video. */
+export function filmPlayerHtml({ id, title, width, height, duration, hasAudio }) {
+  const audio = hasAudio ? `data-has-audio="true"` : "muted";
+  return `<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>${title} · película</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #000;
+      }
+      #stage {
+        position: relative;
+        width: ${width}px;
+        height: ${height}px;
+        overflow: hidden;
+        background: #000;
+      }
+      #film {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="${id}"
+      data-start="0"
+      data-width="${width}"
+      data-height="${height}"
+    >
+      <video
+        id="film"
+        class="clip"
+        src="pelicula.mp4"
+        playsinline
+        ${audio}
+        data-start="0"
+        data-duration="${duration}"
+        data-track-index="0"
+      ></video>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        window.__timelines = window.__timelines || {};
+        window.__timelines["${id}"] = tl;
+      </script>
+    </div>
+  </body>
+</html>
+`;
+}
+
+/**
+ * Exporta la película como borrador del Studio: index.html reproduce
+ * pelicula.mp4 y cada escena va en compositions/ con sus variables
+ * horneadas (editable en el Studio). Reconstruir sobrescribe el mismo borrador.
+ */
+export async function exportToStudio(film, { studioDir = STUDIO_PROJECTS, hasAudio = false } = {}) {
+  const dir = join(studioDir, film.name);
+  mkdirSync(join(dir, "compositions"), { recursive: true });
+  copyFileSync(film.film, join(dir, "pelicula.mp4"));
+  const size = FORMAT_SIZES[film.format];
+  await writeFile(
+    join(dir, "index.html"),
+    filmPlayerHtml({
+      id: film.name,
+      title: film.name,
+      width: size.width,
+      height: size.height,
+      duration: film.duration,
+      hasAudio,
+    }),
+    "utf8",
+  );
+  const compositions = [];
+  for (const [i, s] of film.scenes.entries()) {
+    const html = await readFile(join(s.dir, "index.html"), "utf8");
+    const values = JSON.parse(await readFile(join(s.dir, "variables.json"), "utf8"));
+    const name = `compositions/escena-${String(i + 1).padStart(2, "0")}-${s.template}.html`;
+    await writeFile(join(dir, name), bakeVariables(html, values), "utf8");
+    compositions.push(name);
+  }
+  return { dir, compositions };
 }
 
 /** Hallazgos de `hyperframes check` que merecen atención (sin ruido de estructura). */
@@ -321,11 +434,17 @@ if (process.argv.includes("--storyboard") || process.argv.includes("--review")) 
         quality: opt(args, "--quality"),
         workers: Number(opt(args, "--workers") ?? 2),
         dryRun: args.includes("--dry-run"),
+        studio: args.includes("--studio"),
       });
       console.log(
         film.dryRun
           ? `plan: ${film.scenes.length} escenas en ${film.format} (dry-run)`
-          : `película: ${film.film} (${film.duration} s)`,
+          : `película: ${film.film} (${film.duration} s)${
+              film.studio
+                ? `
+borrador del Studio: ${film.studio}`
+                : ""
+            }`,
       );
     }
   } catch (e) {
