@@ -29,6 +29,7 @@ wissmotion/
   templates/       → plantillas promocionales (Fase 3)
   presets/motion/  → personalidades y presets de movimiento (Fase 2)
   references/      → videos de referencia analizados y cómo recrearlos
+  mockups/         → dispositivos en CSS (teléfono, tablet, laptop, reloj, navegador)
   render/          → render por lotes + destinos (Fase 6)
   server/          → servidor MCP de WissMotion (Fase 8)
   skills/          → skills del producto: wissmotion, -brand, -templates, -motion

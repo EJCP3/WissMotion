@@ -217,6 +217,16 @@ function ReferenceDetail({
             ))}
           </div>
         ) : null}
+        {item.recreate.mockups.length > 0 ? (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-step-12 text-text-2">{t("home.refMockups")}</span>
+            {item.recreate.mockups.map((id) => (
+              <Chip key={id} mono>
+                {id}
+              </Chip>
+            ))}
+          </div>
+        ) : null}
       </div>
       {failed ? (
         <p role="alert" className="mt-2 flex items-center gap-1.5 text-step-12 text-danger-ink">

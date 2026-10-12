@@ -47,6 +47,7 @@ const ELEMENT_PRESETS = new Set([
   "flip-3d",
   "negative-mask",
   "morph-box",
+  "chart-bars",
 ]);
 
 function toSpec(id: string, entry: PresetEntry): MotionPreset | null {

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>chart-bars · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: linear-gradient(180deg, #8cf3fb 0%, #e6fdff 100%);
+      }
+      #card {
+        position: absolute;
+        left: 440px;
+        top: 110px;
+        width: 400px;
+        height: 500px;
+        box-sizing: border-box;
+        padding: 32px;
+        border-radius: 28px;
+        background: #ffffff;
+        box-shadow: 0 30px 60px rgba(14, 80, 96, 0.18);
+        font-family: Inter, sans-serif;
+        color: #0f2a33;
+      }
+      #card h2 {
+        margin: 0;
+        font-size: 24px;
+      }
+      #card p {
+        margin: 14px 0 0;
+        font-size: 40px;
+        font-weight: 600;
+      }
+      #bars {
+        position: absolute;
+        left: 32px;
+        right: 32px;
+        bottom: 40px;
+        height: 240px;
+        display: flex;
+        align-items: flex-end;
+        gap: 16px;
+      }
+      /* Altura completa en CSS; el valor real es scaleY (data-v → data-next). */
+      .bar {
+        flex: 1;
+        height: 100%;
+        border-radius: 8px;
+        background: #3fd3e0;
+        transform-origin: 50% 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="chart-bars"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="card" class="clip" data-start="0" data-duration="3.6" data-track-index="0">
+        <h2>Sleep</h2>
+        <p>6h 31m</p>
+        <div id="bars">
+          <div class="bar" data-v="0.82" data-next="0.4"></div>
+          <div class="bar" data-v="0.74" data-next="0.9"></div>
+          <div class="bar" data-v="0.66" data-next="0.55"></div>
+          <div class="bar" data-v="0.9" data-next="0.3"></div>
+          <div class="bar" data-v="0.7" data-next="0.75"></div>
+          <div class="bar" data-v="0.58" data-next="0.95"></div>
+          <div class="bar" data-v="0.76" data-next="0.6"></div>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        // Crecen desde 0 hasta su dato (leído del DOM al construir: determinista).
+        tl.fromTo(
+          "#bars .bar",
+          { scaleY: 0 },
+          {
+            scaleY: (i, el) => Number(el.dataset.v),
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.06,
+          },
+          0.3,
+        );
+        // Cambio de datos (otra pestaña / otro rango): mismo tween, nuevos valores.
+        tl.to(
+          "#bars .bar",
+          {
+            scaleY: (i, el) => Number(el.dataset.next),
+            duration: 0.8,
+            ease: "power3.inOut",
+            stagger: 0.04,
+          },
+          1.9,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["chart-bars"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

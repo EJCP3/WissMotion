@@ -1,0 +1,199 @@
+/* Mockups de dispositivos de WissMotion: CSS puro, sin imágenes.
+   Copia este bloque al <style> de tu composición (o enlázalo si vive en el
+   proyecto) y mete tu captura/escena dentro de .wm-screen.
+   Tema: data-theme="light" en el dispositivo = marco plateado; por defecto oscuro.
+   Marca: --wm-accent toma --brand-primary si existe. */
+
+.wm-device {
+  --wm-frame: #0c0c0e;
+  --wm-edge: #2a2a2e;
+  --wm-screen-bg: #000;
+  --wm-accent: var(--brand-primary, #7c5cff);
+  position: relative;
+  box-sizing: border-box;
+}
+.wm-device[data-theme="light"] {
+  --wm-frame: #e6e6ea;
+  --wm-edge: #c4c4ca;
+  --wm-screen-bg: #fff;
+}
+.wm-screen {
+  position: absolute;
+  overflow: hidden;
+  background: var(--wm-screen-bg);
+}
+.wm-screen > img,
+.wm-screen > video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Teléfono con isla dinámica (300×620). */
+.wm-phone {
+  width: 300px;
+  height: 620px;
+  border-radius: 54px;
+  background: var(--wm-frame);
+  box-shadow:
+    inset 0 0 0 2px var(--wm-edge),
+    0 30px 70px rgba(0, 0, 0, 0.35);
+}
+.wm-phone .wm-screen {
+  inset: 12px;
+  border-radius: 42px;
+}
+.wm-phone::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 24px;
+  width: 92px;
+  height: 26px;
+  margin-left: -46px;
+  border-radius: 13px;
+  background: #000;
+}
+
+/* Tablet (520×700). */
+.wm-tablet {
+  width: 520px;
+  height: 700px;
+  border-radius: 38px;
+  background: var(--wm-frame);
+  box-shadow:
+    inset 0 0 0 2px var(--wm-edge),
+    0 30px 70px rgba(0, 0, 0, 0.35);
+}
+.wm-tablet .wm-screen {
+  inset: 18px;
+  border-radius: 22px;
+}
+
+/* Laptop: pantalla 760×480 + base. */
+.wm-laptop {
+  width: 760px;
+  height: 500px;
+}
+.wm-laptop .wm-lid {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 760px;
+  height: 480px;
+  border-radius: 22px 22px 6px 6px;
+  background: var(--wm-frame);
+  box-shadow: inset 0 0 0 2px var(--wm-edge);
+}
+.wm-laptop .wm-screen {
+  left: 16px;
+  right: 16px;
+  top: 16px;
+  bottom: 24px;
+  border-radius: 8px;
+}
+.wm-laptop::after {
+  content: "";
+  position: absolute;
+  left: -60px;
+  right: -60px;
+  bottom: 0;
+  height: 20px;
+  border-radius: 0 0 22px 22px;
+  background: linear-gradient(180deg, var(--wm-edge), var(--wm-frame));
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+}
+
+/* Reloj (220×260) con corona y correa. */
+.wm-watch {
+  width: 220px;
+  height: 260px;
+  border-radius: 58px;
+  background: var(--wm-frame);
+  box-shadow:
+    inset 0 0 0 2px var(--wm-edge),
+    0 24px 50px rgba(0, 0, 0, 0.35);
+}
+.wm-watch .wm-screen {
+  inset: 14px;
+  border-radius: 46px;
+}
+.wm-watch::before {
+  content: "";
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  top: -90px;
+  bottom: -90px;
+  border-radius: 34px;
+  /* Solo los tramos de arriba y abajo: sin z-index negativo. */
+  background: linear-gradient(
+    var(--wm-edge) 0 90px,
+    transparent 90px calc(100% - 90px),
+    var(--wm-edge) calc(100% - 90px)
+  );
+}
+.wm-watch::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 70px;
+  width: 12px;
+  height: 46px;
+  border-radius: 6px;
+  background: var(--wm-accent);
+}
+
+/* Ventana de navegador (880×560) con barra, puntos y URL. */
+.wm-browser {
+  width: 880px;
+  height: 560px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--wm-frame);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
+}
+.wm-browser .wm-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  background: var(--wm-edge);
+}
+.wm-browser .wm-bar i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff5f57;
+}
+.wm-browser .wm-bar i:nth-child(2) {
+  background: #febc2e;
+}
+.wm-browser .wm-bar i:nth-child(3) {
+  background: #28c840;
+}
+.wm-browser .wm-url {
+  flex: 1;
+  height: 26px;
+  margin-left: 20px;
+  border-radius: 13px;
+  background: var(--wm-frame);
+  color: #9a9aa2;
+  font:
+    500 13px/26px Inter,
+    sans-serif;
+  text-align: center;
+}
+.wm-browser .wm-screen {
+  left: 0;
+  right: 0;
+  top: 44px;
+  bottom: 0;
+}

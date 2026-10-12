@@ -1,6 +1,6 @@
 ---
 name: wissmotion-motion
-description: Kit de movimiento de WissMotion — 6 personalidades, 35 presets, 4 transiciones y 39 ejemplos seek-safe con pósters. Úsalo para animar composiciones con el look del producto.
+description: Kit de movimiento de WissMotion — 6 personalidades, 38 presets, 4 transiciones y 42 ejemplos seek-safe con pósters. Úsalo para animar composiciones con el look del producto.
 ---
 
 # WissMotion Motion
@@ -13,10 +13,10 @@ Fuente: `wissmotion/presets/motion/` (`personalities.json`, `presets.json`, `tra
 
 ## Presets (vars GSAP `from`/`to` + ejemplo)
 
-- Entrada (12): mask-reveal, stagger-words, blur-in, spring-pop, slide-stack, scale-fade, wipe, typewriter, stagger-chars, tracking-in (solo transforms: x en cascada, nunca letterSpacing), flip-3d, morph-box (contenedor píldora → tarjeta con clip-path; nunca width/height).
+- Entrada (13): mask-reveal, stagger-words, blur-in, spring-pop, slide-stack, scale-fade, wipe, typewriter, stagger-chars, tracking-in (solo transforms: x en cascada, nunca letterSpacing), flip-3d, morph-box (contenedor píldora → tarjeta con clip-path; nunca width/height), chart-bars (barras con scaleY desde la base).
 - Salida (2): fade-slide-out, blur-out.
-- Énfasis (8): pulse, highlight-sweep, underline-draw, counter-up, number-roll, shake, glow, negative-mask (forma con mix-blend-mode: difference encima del texto; del color del fondo = look Jitter, blanca = negativo).
-- Escena (13): device-mockup-scroll, browser-scroll, card-carousel, feature-grid, split-screen, logo-build, kinetic-type, card-stack (pila de tarjetas que rotan), marquee (filas alternas, texto duplicado → -50%), ring-carousel (anillo 3D preserve-3d), wall-pan (cámara sobre muro), gradient-columns (fondo procedural con tiras en Y), bento-shuffle (FLIP con data-dx/dy/ds).
+- Énfasis (9): pulse, highlight-sweep, underline-draw, counter-up, number-roll, shake, glow, negative-mask (forma con mix-blend-mode: difference encima del texto; del color del fondo = look Jitter, blanca = negativo), font-morph (fuente variable con ejes en la URL de Google Fonts).
+- Escena (14): device-mockup-scroll, browser-scroll, card-carousel, feature-grid, split-screen, logo-build, kinetic-type, card-stack (pila de tarjetas que rotan), marquee (filas alternas, texto duplicado → -50%), ring-carousel (anillo 3D preserve-3d), wall-pan (cámara sobre muro), gradient-columns (fondo procedural con tiras en Y), bento-shuffle (FLIP con data-dx/dy/ds), chart-morph (polygon con los mismos vértices: área → radar vía attr.points).
 - Transiciones (4): tr-push, tr-zoom-through, tr-morph, tr-whip (duración + solape + in/out).
 
 ## Reglas

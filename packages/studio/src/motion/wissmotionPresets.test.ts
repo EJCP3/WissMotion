@@ -2,12 +2,13 @@ import { describe, expect, it } from "vitest";
 import { loadMotionPresets, presetAddSpec } from "./wissmotionPresets";
 
 describe("wissmotionPresets", () => {
-  it("expone los 14 tweens planos (escenas y compuestos quedan fuera)", () => {
+  it("expone los 15 tweens planos (escenas y compuestos quedan fuera)", () => {
     const presets = loadMotionPresets();
     expect(presets.map((p) => p.id).sort()).toEqual(
       [
         "blur-in",
         "blur-out",
+        "chart-bars",
         "fade-slide-out",
         "flip-3d",
         "mask-reveal",

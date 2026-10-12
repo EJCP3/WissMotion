@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>font-morph · WissMotion</title>
+    <!-- Fuente variable con ejes en la URL: el inyector de fuentes del render la
+         incrusta respetando los ejes (sin red en tiempo de render). -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&display=block"
+    />
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #12122e;
+      }
+      #t {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 250px;
+        margin: 0;
+        text-align: center;
+        font-family: Anybody, sans-serif;
+        font-size: 150px;
+        line-height: 1;
+        color: #12b8ff;
+        transform-origin: 50% 55%;
+      }
+      .ch {
+        display: inline-block;
+        font-variation-settings:
+          "wdth" 150,
+          "wght" 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="font-morph"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <h1 id="t" class="clip" data-start="0" data-duration="3.2" data-track-index="0">
+        <span class="ch">M</span><span class="ch">O</span><span class="ch">R</span
+        ><span class="ch">P</span><span class="ch">H</span>
+      </h1>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        // Cada letra se "infla": de ancha y media a estrecha y negra, en cascada.
+        tl.fromTo(
+          "#t .ch",
+          { fontVariationSettings: '"wdth" 150, "wght" 500' },
+          {
+            fontVariationSettings: '"wdth" 50, "wght" 900',
+            duration: 0.9,
+            ease: "back.out(1.6)",
+            stagger: 0.12,
+          },
+          0.4,
+        );
+        // Y la palabra crece hasta llenar el cuadro (solo transform).
+        tl.to("#t", { scaleY: 3.6, scaleX: 1.5, duration: 1, ease: "expo.inOut" }, 1.9);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["font-morph"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

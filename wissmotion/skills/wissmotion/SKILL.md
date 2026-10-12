@@ -17,7 +17,8 @@ Producto: videos promocionales adaptados a la marca del usuario, editables a man
 ## Dónde vive cada cosa
 
 - `wissmotion/brand-kit/` — esquema v1, validador Ajv, extractor, biblioteca, tokens CSS.
-- `wissmotion/presets/motion/` — 6 personalidades, 35 presets, 4 transiciones, 39 ejemplos lint-clean + pósters.
+- `wissmotion/presets/motion/` — 6 personalidades, 38 presets, 4 transiciones, 42 ejemplos lint-clean + pósters.
+- `wissmotion/mockups/` — teléfono, tablet, laptop, reloj y navegador en CSS puro (tema claro/oscuro, acento de marca).
 - `wissmotion/templates/` — plantillas con `data-composition-variables` + instanciador.
 - `wissmotion/references/` — videos de referencia ya analizados: técnica, `recreate` (plantilla/preset/transición) y hoja de fotogramas. Si el usuario pide "como tal referencia", empieza aquí.
 - `wissmotion/render/` — lote por destinos con chequeo de aspecto.

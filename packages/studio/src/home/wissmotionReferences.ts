@@ -38,7 +38,7 @@ export interface WissmotionReference {
   duration: number;
   description: string;
   techniques: string[];
-  recreate: { templates: string[]; presets: string[]; transitions: string[] };
+  recreate: { templates: string[]; presets: string[]; transitions: string[]; mockups: string[] };
   status: ReferenceStatus;
   missing: string[];
   sheet: string;
@@ -78,11 +78,12 @@ export const WISSMOTION_REFERENCES: WissmotionReference[] = (
 
 /** Brief en texto plano para pegar en el Asistente o en un agente externo. */
 export function buildReferenceBrief(ref: WissmotionReference): string {
-  const { templates, presets, transitions } = ref.recreate;
+  const { templates, presets, transitions, mockups } = ref.recreate;
   const recreate = [
     templates.length > 0 ? `plantilla ${templates.join(", ")}` : "",
     presets.length > 0 ? `presets ${presets.join(", ")}` : "",
     transitions.length > 0 ? `transiciones ${transitions.join(", ")}` : "",
+    mockups.length > 0 ? `mockups ${mockups.join(", ")} (wissmotion/mockups/mockups.css)` : "",
   ].filter(Boolean);
   return [
     `Quiero un video como la referencia «${ref.title}» (${ref.aspect.join(" / ")}, ${ref.duration} s).`,

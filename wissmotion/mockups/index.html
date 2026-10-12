@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>mockups · WissMotion</title>
+    <link rel="stylesheet" href="mockups.css" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        --brand-primary: #7c5cff;
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: linear-gradient(160deg, #f4f1ec 0%, #dcd6cc 100%);
+      }
+      .wm-device {
+        position: absolute;
+      }
+      /* Pantallas de relleno con la marca; en un proyecto real va la captura. */
+      .fill {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(160deg, var(--brand-primary), #1d1440);
+      }
+      .fill.alt {
+        background: linear-gradient(160deg, #ffffff, #e9e4ff);
+      }
+      #browser {
+        left: 120px;
+        top: 120px;
+      }
+      #laptop {
+        left: 1060px;
+        top: 90px;
+      }
+      #phone {
+        left: 1080px;
+        top: 420px;
+      }
+      #tablet {
+        left: 1440px;
+        top: 360px;
+      }
+      #watch {
+        left: 560px;
+        top: 760px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="mockups"
+      data-start="0"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div
+        id="browser"
+        class="clip wm-device wm-browser"
+        data-start="0"
+        data-duration="3"
+        data-track-index="0"
+      >
+        <div class="wm-bar"><i></i><i></i><i></i><span class="wm-url">wissmotion.app</span></div>
+        <div class="wm-screen"><div class="fill alt"></div></div>
+      </div>
+      <div
+        id="laptop"
+        class="clip wm-device wm-laptop"
+        data-theme="light"
+        data-start="0"
+        data-duration="3"
+        data-track-index="1"
+      >
+        <div class="wm-lid">
+          <div class="wm-screen"><div class="fill"></div></div>
+        </div>
+      </div>
+      <div
+        id="phone"
+        class="clip wm-device wm-phone"
+        data-start="0"
+        data-duration="3"
+        data-track-index="2"
+      >
+        <div class="wm-screen"><div class="fill"></div></div>
+      </div>
+      <div
+        id="tablet"
+        class="clip wm-device wm-tablet"
+        data-theme="light"
+        data-start="0"
+        data-duration="3"
+        data-track-index="3"
+      >
+        <div class="wm-screen"><div class="fill alt"></div></div>
+      </div>
+      <div
+        id="watch"
+        class="clip wm-device wm-watch"
+        data-start="0"
+        data-duration="3"
+        data-track-index="4"
+      >
+        <div class="wm-screen"><div class="fill"></div></div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from(
+          ".wm-device",
+          { y: 60, opacity: 0, duration: 0.6, ease: "power3.out", stagger: 0.08 },
+          0.2,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["mockups"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

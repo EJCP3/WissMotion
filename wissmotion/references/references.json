@@ -17,14 +17,12 @@
       ],
       "recreate": {
         "templates": ["stats"],
-        "presets": ["scale-fade", "morph-box"],
-        "transitions": []
+        "presets": ["chart-morph", "morph-box"],
+        "transitions": [],
+        "mockups": []
       },
-      "status": "parcial",
-      "missing": [
-        "gráficas SVG con datos interpolables (área, barras, radar)",
-        "morph de forma entre tipos de gráfica"
-      ]
+      "status": "lista",
+      "missing": []
     },
     {
       "id": "antes-despues-boceto",
@@ -38,7 +36,8 @@
       "recreate": {
         "templates": ["antes-despues"],
         "presets": ["wipe"],
-        "transitions": []
+        "transitions": [],
+        "mockups": []
       },
       "status": "lista",
       "missing": []
@@ -63,7 +62,8 @@
       "recreate": {
         "templates": ["promo-app"],
         "presets": ["morph-box", "spring-pop", "blur-in"],
-        "transitions": []
+        "transitions": [],
+        "mockups": ["wm-phone"]
       },
       "status": "parcial",
       "missing": ["multiformato desde una plantilla (16:9 ↔ 9:16)"]
@@ -80,7 +80,8 @@
       "recreate": {
         "templates": ["lista-cinetica"],
         "presets": [],
-        "transitions": []
+        "transitions": [],
+        "mockups": []
       },
       "status": "parcial",
       "missing": ["variante de lista-cinetica con el fondo ligado a cada ítem"]
@@ -102,7 +103,8 @@
       "recreate": {
         "templates": ["stats"],
         "presets": ["card-stack", "counter-up", "slide-stack", "stagger-words"],
-        "transitions": []
+        "transitions": [],
+        "mockups": []
       },
       "status": "lista",
       "missing": []
@@ -119,7 +121,8 @@
       "recreate": {
         "templates": ["lista-cinetica"],
         "presets": [],
-        "transitions": []
+        "transitions": [],
+        "mockups": []
       },
       "status": "lista",
       "missing": []
@@ -136,7 +139,8 @@
       "recreate": {
         "templates": [],
         "presets": ["negative-mask"],
-        "transitions": []
+        "transitions": [],
+        "mockups": []
       },
       "status": "lista",
       "missing": []
@@ -153,7 +157,8 @@
       "recreate": {
         "templates": [],
         "presets": ["ring-carousel"],
-        "transitions": []
+        "transitions": [],
+        "mockups": []
       },
       "status": "lista",
       "missing": []
@@ -170,7 +175,8 @@
       "recreate": {
         "templates": [],
         "presets": ["gradient-columns"],
-        "transitions": []
+        "transitions": [],
+        "mockups": []
       },
       "status": "lista",
       "missing": []
@@ -187,10 +193,11 @@
       "recreate": {
         "templates": ["logo-sting"],
         "presets": ["logo-build", "feature-grid", "bento-shuffle"],
-        "transitions": []
+        "transitions": [],
+        "mockups": ["wm-watch", "wm-laptop", "wm-phone"]
       },
-      "status": "parcial",
-      "missing": ["mockups de dispositivos y productos"]
+      "status": "lista",
+      "missing": []
     },
     {
       "id": "editorial-letra",
@@ -204,7 +211,8 @@
       "recreate": {
         "templates": [],
         "presets": ["negative-mask", "scale-fade"],
-        "transitions": []
+        "transitions": [],
+        "mockups": []
       },
       "status": "lista",
       "missing": []
@@ -220,11 +228,12 @@
       "techniques": ["giro 3D de tarjeta", "gráfica de barras", "cambio de pestaña"],
       "recreate": {
         "templates": ["stats"],
-        "presets": ["flip-3d"],
-        "transitions": []
+        "presets": ["flip-3d", "chart-bars"],
+        "transitions": [],
+        "mockups": []
       },
-      "status": "parcial",
-      "missing": ["gráficas UI con datos interpolables"]
+      "status": "lista",
+      "missing": []
     },
     {
       "id": "motion-letras",
@@ -238,7 +247,8 @@
       "recreate": {
         "templates": [],
         "presets": ["stagger-chars"],
-        "transitions": []
+        "transitions": [],
+        "mockups": []
       },
       "status": "lista",
       "missing": []
@@ -259,7 +269,8 @@
       "recreate": {
         "templates": ["promo-web"],
         "presets": ["browser-scroll", "typewriter"],
-        "transitions": []
+        "transitions": [],
+        "mockups": ["wm-browser"]
       },
       "status": "lista",
       "missing": []
@@ -276,7 +287,8 @@
       "recreate": {
         "templates": [],
         "presets": ["tracking-in"],
-        "transitions": []
+        "transitions": [],
+        "mockups": []
       },
       "status": "lista",
       "missing": []
@@ -292,11 +304,12 @@
       "techniques": ["morph de tipografía", "escala a pantalla completa"],
       "recreate": {
         "templates": [],
-        "presets": [],
-        "transitions": []
+        "presets": ["font-morph"],
+        "transitions": [],
+        "mockups": []
       },
-      "status": "falta",
-      "missing": ["animar ejes de una fuente variable o morph SVG de letras"]
+      "status": "lista",
+      "missing": []
     },
     {
       "id": "zoom-marcos",
@@ -310,7 +323,8 @@
       "recreate": {
         "templates": [],
         "presets": ["typewriter"],
-        "transitions": ["tr-zoom-through"]
+        "transitions": ["tr-zoom-through"],
+        "mockups": []
       },
       "status": "lista",
       "missing": []
@@ -327,7 +341,8 @@
       "recreate": {
         "templates": [],
         "presets": ["wall-pan"],
-        "transitions": []
+        "transitions": [],
+        "mockups": []
       },
       "status": "lista",
       "missing": []
@@ -349,7 +364,8 @@
       "recreate": {
         "templates": [],
         "presets": ["blur-in", "blur-out"],
-        "transitions": ["tr-whip"]
+        "transitions": ["tr-whip"],
+        "mockups": []
       },
       "status": "parcial",
       "missing": [
@@ -373,7 +389,8 @@
       "recreate": {
         "templates": [],
         "presets": ["stagger-words", "highlight-sweep"],
-        "transitions": []
+        "transitions": [],
+        "mockups": []
       },
       "status": "parcial",
       "missing": ["película multi-escena (hoy: agente + /product-launch-video)"]
@@ -395,7 +412,8 @@
       "recreate": {
         "templates": [],
         "presets": ["marquee", "kinetic-type", "logo-build", "spring-pop"],
-        "transitions": []
+        "transitions": [],
+        "mockups": []
       },
       "status": "parcial",
       "missing": ["película multi-escena (hoy: agente + /product-launch-video)"]

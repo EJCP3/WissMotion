@@ -548,6 +548,56 @@
           "scale": 1
         }
       }
+    },
+    "chart-bars": {
+      "kind": "entrada",
+      "description": "Barras que crecen desde la base hasta su dato. Altura completa en CSS y el valor como scaleY (p. ej. leído de data-v); repite el tween con otros valores para cambiar de datos. Solo transforms.",
+      "ease": "power3.out",
+      "duration": 0.8,
+      "stagger": 0.06,
+      "gsap": {
+        "from": {
+          "scaleY": 0,
+          "transformOrigin": "50% 100%"
+        },
+        "to": {
+          "scaleY": 1,
+          "transformOrigin": "50% 100%"
+        }
+      }
+    },
+    "chart-morph": {
+      "kind": "escena",
+      "description": "Gráfica SVG que cambia de datos y de tipo (área → radar): un <polygon> con el MISMO número de vértices en cada estado y GSAP interpola attr.points. Los valores son de ejemplo (8 vértices).",
+      "ease": "expo.inOut",
+      "duration": 1.1,
+      "gsap": {
+        "from": {
+          "attr": {
+            "points": "60,260 60,150 156,110 252,60 348,120 444,170 540,130 540,260"
+          }
+        },
+        "to": {
+          "attr": {
+            "points": "229.3,200.7 220.0,130.0 222.2,52.2 300.0,60.0 374.2,55.8 390.0,130.0 367.2,197.2 300.0,215.0"
+          }
+        }
+      }
+    },
+    "font-morph": {
+      "kind": "énfasis",
+      "description": "Letras que se transforman con una fuente variable (ejes en la URL de Google Fonts, p. ej. Anybody wdth,wght): font-variation-settings en cascada por <span class=ch>. Remata con scale para llenar el cuadro.",
+      "ease": "back.out(1.6)",
+      "duration": 0.9,
+      "stagger": 0.12,
+      "gsap": {
+        "from": {
+          "fontVariationSettings": "\"wdth\" 150, \"wght\" 500"
+        },
+        "to": {
+          "fontVariationSettings": "\"wdth\" 50, \"wght\" 900"
+        }
+      }
     }
   }
 }

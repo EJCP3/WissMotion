@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>chart-morph · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: linear-gradient(180deg, #4a3f55 0%, #8a7b96 100%);
+      }
+      #card {
+        position: absolute;
+        left: 320px;
+        top: 130px;
+        width: 640px;
+        height: 460px;
+        box-sizing: border-box;
+        padding: 28px 20px;
+        border-radius: 36px;
+        background: #f3c6f7;
+        font-family: Inter, sans-serif;
+        color: #2a1a33;
+      }
+      #card h2 {
+        margin: 0 0 20px;
+        font-size: 22px;
+        font-weight: 600;
+      }
+      #chart {
+        display: block;
+      }
+      /* La rejilla del radar aparece al transformarse: oculta desde CSS. */
+      #grid {
+        opacity: 0;
+      }
+      #labels {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 40px 0;
+        font-size: 16px;
+        color: #7a5a86;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="chart-morph"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="card" class="clip" data-start="0" data-duration="4.4" data-track-index="0">
+        <h2>Activity history</h2>
+        <!-- Mismo número de vértices (8) en área A, área B y radar: GSAP
+             interpola el atributo points número a número. -->
+        <svg id="chart" width="600" height="270" viewBox="0 0 600 270">
+          <g id="grid" fill="none" stroke="#7a5a86" stroke-opacity="0.35">
+            <polygon
+              points="257.6,172.4 240.0,130.0 257.6,87.6 300.0,70.0 342.4,87.6 360.0,130.0 342.4,172.4 300.0,190.0"
+            />
+            <polygon
+              points="215.1,214.9 180.0,130.0 215.1,45.1 300.0,10.0 384.9,45.1 420.0,130.0 384.9,214.9 300.0,250.0"
+            />
+          </g>
+          <polygon
+            id="shape"
+            points="60,260 60,150 156,110 252,60 348,120 444,170 540,130 540,260"
+            fill="#c86bd6"
+            fill-opacity="0.55"
+            stroke="#a347b3"
+            stroke-width="3"
+          />
+        </svg>
+        <div id="labels">
+          <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span
+          ><span>Jun</span>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        // 1) Cambio de datos dentro del mismo tipo de gráfica.
+        tl.to(
+          "#shape",
+          {
+            attr: { points: "60,260 60,90 156,170 252,140 348,80 444,120 540,60 540,260" },
+            duration: 0.9,
+            ease: "power3.inOut",
+          },
+          0.6,
+        );
+        // 2) Área → radar, con cambio de tema de la tarjeta.
+        tl.to(
+          "#shape",
+          {
+            attr: {
+              points:
+                "229.3,200.7 220.0,130.0 222.2,52.2 300.0,60.0 374.2,55.8 390.0,130.0 367.2,197.2 300.0,215.0",
+            },
+            fill: "#6f8fe0",
+            stroke: "#4c6cc4",
+            duration: 1.1,
+            ease: "expo.inOut",
+          },
+          2,
+        );
+        tl.to("#card", { backgroundColor: "#cfe0fb", duration: 1.1, ease: "expo.inOut" }, 2);
+        tl.to("#labels", { opacity: 0, duration: 0.4, ease: "power2.out" }, 2);
+        tl.to("#grid", { opacity: 1, duration: 0.6, ease: "power2.out" }, 2.5);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["chart-morph"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

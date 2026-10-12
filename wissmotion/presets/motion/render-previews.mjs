@@ -50,6 +50,9 @@ const TIMES = {
   "wall-pan": 1.6,
   "gradient-columns": 2,
   "bento-shuffle": 0.9,
+  "chart-bars": 0.7,
+  "chart-morph": 2.6,
+  "font-morph": 1.1,
 };
 
 export function previewTime(id) {

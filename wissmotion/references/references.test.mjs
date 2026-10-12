@@ -12,6 +12,13 @@ const { references } = readJson(join(here, "references.json"));
 const known = {
   presets: new Set(Object.keys(readJson(join(motion, "presets.json")).presets)),
   transitions: new Set(Object.keys(readJson(join(motion, "transitions.json")).transitions)),
+  mockups: new Set(
+    [
+      ...readFileSync(join(here, "..", "mockups", "mockups.css"), "utf8").matchAll(
+        /^.(wm-[a-z]+) {/gm,
+      ),
+    ].map((m) => m[1]),
+  ),
   templates: new Set(
     readdirSync(join(here, "..", "templates"), { withFileTypes: true })
       .filter((d) => d.isDirectory())
