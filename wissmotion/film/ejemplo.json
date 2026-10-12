@@ -1,0 +1,22 @@
+{
+  "name": "acme-lanzamiento",
+  "format": "16:9",
+  "brand": "../brand-kit/brand.example.json",
+  "transition": { "type": "fade", "duration": 0.5 },
+  "scenes": [
+    {
+      "template": "logo-sting",
+      "transition": { "type": "zoomin", "duration": 0.6 }
+    },
+    {
+      "template": "promo-app",
+      "vars": { "feature1": "Edita a mano o con IA", "ctaLabel": "Pruébala gratis" },
+      "transition": { "type": "slideleft", "duration": 0.5 }
+    },
+    {
+      "template": "stats",
+      "transition": { "type": "circleopen", "duration": 0.6 }
+    },
+    { "template": "oferta" }
+  ]
+}

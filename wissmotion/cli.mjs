@@ -3,7 +3,7 @@
 // todo el producto sin recordar rutas. Despacha a los scripts existentes:
 //   node wissmotion/cli.mjs <comando> [args]
 // Comandos: mcp, brand-validate, brand-extract, brands, template, instantiate,
-//   templateize, render, voiceover, captions, beats, package, agents, help.
+//   templateize, render, voiceover, captions, beats, package, agents, film, help.
 import { spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -47,6 +47,10 @@ const COMMANDS = {
     help: "--export dir --out x.wissmotion | --import x.wissmotion --out dir",
   },
   agents: { file: ["server", "agents-setup.mjs"], help: "--list | --write <agente>" },
+  film: {
+    file: ["film", "film.mjs"],
+    help: "--storyboard p.json --out dir [--format 9:16] | --review dir",
+  },
 };
 
 export function usage() {

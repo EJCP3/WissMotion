@@ -24,7 +24,7 @@ function runCli(...args) {
 }
 
 describe("cli.mjs unificado", () => {
-  it("usage lista los 12 comandos", () => {
+  it("usage lista los 13 comandos", () => {
     const help = usage();
     for (const name of [
       "mcp",
@@ -39,6 +39,7 @@ describe("cli.mjs unificado", () => {
       "beats",
       "package",
       "agents",
+      "film",
     ]) {
       assert.ok(help.includes(name), name);
     }

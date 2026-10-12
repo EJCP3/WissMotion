@@ -1,0 +1,145 @@
+<!doctype html>
+<html
+  lang="es"
+  data-composition-variables='[
+    {"id":"word","type":"string","label":"Palabra","default":"motion"},
+    {"id":"kicker","type":"string","label":"Etiqueta superior","default":"CASO DE USO · MOTION GRAPHICS"},
+    {"id":"brandBackground","type":"color","label":"Fondo","default":"#f3f1ec"},
+    {"id":"brandText","type":"color","label":"Texto","default":"#111111"},
+    {"id":"brandAccent","type":"color","label":"Punto de acento","default":"#e8613c"},
+    {"id":"brandHeading","type":"string","label":"Fuente titulares","default":"Inter"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      data-wm-fonts
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block"
+    />
+    <title>Palabra · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: var(--brandBackground);
+      }
+      #kicker {
+        position: absolute;
+        left: 40px;
+        top: 34px;
+        margin: 0;
+        font: 600 14px var(--brandHeading);
+        letter-spacing: 3px;
+        color: var(--brandText);
+        opacity: 0.55;
+      }
+      #word {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 270px;
+        margin: 0;
+        text-align: center;
+        font: 800 150px/1 var(--brandHeading);
+        letter-spacing: -0.04em;
+        color: var(--brandText);
+      }
+      #word .dot {
+        color: var(--brandAccent);
+      }
+
+      /* ── Multiformato (wissmotion/templates/formats.mjs) ── */
+      /* 9:16 — vertical para Reels/TikTok/Shorts */
+      #stage[data-format="9:16"] #kicker {
+        left: 60px;
+        top: 90px;
+        font-size: 24px;
+      }
+      #stage[data-format="9:16"] #word {
+        left: 30px;
+        right: 30px;
+        top: 860px;
+        font-size: 190px;
+      }
+      /* 1:1 — cuadrado */
+      #stage[data-format="1:1"] #kicker {
+        left: 50px;
+        top: 50px;
+        font-size: 18px;
+      }
+      #stage[data-format="1:1"] #word {
+        left: 20px;
+        right: 20px;
+        top: 450px;
+        font-size: 170px;
+      }
+      /* 4:5 — feed */
+      #stage[data-format="4:5"] #kicker {
+        left: 50px;
+        top: 60px;
+        font-size: 18px;
+      }
+      #stage[data-format="4:5"] #word {
+        left: 20px;
+        right: 20px;
+        top: 580px;
+        font-size: 170px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="palabra"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <p
+        id="kicker"
+        class="clip"
+        data-start="0"
+        data-duration="2.6"
+        data-track-index="0"
+        data-var-text="kicker"
+      >
+        CASO DE USO · MOTION GRAPHICS
+      </p>
+      <h1 id="word" class="clip" data-start="0" data-duration="2.6" data-track-index="1">
+        <span data-var-text="word">motion</span><span class="dot">.</span>
+      </h1>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        // Entra y sale con desenfoque de movimiento en la dirección del viaje.
+        tl.fromTo(
+          "#word",
+          { x: -90, opacity: 0, filter: "blur(18px)" },
+          { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.55, ease: "expo.out" },
+          0.1,
+        );
+        tl.fromTo(
+          "#kicker",
+          { opacity: 0 },
+          { opacity: 0.55, duration: 0.4, ease: "power2.out" },
+          0.2,
+        );
+        tl.to(
+          "#word",
+          { x: 90, opacity: 0, filter: "blur(18px)", duration: 0.45, ease: "expo.in" },
+          2.1,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["palabra"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

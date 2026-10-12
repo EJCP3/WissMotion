@@ -1,0 +1,10 @@
+{
+  "id": "palabra",
+  "name": "Palabra cinética",
+  "description": "Una palabra gigante con punto de acento que entra y sale con desenfoque de movimiento. Encadena varias en una película (estilo launch film). 2,6 s. Multiformato.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 2.6,
+  "formats": ["16:9", "9:16", "1:1", "4:5"]
+}

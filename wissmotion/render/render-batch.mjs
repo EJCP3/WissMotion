@@ -6,10 +6,11 @@
 // (1280×720: el upscale a 1080p exige factor no entero y el CLI lo rechaza).
 // Si el aspecto no coincide pero el index.html trae layout para ese formato
 // (CSS [data-format="9:16"], ver templates/formats.mjs), se genera
-// .format-9x16.html desde el index.html actual y se renderiza con -c; si no,
+// .format-9x16.html desde el index.html actual, se renderiza con --composition
+// y se borra al terminar; si no,
 // se omite con aviso (salvo --force). Deja renders/<nombre>.<dest>.<ext> + manifest.json.
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -140,6 +141,9 @@ export async function runBatch({
       timeout: 1_800_000,
       stdio: "inherit",
     });
+    // Fuera tras el render: un segundo HTML raíz en el proyecto rompe el lint
+    // (multiple_root_compositions) y podría duplicar audio en el Studio.
+    if (job.composition) rmSync(join(project, job.composition), { force: true });
     results.push({ dest: job.dest, file, ok: r.status === 0 && existsSync(file) });
   }
   const manifest = { project: name, aspect, at: new Date().toISOString(), results };

@@ -4,11 +4,12 @@
 // Copia index.html, fusiona variables (marca + contenido) a variables.json y
 // deja el comando de render listo en README.md. El render usa
 // `--variables-file` (y `--strict-variables` en CI).
-import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateBrand } from "../brand-kit/validate-brand.mjs";
 import { applyFormat, supportedFormats } from "./formats.mjs";
+import { brandFontsLink } from "./fonts.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const TYPES = new Set(["string", "number", "color", "boolean", "enum"]);
@@ -92,11 +93,15 @@ export async function instantiate({
   if (unknown.length > 0) throw new Error(`variables no declaradas: ${unknown.join(", ")}`);
 
   await mkdir(outDir, { recursive: true });
-  if (format && format !== manifest.format) {
-    await writeFile(join(outDir, "index.html"), applyFormat(html, format), "utf8");
-  } else {
-    await copyFile(join(dir, "index.html"), join(outDir, "index.html"));
-  }
+  // Formato pedido + <link> de Google Fonts con las fuentes efectivas (sin él,
+  // el render no incrusta la fuente de marca y cae a Times; ver fonts.mjs).
+  const effective = Object.fromEntries(declared.map((v) => [v.id, overrides[v.id] ?? v.default]));
+  const formatted = format && format !== manifest.format ? applyFormat(html, format) : html;
+  await writeFile(
+    join(outDir, "index.html"),
+    brandFontsLink(formatted, effective, brand.fonts?.weights),
+    "utf8",
+  );
   await writeFile(
     join(outDir, "variables.json"),
     `${JSON.stringify(overrides, null, 2)}\n`,

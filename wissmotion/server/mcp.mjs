@@ -11,7 +11,8 @@ import { validateBrand } from "../brand-kit/validate-brand.mjs";
 import { extractBrand } from "../brand-kit/extract-lib.mjs";
 import { getBrand, listBrands, resolveLibraryDir, saveBrand } from "../brand-kit/brand-library.mjs";
 import { instantiate, parseDeclaredVariables } from "../templates/instantiate.mjs";
-import { planBatch, readCompositionSize, DEST_IDS } from "../render/render-batch.mjs";
+import { formatsIn, planBatch, readCompositionSize, DEST_IDS } from "../render/render-batch.mjs";
+import { buildFilm, reviewFilm } from "../film/film.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "..");
@@ -189,12 +190,53 @@ const TOOLS = [
     },
     run: async ({ project, dest, quality }) => {
       const { aspect } = await readCompositionSize(project);
+      const formats = formatsIn(await readFile(join(project, "index.html"), "utf8"));
       return text({
         aspect,
+        formats,
         destinations: DEST_IDS,
-        plan: planBatch({ dest: dest ?? "all", aspect, quality }),
+        plan: planBatch({ dest: dest ?? "all", aspect, quality, formats }),
       });
     },
+  },
+  {
+    def: {
+      name: "film_build",
+      description:
+        "Película de varias escenas desde un storyboard (escenas = plantillas con marca, transiciones xfade, música opcional). dryRun solo instancia las escenas.",
+      inputSchema: {
+        type: "object",
+        required: ["storyboard", "out"],
+        properties: {
+          storyboard: { type: "object" },
+          out: { type: "string" },
+          baseDir: { type: "string" },
+          format: { type: "string", enum: ["16:9", "9:16", "1:1", "4:5"] },
+          quality: { type: "string" },
+          dryRun: { type: "boolean" },
+        },
+      },
+    },
+    run: async ({ storyboard, out, baseDir, format, quality, dryRun }) =>
+      text(
+        await buildFilm({
+          storyboard,
+          outDir: out,
+          baseDir: baseDir ?? process.cwd(),
+          format,
+          quality,
+          dryRun: Boolean(dryRun),
+        }),
+      ),
+  },
+  {
+    def: {
+      name: "film_review",
+      description:
+        "Revisa una película construida: hyperframes check por escena + hoja de 12 fotogramas (review/pelicula.jpg, léela con visión antes de entregar).",
+      inputSchema: { type: "object", required: ["out"], properties: { out: { type: "string" } } },
+    },
+    run: async ({ out }) => text(await reviewFilm({ outDir: out })),
   },
 ];
 

@@ -25,3 +25,46 @@ export function applyFormat(html: string, format: string): string {
   );
   return html.slice(0, root.index) + tag + html.slice(root.index + root[0].length);
 }
+
+// Espejo de wissmotion/templates/fonts.mjs: <link data-wm-fonts> de Google
+// Fonts con las fuentes de marca (el render no ve var(--brandHeading)).
+const GENERIC_FONTS = new Set([
+  "serif",
+  "sans-serif",
+  "monospace",
+  "system-ui",
+  "cursive",
+  "fantasy",
+]);
+export const DEFAULT_WEIGHTS = [400, 500, 600, 700, 800];
+
+export function fontsHref(families: unknown[], weights: number[] = DEFAULT_WEIGHTS): string | null {
+  const names = [
+    ...new Set(
+      families.map((f) => String(f ?? "").trim()).filter((f) => f && !GENERIC_FONTS.has(f)),
+    ),
+  ];
+  if (names.length === 0) return null;
+  const w = [...new Set(weights)].sort((a, b) => a - b).join(";");
+  const params = names.map((n) => `family=${n.replace(/ /g, "+")}:wght@${w}`);
+  return `https://fonts.googleapis.com/css2?${params.join("&")}&display=block`;
+}
+
+export function withFontLink(html: string, href: string | null): string {
+  if (!href) return html;
+  const tag = `<link data-wm-fonts rel="stylesheet" href="${href.replace(/&/g, "&amp;")}" />`;
+  if (/<link\s+data-wm-fonts[^>]*>/.test(html)) {
+    return html.replace(/<link\s+data-wm-fonts[^>]*>/, tag);
+  }
+  if (html.includes("<title>")) return html.replace("<title>", `${tag}\n    <title>`);
+  return html.replace("</head>", `    ${tag}\n  </head>`);
+}
+
+export function brandFontsLink(
+  html: string,
+  values: Record<string, unknown>,
+  weights?: number[],
+): string {
+  const w = weights?.length ? [...weights, 700] : DEFAULT_WEIGHTS;
+  return withFontLink(html, fontsHref([values.brandHeading, values.brandBody], w));
+}

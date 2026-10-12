@@ -1,0 +1,53 @@
+{
+  "name": "skills-launch",
+  "format": "16:9",
+  "brand": "../brand-kit/brand.example.json",
+  "transition": { "type": "fadeblack", "duration": 0.3 },
+  "scenes": [
+    {
+      "template": "palabra",
+      "vars": {
+        "word": "browse",
+        "kicker": "CATÁLOGO · EXPLORA",
+        "brandBackground": "#111111",
+        "brandText": "#f3f1ec",
+        "brandAccent": "#e8613c"
+      }
+    },
+    {
+      "template": "palabra",
+      "vars": {
+        "word": "motion",
+        "kicker": "CASO DE USO · MOTION GRAPHICS",
+        "brandBackground": "#f3f1ec",
+        "brandText": "#111111",
+        "brandAccent": "#e8613c"
+      }
+    },
+    {
+      "template": "palabra",
+      "vars": {
+        "word": "connect",
+        "kicker": "CONECTA · SIN API KEY",
+        "brandBackground": "#e07a5f",
+        "brandText": "#ffffff",
+        "brandAccent": "#111111"
+      },
+      "transition": { "type": "smoothleft", "duration": 0.4 }
+    },
+    {
+      "template": "promo-web",
+      "transition": { "type": "fadeblack", "duration": 0.3 }
+    },
+    {
+      "template": "palabra",
+      "vars": {
+        "word": "ships",
+        "kicker": "SALIDA · LISTO PARA PUBLICAR",
+        "brandBackground": "#111111",
+        "brandText": "#ffffff",
+        "brandAccent": "#e8613c"
+      }
+    }
+  ]
+}

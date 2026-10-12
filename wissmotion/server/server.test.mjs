@@ -54,9 +54,9 @@ function textOf(result) {
 }
 
 describe("mcp.mjs (stdio)", () => {
-  it("tools/list expone 9 herramientas", async () => {
+  it("tools/list expone 11 herramientas", async () => {
     const { tools } = await send("tools/list", {});
-    assert.equal(tools.length, 9);
+    assert.equal(tools.length, 11);
     assert.ok(tools.some((t) => t.name === "template_instantiate"));
   });
 
@@ -108,11 +108,11 @@ describe("mcp.mjs (stdio)", () => {
     }
   });
 
-  it("template_list trae 13 plantillas con variables", async () => {
+  it("template_list trae 14 plantillas con variables", async () => {
     const list = JSON.parse(
       textOf(await send("tools/call", { name: "template_list", arguments: {} })),
     );
-    assert.equal(list.length, 13);
+    assert.equal(list.length, 14);
     const app = list.find((t) => t.id === "promo-app");
     assert.ok(app.variables.some((v) => v.id === "brandPrimary" && v.type === "color"));
   });

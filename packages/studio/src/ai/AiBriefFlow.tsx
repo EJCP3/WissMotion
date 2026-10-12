@@ -3,7 +3,19 @@ import { Button, Input, Select } from "../ui";
 import { useLanguage } from "../i18n/LanguageContext";
 import { draftStoryboard, type StoryboardScene } from "./localDraft";
 import { WISSMOTION_TEMPLATES } from "../home/wissmotionTemplates";
-import { installWissmotionTemplate } from "../home/wissmotionInstall";
+import { installWissmotionTemplate, saveProjectJson } from "../home/wissmotionInstall";
+import { readStoredBrand } from "../brand/useBrandKit";
+
+/** Nombre de película válido para wissmotion/film (slug a-z0-9-). */
+export function filmSlug(text: string): string {
+  const slug = text
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return slug || "pelicula";
+}
 
 interface EditableScene extends StoryboardScene {
   beatText: string;
@@ -29,6 +41,7 @@ export function AiBriefFlow({
   const [working, setWorking] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [created, setCreated] = useState<string[] | null>(null);
+  const [filmPath, setFilmPath] = useState<string | null>(null);
 
   const generate = () => {
     const { beats, scenes } = draftStoryboard({ producto: producto || "Mi producto", publico });
@@ -62,6 +75,17 @@ export function AiBriefFlow({
           }),
         );
       }
+      // Storyboard para unir las escenas en una película (wissmotion/film).
+      const brand = readStoredBrand(projectId);
+      setFilmPath(
+        await saveProjectJson(projectId, "pelicula.json", {
+          name: filmSlug(producto),
+          format: "16:9",
+          ...(brand ? { brand } : {}),
+          transition: { type: "fade", duration: 0.5 },
+          scenes: plan.map((scene) => ({ template: scene.plantilla, vars: scene.vars })),
+        }),
+      );
       setCreated(paths);
       onOpenProject(projectId, paths[0]);
     } catch (e) {
@@ -125,6 +149,14 @@ export function AiBriefFlow({
           <p role="status" className="text-step-12 text-text-2">
             {t("brief.created")}: {created.length}
           </p>
+          {filmPath ? (
+            <p className="text-step-12 text-text-2">
+              {t("brief.filmSaved")}: <code className="font-mono">{filmPath}</code> →{" "}
+              <code className="font-mono">
+                wissmotion film --storyboard {filmPath} --out pelicula
+              </code>
+            </p>
+          ) : null}
           <div>
             <Button variant="ghost" onClick={() => onOpenProject(projectId, created[0])}>
               {t("brief.openFirst")}

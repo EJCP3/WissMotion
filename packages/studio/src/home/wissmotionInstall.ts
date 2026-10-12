@@ -2,7 +2,7 @@ import { buildProjectApiPath } from "../utils/projectRouting";
 import { studioApiFetch } from "../utils/studioApiFetch";
 import { readStoredBrand } from "../brand/useBrandKit";
 import type { BrandV1 } from "../brand/brandTypes";
-import { applyFormat } from "./templateFormats";
+import { applyFormat, brandFontsLink } from "./templateFormats";
 import type { WissmotionTemplate } from "./wissmotionTemplates";
 
 // brand.json → ids de variable estándar (espejo de BRAND_MAP en
@@ -84,6 +84,17 @@ async function putNewFile(
   throw new Error(`write ${lastStatus}`);
 }
 
+/** Guarda un JSON nuevo en el proyecto (sufijo -2, -3… si ya existe). */
+export function saveProjectJson(projectId: string, name: string, data: unknown): Promise<string> {
+  return putNewFile(
+    projectId,
+    name,
+    `${JSON.stringify(data, null, 2)}
+`,
+    "application/json",
+  );
+}
+
 /**
  * Instala una plantilla WissMotion en el proyecto: HTML con la marca
  * horneada + variables.json (solo si no existe). Devuelve la ruta para
@@ -102,7 +113,8 @@ export async function installWissmotionTemplate(
   const brand = opts && "brand" in opts ? (opts.brand ?? null) : readStoredBrand(projectId);
   const values = { ...mergeTemplateVariables(template, brand), ...(opts?.vars ?? {}) };
   const format = opts?.format && opts.format !== template.format ? opts.format : null;
-  const html = format ? applyFormat(template.html, format) : template.html;
+  const formatted = format ? applyFormat(template.html, format) : template.html;
+  const html = brandFontsLink(formatted, values, brand?.fonts?.weights);
   const baseName =
     opts?.fileName ?? `${template.id}${format ? `-${format.replace(":", "x")}` : ""}.html`;
   const compPath = await putNewFile(

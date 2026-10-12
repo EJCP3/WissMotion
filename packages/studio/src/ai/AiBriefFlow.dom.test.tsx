@@ -67,6 +67,9 @@ describe("AiBriefFlow", () => {
       (p) => p.url.includes("/files/") && p.body.includes("data-composition-id"),
     );
     expect(htmlPuts).toHaveLength(3);
+    const film = puts.find((p) => p.url.includes("pelicula.json"));
+    expect(JSON.parse(film?.body ?? "{}")).toMatchObject({ name: "mi-app", format: "16:9" });
+    expect(JSON.parse(film?.body ?? "{}").scenes).toHaveLength(3);
     expect(opened).toEqual([{ id: "p1", comp: "compositions/escena-1-logo-sting.html" }]);
     expect(host.textContent).toContain("Composiciones creadas");
   });

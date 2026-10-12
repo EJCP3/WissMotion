@@ -1,4 +1,4 @@
-// Catálogo WissMotion para la galería del Home: las 12 plantillas con su
+// Catálogo WissMotion para la galería del Home: las plantillas con su
 // HTML (generado), manifiesto, póster y variables parseadas. El HTML viaja
 // en wissmotionTemplates.generated.ts (ver wissmotion/sync-templates.mjs)
 // porque tsup no entiende ?raw; los PNG sí pasan como assets. En dev,
@@ -31,6 +31,8 @@ import historiaManifest from "../../../../wissmotion/templates/historia/template
 import historiaPoster from "../../../../wissmotion/templates/historia/preview.png";
 import listaCineticaManifest from "../../../../wissmotion/templates/lista-cinetica/template.json";
 import listaCineticaPoster from "../../../../wissmotion/templates/lista-cinetica/preview.png";
+import palabraManifest from "../../../../wissmotion/templates/palabra/template.json";
+import palabraPoster from "../../../../wissmotion/templates/palabra/preview.png";
 
 export interface WissmotionTemplateVariable {
   id: string;
@@ -115,4 +117,5 @@ export const WISSMOTION_TEMPLATES: WissmotionTemplate[] = [
   entry("antes-despues", antesDespuesManifest, antesDespuesPoster),
   entry("historia", historiaManifest, historiaPoster),
   entry("lista-cinetica", listaCineticaManifest, listaCineticaPoster),
+  entry("palabra", palabraManifest, palabraPoster),
 ];
