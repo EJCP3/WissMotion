@@ -10,7 +10,7 @@ Producto: videos promocionales adaptados a la marca del usuario, editables a man
 ## Pipeline canónico
 
 1. **Marca**: extraer (`brand_extract` / `extract-from-url.mjs`), validar, guardar en biblioteca, o editar en el panel Marca del Studio.
-2. **Plantilla**: elegir en `template_list` (14: promo-app, promo-web, logo-sting, feature-highlight, stats, testimonios, oferta, precios, evento, lanzamiento, antes-después, historia 9:16, lista-cinetica 9:16, palabra).
+2. **Plantilla**: elegir en `template_list` (16: promo-app, promo-web, logo-sting, feature-highlight, stats, testimonios, oferta, precios, evento, lanzamiento, antes-después, historia 9:16, lista-cinetica 9:16, palabra, tabla-ui, fichas-logo).
 3. **Instanciar**: `template_instantiate` (marca de biblioteca o inline + vars de contenido) → proyecto con `index.html` + `variables.json` + `brand.json`.
 4. **Render**: `render_plan` para ver destinos; `render-batch.mjs` para MP4/WebM/GIF por destino (youtube, reels, tiktok, shorts, linkedin, x, hero…).
 

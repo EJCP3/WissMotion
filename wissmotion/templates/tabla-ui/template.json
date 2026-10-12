@@ -1,0 +1,10 @@
+{
+  "id": "tabla-ui",
+  "name": "Tabla de producto (UI)",
+  "description": "Titular y tabla de producto: filas en cascada con etiquetas de color y una columna que se resalta. Para catálogos, comparativas y features. 5 s. Multiformato.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 5,
+  "formats": ["16:9", "9:16", "1:1", "4:5"]
+}

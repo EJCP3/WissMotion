@@ -1,0 +1,38 @@
+{
+  "name": "estudio-marca",
+  "format": "16:9",
+  "brand": "../brand-kit/brand.example.json",
+  "transition": { "type": "fadeblack", "duration": 0.3 },
+  "scenes": [
+    {
+      "template": "palabra",
+      "vars": {
+        "word": "decide",
+        "kicker": "TU CATÁLOGO · TUS REGLAS",
+        "brandBackground": "#111111",
+        "brandText": "#f3f1ec",
+        "brandAccent": "#ff5a36"
+      },
+      "transition": { "type": "fadewhite", "duration": 0.35 }
+    },
+    {
+      "template": "tabla-ui",
+      "vars": { "title": "Tú decides." },
+      "transition": { "type": "smoothleft", "duration": 0.45 }
+    },
+    {
+      "template": "palabra",
+      "vars": {
+        "word": "ships",
+        "kicker": "SALIDA · LISTO PARA PUBLICAR",
+        "brandBackground": "#5b3df5",
+        "brandText": "#ffffff",
+        "brandAccent": "#d4ff3a"
+      }
+    },
+    {
+      "template": "fichas-logo",
+      "vars": { "word": "ESTUDIO", "kicker": "VIDEOS PROMO CON TU MARCA" }
+    }
+  ]
+}

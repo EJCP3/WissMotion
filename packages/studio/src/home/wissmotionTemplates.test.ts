@@ -4,13 +4,14 @@ import { WISSMOTION_TEMPLATES, parseTemplateVariables } from "./wissmotionTempla
 import { TEMPLATE_HTML } from "./wissmotionTemplates.generated";
 
 describe("wissmotionTemplates", () => {
-  it("expone las 14 plantillas con manifiesto, póster y variables", () => {
-    expect(WISSMOTION_TEMPLATES).toHaveLength(14);
+  it("expone las 16 plantillas con manifiesto, póster y variables", () => {
+    expect(WISSMOTION_TEMPLATES).toHaveLength(16);
     const ids = WISSMOTION_TEMPLATES.map((t) => t.id).sort();
     expect(ids).toEqual([
       "antes-despues",
       "evento",
       "feature-highlight",
+      "fichas-logo",
       "historia",
       "lanzamiento",
       "lista-cinetica",
@@ -21,6 +22,7 @@ describe("wissmotionTemplates", () => {
       "promo-app",
       "promo-web",
       "stats",
+      "tabla-ui",
       "testimonios",
     ]);
     for (const t of WISSMOTION_TEMPLATES) {

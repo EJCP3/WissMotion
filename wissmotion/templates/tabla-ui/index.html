@@ -1,0 +1,231 @@
+<!doctype html>
+<html
+  lang="es"
+  data-composition-variables='[
+    {"id":"title","type":"string","label":"Titular","default":"Tú decides."},
+    {"id":"row1","type":"string","label":"Fila 1","default":"Brand Story Deck"},
+    {"id":"row2","type":"string","label":"Fila 2","default":"Launch Film"},
+    {"id":"row3","type":"string","label":"Fila 3","default":"Apple Style OG Image"},
+    {"id":"row4","type":"string","label":"Fila 4","default":"Visual Canvas Deck"},
+    {"id":"row5","type":"string","label":"Fila 5","default":"Notion Style OG Image"},
+    {"id":"brandBackground","type":"color","label":"Fondo","default":"#f7f5f2"},
+    {"id":"brandText","type":"color","label":"Texto","default":"#1c1917"},
+    {"id":"brandPrimary","type":"color","label":"Primario","default":"#6d28d9"},
+    {"id":"brandAccent","type":"color","label":"Columna resaltada","default":"#e8613c"},
+    {"id":"brandHeading","type":"string","label":"Fuente titulares","default":"Inter"},
+    {"id":"brandBody","type":"string","label":"Fuente texto","default":"Inter"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      data-wm-fonts
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block"
+    />
+    <title>Tabla UI · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: var(--brandBackground);
+      }
+      #title {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 90px;
+        margin: 0;
+        text-align: center;
+        font: 700 64px var(--brandHeading);
+        letter-spacing: -0.03em;
+        color: var(--brandText);
+      }
+      #table {
+        position: absolute;
+        left: 140px;
+        top: 230px;
+        width: 1000px;
+        font: 500 17px var(--brandBody);
+        color: var(--brandText);
+      }
+      .row {
+        position: relative;
+        display: grid;
+        grid-template-columns: 34% 14% 20% 14% 18%;
+        align-items: center;
+        height: 54px;
+        padding: 0 16px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+      }
+      .head {
+        height: 44px;
+        font-size: 14px;
+        font-weight: 600;
+        opacity: 0.72;
+      }
+      .pill {
+        justify-self: start;
+        padding: 3px 10px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--brandPrimary);
+        background: color-mix(in srgb, var(--brandPrimary) 14%, transparent);
+      }
+      .pill.alt {
+        color: #1d4ed8;
+        background: rgba(37, 99, 235, 0.1);
+      }
+      .pill.img {
+        color: #166534;
+        background: rgba(21, 128, 61, 0.1);
+      }
+      .price {
+        font-variant-numeric: tabular-nums;
+      }
+      .muted {
+        opacity: 0.74;
+      }
+      /* Columna resaltada (Precio): crece de arriba abajo detrás de la tabla. */
+      #hl {
+        position: absolute;
+        /* Alineada con la 4.ª columna: 16px de padding + 68% del ancho útil. */
+        left: calc((100% - 32px) * 0.68 + 4px);
+        top: 0;
+        width: calc((100% - 32px) * 0.14);
+        height: 100%;
+        border: 1.5px solid var(--brandAccent);
+        border-radius: 8px;
+        background: color-mix(in srgb, var(--brandAccent) 12%, transparent);
+        transform-origin: 50% 0;
+      }
+
+      /* ── Multiformato (wissmotion/templates/formats.mjs) ── */
+      /* 9:16 — vertical para Reels/TikTok/Shorts */
+      #stage[data-format="9:16"] #title {
+        top: 520px;
+        font-size: 104px;
+      }
+      #stage[data-format="9:16"] #table {
+        left: 40px;
+        top: 720px;
+        width: 1000px;
+        font-size: 27px;
+      }
+      #stage[data-format="9:16"] .row {
+        height: 92px;
+      }
+      #stage[data-format="9:16"] .head {
+        height: 70px;
+        font-size: 21px;
+      }
+      /* 1:1 — cuadrado */
+      #stage[data-format="1:1"] #title {
+        top: 220px;
+        font-size: 80px;
+      }
+      #stage[data-format="1:1"] #table {
+        left: 40px;
+        top: 370px;
+        width: 1000px;
+      }
+      /* 4:5 — feed */
+      #stage[data-format="4:5"] #title {
+        top: 300px;
+        font-size: 84px;
+      }
+      #stage[data-format="4:5"] #table {
+        left: 40px;
+        top: 470px;
+        width: 1000px;
+        font-size: 19px;
+      }
+      #stage[data-format="4:5"] .row {
+        height: 62px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="tabla-ui"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <h1
+        id="title"
+        class="clip"
+        data-start="0"
+        data-duration="5"
+        data-track-index="0"
+        data-var-text="title"
+      >
+        Tú decides.
+      </h1>
+      <div id="table" class="clip" data-start="0" data-duration="5" data-track-index="1">
+        <div id="hl"></div>
+        <div class="row head">
+          <span>Nombre</span><span>Formato</span><span>Agente</span><span>Precio</span
+          ><span>Añadido</span>
+        </div>
+        <div class="row item">
+          <span data-var-text="row1">Brand Story Deck</span><span class="pill">Slides</span
+          ><span>Claude Code</span><span class="price">$4.99</span
+          ><span class="muted">3 sep 2026</span>
+        </div>
+        <div class="row item">
+          <span data-var-text="row2">Launch Film</span><span class="pill alt">Video</span
+          ><span>Codex</span><span class="price">$4.99</span><span class="muted">8 sep 2026</span>
+        </div>
+        <div class="row item">
+          <span data-var-text="row3">Apple Style OG Image</span><span class="pill img">Imagen</span
+          ><span>Cursor</span><span class="price">$4.99</span><span class="muted">12 sep 2026</span>
+        </div>
+        <div class="row item">
+          <span data-var-text="row4">Visual Canvas Deck</span><span class="pill">Slides</span
+          ><span>Claude Code</span><span class="price">$4.99</span
+          ><span class="muted">15 sep 2026</span>
+        </div>
+        <div class="row item">
+          <span data-var-text="row5">Notion Style OG Image</span><span class="pill img">Imagen</span
+          ><span>Codex</span><span class="price">$4.99</span><span class="muted">21 sep 2026</span>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(
+          "#title",
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, ease: "expo.out" },
+          0.2,
+        );
+        tl.fromTo("#table .head", { opacity: 0 }, { opacity: 0.72, duration: 0.4 }, 0.6);
+        tl.fromTo(
+          "#table .item",
+          { y: 18, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.55, ease: "power3.out", stagger: 0.09 },
+          0.75,
+        );
+        tl.fromTo(
+          "#hl",
+          { scaleY: 0, opacity: 0 },
+          { scaleY: 1, opacity: 1, duration: 0.7, ease: "expo.inOut" },
+          2.1,
+        );
+        tl.to("#stage", { opacity: 0, duration: 0.4, ease: "power2.in" }, 4.6);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["tabla-ui"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

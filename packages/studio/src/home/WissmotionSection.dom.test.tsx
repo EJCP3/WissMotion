@@ -38,10 +38,10 @@ async function mountSection(search = "") {
 }
 
 describe("WissmotionSection", () => {
-  it("muestra las 14 plantillas y filtra por búsqueda", async () => {
+  it("muestra las 16 plantillas y filtra por búsqueda", async () => {
     const { host } = await mountSection();
-    expect(host.querySelectorAll('[data-testid="wissmotion-grid"] button')).toHaveLength(14);
-    const { host: filtered } = await mountSection("logo");
+    expect(host.querySelectorAll('[data-testid="wissmotion-grid"] button')).toHaveLength(16);
+    const { host: filtered } = await mountSection("logo-sting");
     expect(filtered.querySelectorAll('[data-testid="wissmotion-grid"] button')).toHaveLength(1);
     expect(filtered.textContent).toContain("Intro de logo");
   });

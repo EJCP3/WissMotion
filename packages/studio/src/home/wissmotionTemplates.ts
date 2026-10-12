@@ -33,6 +33,10 @@ import listaCineticaManifest from "../../../../wissmotion/templates/lista-cineti
 import listaCineticaPoster from "../../../../wissmotion/templates/lista-cinetica/preview.png";
 import palabraManifest from "../../../../wissmotion/templates/palabra/template.json";
 import palabraPoster from "../../../../wissmotion/templates/palabra/preview.png";
+import tablaUiManifest from "../../../../wissmotion/templates/tabla-ui/template.json";
+import tablaUiPoster from "../../../../wissmotion/templates/tabla-ui/preview.png";
+import fichasLogoManifest from "../../../../wissmotion/templates/fichas-logo/template.json";
+import fichasLogoPoster from "../../../../wissmotion/templates/fichas-logo/preview.png";
 
 export interface WissmotionTemplateVariable {
   id: string;
@@ -118,4 +122,6 @@ export const WISSMOTION_TEMPLATES: WissmotionTemplate[] = [
   entry("historia", historiaManifest, historiaPoster),
   entry("lista-cinetica", listaCineticaManifest, listaCineticaPoster),
   entry("palabra", palabraManifest, palabraPoster),
+  entry("tabla-ui", tablaUiManifest, tablaUiPoster),
+  entry("fichas-logo", fichasLogoManifest, fichasLogoPoster),
 ];

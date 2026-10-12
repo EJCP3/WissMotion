@@ -4,22 +4,24 @@ Composiciones HyperFrames con variables (`data-composition-variables`):
 el mismo `index.html` sirve a todas las marcas vía `--variables-file`
 (y el panel Variables del Studio las edita en vivo).
 
-| Plantilla            | Qué es                                                                                                                                       |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `promo-app/`         | App móvil: mockup con scroll, nombre, tagline, 3 features y CTA. 8 s. ![promo-app](promo-app/preview.png)                                    |
-| `promo-web/`         | Web/SaaS: navegador con captura, titular, subtítulo, 3 features y CTA. 8 s. ![promo-web](promo-web/preview.png)                              |
-| `logo-sting/`        | Intro de logo (pop + reveal + tagline + fade). 6 s. ![logo-sting](logo-sting/preview.png)                                                    |
-| `feature-highlight/` | Una función en 8 s: kicker, titular con reveal, subrayado y descripción. ![feature-highlight](feature-highlight/preview.png)                 |
-| `stats/`             | 3 cifras con etiquetas en grilla. 6 s. ![stats](stats/preview.png)                                                                           |
-| `testimonios/`       | Cita con autor, cargo y estrellas. 6 s. ![testimonios](testimonios/preview.png)                                                              |
-| `oferta/`            | Badge, titular con descuento, descripción y CTA con pulse. 6 s. ![oferta](oferta/preview.png)                                                |
-| `precios/`           | 3 planes con destacado central y CTA. 6 s. ![precios](precios/preview.png)                                                                   |
-| `evento/`            | Anuncio de evento en vivo con fecha y CTA. 6 s. ![evento](evento/preview.png)                                                                |
-| `lanzamiento/`       | Countdown 3-2-1 con reveal del nombre y fecha. 6 s. ![lanzamiento](lanzamiento/preview.png)                                                  |
-| `antes-despues/`     | Comparativa con dos imágenes, divisor y etiquetas. 6 s. ![antes-despues](antes-despues/preview.png)                                          |
-| `historia/`          | Vertical 9:16 con barra de progreso, titular y CTA. 6 s. ![historia](historia/preview.png)                                                   |
-| `palabra/`           | Palabra gigante con punto de acento y desenfoque de movimiento; encadénala en una película (`film/`). 2,6 s. ![palabra](palabra/preview.png) |
-| `lista-cinetica/`    | Columna cinética vertical con foco nítido y flecha (estilo Jitter List). 9 s, 9:16. ![lista-cinetica](lista-cinetica/preview.png)            |
+| Plantilla            | Qué es                                                                                                                                         |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `promo-app/`         | App móvil: mockup con scroll, nombre, tagline, 3 features y CTA. 8 s. ![promo-app](promo-app/preview.png)                                      |
+| `promo-web/`         | Web/SaaS: navegador con captura, titular, subtítulo, 3 features y CTA. 8 s. ![promo-web](promo-web/preview.png)                                |
+| `logo-sting/`        | Intro de logo (pop + reveal + tagline + fade). 6 s. ![logo-sting](logo-sting/preview.png)                                                      |
+| `feature-highlight/` | Una función en 8 s: kicker, titular con reveal, subrayado y descripción. ![feature-highlight](feature-highlight/preview.png)                   |
+| `stats/`             | 3 cifras con etiquetas en grilla. 6 s. ![stats](stats/preview.png)                                                                             |
+| `testimonios/`       | Cita con autor, cargo y estrellas. 6 s. ![testimonios](testimonios/preview.png)                                                                |
+| `oferta/`            | Badge, titular con descuento, descripción y CTA con pulse. 6 s. ![oferta](oferta/preview.png)                                                  |
+| `precios/`           | 3 planes con destacado central y CTA. 6 s. ![precios](precios/preview.png)                                                                     |
+| `evento/`            | Anuncio de evento en vivo con fecha y CTA. 6 s. ![evento](evento/preview.png)                                                                  |
+| `lanzamiento/`       | Countdown 3-2-1 con reveal del nombre y fecha. 6 s. ![lanzamiento](lanzamiento/preview.png)                                                    |
+| `antes-despues/`     | Comparativa con dos imágenes, divisor y etiquetas. 6 s. ![antes-despues](antes-despues/preview.png)                                            |
+| `historia/`          | Vertical 9:16 con barra de progreso, titular y CTA. 6 s. ![historia](historia/preview.png)                                                     |
+| `palabra/`           | Palabra gigante con punto de acento y desenfoque de movimiento; encadénala en una película (`film/`). 2,6 s. ![palabra](palabra/preview.png)   |
+| `tabla-ui/`          | Titular + tabla de producto con filas en cascada, etiquetas y columna resaltada. 5 s. ![tabla-ui](tabla-ui/preview.png)                        |
+| `fichas-logo/`       | Nombre de marca letra a letra en fichas de colores (giro + desenfoque) sobre rejilla de puntos. 4,5 s. ![fichas-logo](fichas-logo/preview.png) |
+| `lista-cinetica/`    | Columna cinética vertical con foco nítido y flecha (estilo Jitter List). 9 s, 9:16. ![lista-cinetica](lista-cinetica/preview.png)              |
 
 ## Multiformato (16:9, 9:16, 1:1, 4:5)
 

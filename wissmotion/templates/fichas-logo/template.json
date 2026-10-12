@@ -1,0 +1,10 @@
+{
+  "id": "fichas-logo",
+  "name": "Logo en fichas",
+  "description": "El nombre de la marca letra a letra en fichas de colores que llegan girando con desenfoque, sobre rejilla de puntos, con frase final. Cierre o intro de película. 4,5 s. Multiformato.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 4.5,
+  "formats": ["16:9", "9:16", "1:1", "4:5"]
+}
