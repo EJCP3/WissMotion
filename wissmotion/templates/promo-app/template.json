@@ -1,9 +1,10 @@
 {
   "id": "promo-app",
   "name": "Promo de app móvil",
-  "description": "Mockup de teléfono con scroll, nombre, tagline, 3 features y CTA. 8 s, 16:9.",
+  "description": "Mockup de teléfono con scroll, nombre, tagline, 3 features y CTA. 8 s. Multiformato: 16:9, 9:16, 1:1 y 4:5.",
   "format": "16:9",
   "width": 1280,
   "height": 720,
-  "duration": 8
+  "duration": 8,
+  "formats": ["16:9", "9:16", "1:1", "4:5"]
 }

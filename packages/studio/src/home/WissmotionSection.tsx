@@ -74,6 +74,9 @@ function WissmotionCard({
         </span>
         <span className="mt-0.5 block text-step-12 text-text-2">
           WissMotion{item.duration ? ` · ${item.duration}s` : ""}
+          {item.formats.length > 1
+            ? ` · ${item.formats.length} ${t("home.formats")}`
+            : ` · ${item.format}`}
         </span>
       </button>
       {failed ? (

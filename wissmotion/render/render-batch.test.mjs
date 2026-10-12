@@ -19,11 +19,11 @@ import {
 
 describe("render-batch.mjs (dry-run)", () => {
   it("9 destinos con formatos y fps válidos", () => {
-    assert.equal(DEST_IDS.length, 9);
+    assert.equal(DEST_IDS.length, 11);
     for (const [id, d] of Object.entries(DESTINATIONS)) {
       assert.ok(["mp4", "webm", "gif"].includes(d.format), `${id}: format`);
       assert.ok([15, 24, 30, 60].includes(d.fps), `${id}: fps`);
-      assert.ok(["16:9", "9:16"].includes(d.aspect), `${id}: aspect`);
+      assert.ok(["16:9", "9:16", "1:1", "4:5"].includes(d.aspect), `${id}: aspect`);
     }
   });
 
@@ -35,7 +35,7 @@ describe("render-batch.mjs (dry-run)", () => {
 
   it("planBatch filtra por aspecto 16:9 sin --force", () => {
     const plan = planBatch({ dest: "all", aspect: "16:9" });
-    assert.equal(plan.length, 9);
+    assert.equal(plan.length, 11);
     const ok = plan
       .filter((j) => j.compatible)
       .map((j) => j.dest)
@@ -85,18 +85,34 @@ describe("render-batch.mjs (dry-run)", () => {
   });
 
   it("runBatch dry-run genera plan y respeta aspecto", async () => {
-    const template = fileURLToPath(new URL("../templates/logo-sting", import.meta.url));
+    // historia es solo 9:16 (sin layouts de otros formatos).
+    const template = fileURLToPath(new URL("../templates/historia", import.meta.url));
     const manifest = await runBatch({
       projectDir: template,
       dest: "all",
       dryRun: true,
       outBase: await mkdtemp(joinTmp("wissmotion-batch-")),
     });
-    assert.equal(manifest.aspect, "16:9");
-    assert.equal(manifest.results.length, 9);
-    assert.equal(manifest.results.filter((r) => r.ok).length, 6);
-    assert.equal(manifest.results.filter((r) => r.skipped).length, 3);
+    assert.equal(manifest.aspect, "9:16");
+    assert.equal(manifest.results.length, 11);
+    assert.equal(manifest.results.filter((r) => r.ok).length, 3);
+    assert.equal(manifest.results.filter((r) => r.skipped).length, 8);
+    const reels = manifest.results.find((r) => r.dest === "reels");
+    assert.ok(reels.args.includes("--format") && !reels.args.includes("--composition"));
+  });
+
+  it("runBatch multiformato: promo-app cubre los 11 destinos con su layout", async () => {
+    const template = fileURLToPath(new URL("../templates/promo-app", import.meta.url));
+    const manifest = await runBatch({
+      projectDir: template,
+      dest: "all",
+      dryRun: true,
+      outBase: await mkdtemp(joinTmp("wissmotion-batch-")),
+    });
+    assert.equal(manifest.results.filter((r) => r.ok).length, 11);
+    const reels = manifest.results.find((r) => r.dest === "reels");
+    assert.ok(reels.args.includes("--composition") && reels.args.includes(".format-9x16.html"));
     const yt = manifest.results.find((r) => r.dest === "youtube");
-    assert.ok(yt.args.includes("--format") && yt.args.includes("mp4"));
+    assert.ok(!yt.args.includes("--composition"));
   });
 });

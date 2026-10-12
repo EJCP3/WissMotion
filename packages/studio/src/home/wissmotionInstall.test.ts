@@ -91,6 +91,24 @@ describe("wissmotionInstall", () => {
     expect(JSON.parse(puts[1].body).brandPrimary).toBe("#111111");
   });
 
+  it("instala en otro formato con su layout y nombre propio", async () => {
+    const puts: { url: string; body: string }[] = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string, init?: RequestInit) => {
+        puts.push({ url: String(url), body: String(init?.body ?? "") });
+        return new Response("ok", { status: 200 });
+      }),
+    );
+    const compPath = await installWissmotionTemplate("p1", promoApp, { format: "9:16" });
+    expect(compPath).toBe("compositions/promo-app-9x16.html");
+    expect(puts[0].body).toContain('data-format="9:16"');
+    expect(puts[0].body).toContain('data-height="1920"');
+    // El formato propio de la plantilla no cambia nada.
+    const same = await installWissmotionTemplate("p1", promoApp, { format: "16:9" });
+    expect(same).toBe("compositions/promo-app.html");
+  });
+
   it("reintenta el HTML en 409 y omite variables.json si existe", async () => {
     const seen: string[] = [];
     vi.stubGlobal(

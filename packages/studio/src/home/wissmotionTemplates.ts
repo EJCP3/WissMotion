@@ -45,6 +45,8 @@ export interface WissmotionTemplate {
   description: string;
   format: string;
   duration: number;
+  /** Formatos con layout propio (wissmotion/templates/formats.mjs). */
+  formats: string[];
   html: string;
   poster: string;
   variables: WissmotionTemplateVariable[];
@@ -84,12 +86,19 @@ export function parseTemplateVariables(html: string): WissmotionTemplateVariable
 
 function entry(
   id: string,
-  manifest: { name: string; description: string; format: string; duration: number },
+  manifest: {
+    name: string;
+    description: string;
+    format: string;
+    duration: number;
+    formats?: string[];
+  },
   poster: string,
 ): WissmotionTemplate {
   const html = TEMPLATE_HTML[id];
   if (typeof html !== "string") throw new Error(`plantilla sin HTML generado: ${id}`);
-  return { id, ...manifest, html, poster, variables: parseTemplateVariables(html) };
+  const formats = manifest.formats ?? [manifest.format];
+  return { id, ...manifest, formats, html, poster, variables: parseTemplateVariables(html) };
 }
 
 export const WISSMOTION_TEMPLATES: WissmotionTemplate[] = [

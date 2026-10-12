@@ -135,11 +135,12 @@ const TOOLS = [
           brand: { type: ["object", "string"] },
           vars: { type: "object" },
           out: { type: "string" },
+          format: { type: "string", enum: ["16:9", "9:16", "1:1", "4:5"] },
           brandsDir: { type: "string" },
         },
       },
     },
-    run: async ({ template, brand, vars, out, brandsDir }) => {
+    run: async ({ template, brand, vars, out, format, brandsDir }) => {
       const brandObj =
         typeof brand === "string"
           ? await getBrand(resolveLibraryDir(brandsDir), brand)
@@ -150,6 +151,7 @@ const TOOLS = [
           brand: brandObj,
           contentVars: vars ?? {},
           outDir: out,
+          format,
         }),
       );
     },

@@ -8,6 +8,7 @@ import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateBrand } from "../brand-kit/validate-brand.mjs";
+import { applyFormat, supportedFormats } from "./formats.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const TYPES = new Set(["string", "number", "color", "boolean", "enum"]);
@@ -56,7 +57,14 @@ export function brandToVariables(brand) {
   return out;
 }
 
-export async function instantiate({ templateId, brand, contentVars, outDir, templatesDir = here }) {
+export async function instantiate({
+  templateId,
+  brand,
+  contentVars,
+  outDir,
+  format,
+  templatesDir = here,
+}) {
   const dir = join(templatesDir, templateId);
   const [html, manifestRaw] = await Promise.all([
     readFile(join(dir, "index.html"), "utf8"),
@@ -65,6 +73,10 @@ export async function instantiate({ templateId, brand, contentVars, outDir, temp
   const manifest = JSON.parse(manifestRaw);
   if (manifest.id !== templateId)
     throw new Error(`template.json id ${manifest.id} ≠ ${templateId}`);
+  const formats = supportedFormats(manifest);
+  if (format && !formats.includes(format)) {
+    throw new Error(`${templateId} no tiene layout ${format} (soporta: ${formats.join(", ")})`);
+  }
   const declared = parseDeclaredVariables(html);
   const declaredIds = new Set(declared.map((v) => v.id));
 
@@ -80,7 +92,11 @@ export async function instantiate({ templateId, brand, contentVars, outDir, temp
   if (unknown.length > 0) throw new Error(`variables no declaradas: ${unknown.join(", ")}`);
 
   await mkdir(outDir, { recursive: true });
-  await copyFile(join(dir, "index.html"), join(outDir, "index.html"));
+  if (format && format !== manifest.format) {
+    await writeFile(join(outDir, "index.html"), applyFormat(html, format), "utf8");
+  } else {
+    await copyFile(join(dir, "index.html"), join(outDir, "index.html"));
+  }
   await writeFile(
     join(outDir, "variables.json"),
     `${JSON.stringify(overrides, null, 2)}\n`,
@@ -112,7 +128,7 @@ if (process.argv.includes("--template")) {
   const out = opt(process.argv.slice(2), "--out");
   if (!templateId || !out) {
     console.error(
-      "Uso: node instantiate.mjs --template <id> --brand brand.json [--vars vars.json] --out dir",
+      "Uso: node instantiate.mjs --template <id> --brand brand.json [--vars vars.json] [--format 9:16] --out dir",
     );
     process.exit(2);
   }
@@ -126,6 +142,7 @@ if (process.argv.includes("--template")) {
       brand,
       contentVars,
       outDir: resolve(out),
+      format: opt(process.argv.slice(2), "--format"),
     });
     console.log(`OK: ${manifest.name} en ${out} (${Object.keys(variables).length} variables)`);
   } catch (e) {

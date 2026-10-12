@@ -2,6 +2,7 @@ import { buildProjectApiPath } from "../utils/projectRouting";
 import { studioApiFetch } from "../utils/studioApiFetch";
 import { readStoredBrand } from "../brand/useBrandKit";
 import type { BrandV1 } from "../brand/brandTypes";
+import { applyFormat } from "./templateFormats";
 import type { WissmotionTemplate } from "./wissmotionTemplates";
 
 // brand.json → ids de variable estándar (espejo de BRAND_MAP en
@@ -91,15 +92,23 @@ async function putNewFile(
 export async function installWissmotionTemplate(
   projectId: string,
   template: WissmotionTemplate,
-  opts?: { brand?: BrandV1 | null; vars?: Record<string, unknown>; fileName?: string },
+  opts?: {
+    brand?: BrandV1 | null;
+    vars?: Record<string, unknown>;
+    fileName?: string;
+    format?: string;
+  },
 ): Promise<string> {
   const brand = opts && "brand" in opts ? (opts.brand ?? null) : readStoredBrand(projectId);
   const values = { ...mergeTemplateVariables(template, brand), ...(opts?.vars ?? {}) };
-  const baseName = opts?.fileName ?? `${template.id}.html`;
+  const format = opts?.format && opts.format !== template.format ? opts.format : null;
+  const html = format ? applyFormat(template.html, format) : template.html;
+  const baseName =
+    opts?.fileName ?? `${template.id}${format ? `-${format.replace(":", "x")}` : ""}.html`;
   const compPath = await putNewFile(
     projectId,
     `compositions/${baseName}`,
-    bakeVariables(template.html, values),
+    bakeVariables(html, values),
     "text/plain",
   );
   try {

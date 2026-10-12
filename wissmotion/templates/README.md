@@ -20,6 +20,24 @@ el mismo `index.html` sirve a todas las marcas vía `--variables-file`
 | `historia/`          | Vertical 9:16 con barra de progreso, titular y CTA. 6 s. ![historia](historia/preview.png)                                        |
 | `lista-cinetica/`    | Columna cinética vertical con foco nítido y flecha (estilo Jitter List). 9 s, 9:16. ![lista-cinetica](lista-cinetica/preview.png) |
 
+## Multiformato (16:9, 9:16, 1:1, 4:5)
+
+Todas salvo `historia` y `lista-cinetica` (nativas 9:16) traen composición
+propia para cada formato: en su CSS, bloques `#stage[data-format="9:16"] …`
+y en `template.json` la lista `formats`. No es un 16:9 encogido: cada
+formato recoloca y reescala texto, mockups y CTA.
+
+```bash
+node instantiate.mjs --template promo-app --brand b.json --format 9:16 --out ./vertical
+node ../render/render-batch.mjs --project ./mi-promo --dest all   # cada destino en su formato
+```
+
+`formats.mjs` (`applyFormat`) fija tamaño y `data-format`; el render por
+lotes genera `.format-9x16.html` desde el `index.html` actual (lo editado en
+el Studio llega a todos los formatos). `formats.test.mjs` comprueba que lo
+declarado en `template.json` y los bloques CSS coinciden. Para añadir un
+formato a una plantilla: bloque CSS + entrada en `formats`.
+
 ## Convención de variables
 
 Las plantillas declaran `brand*` (colores, fuentes, logo, nombre, tagline)

@@ -4,13 +4,16 @@
 //     [--variables-file vars.json] [--quality draft|looks|delivery] [--workers 2] [--force] [--dry-run]
 // Cada destino es {format, fps, quality, resolution?}; 16:9 rinde nativo
 // (1280×720: el upscale a 1080p exige factor no entero y el CLI lo rechaza).
-// El aspecto de la composición debe coincidir o se omite con aviso,
-// salvo --force. Deja renders/<nombre>.<dest>.<ext> + manifest.json.
+// Si el aspecto no coincide pero el index.html trae layout para ese formato
+// (CSS [data-format="9:16"], ver templates/formats.mjs), se genera
+// .format-9x16.html desde el index.html actual y se renderiza con -c; si no,
+// se omite con aviso (salvo --force). Deja renders/<nombre>.<dest>.<ext> + manifest.json.
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { applyFormat, formatFileName } from "../templates/formats.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 
@@ -24,6 +27,8 @@ export const DESTINATIONS = {
   reels: { format: "mp4", fps: 30, quality: "delivery", resolution: "portrait", aspect: "9:16" },
   tiktok: { format: "mp4", fps: 30, quality: "delivery", resolution: "portrait", aspect: "9:16" },
   shorts: { format: "mp4", fps: 30, quality: "delivery", resolution: "portrait", aspect: "9:16" },
+  square: { format: "mp4", fps: 30, quality: "delivery", aspect: "1:1" },
+  feed: { format: "mp4", fps: 30, quality: "delivery", aspect: "4:5" },
 };
 
 export const DEST_IDS = Object.keys(DESTINATIONS);
@@ -47,7 +52,14 @@ export async function readCompositionSize(projectDir) {
   return { width: Number(w), height: Number(h), aspect: aspectOf(Number(w), Number(h)) };
 }
 
-export function planBatch({ dest, aspect, quality, workers }) {
+/** Formatos con layout propio en el HTML (además del base 16:9). */
+export function formatsIn(html) {
+  const found = new Set([...html.matchAll(/\[data-format="([0-9]+:[0-9]+)"\]/g)].map((m) => m[1]));
+  if (found.size > 0) found.add("16:9");
+  return [...found];
+}
+
+export function planBatch({ dest, aspect, quality, workers, formats = [] }) {
   const ids = dest === "all" ? DEST_IDS : [dest];
   if (dest !== "all" && !DESTINATIONS[dest]) throw new Error(`destino desconocido: ${dest}`);
   return ids.map((id) => {
@@ -57,7 +69,10 @@ export function planBatch({ dest, aspect, quality, workers }) {
       ...d,
       quality: quality ?? d.quality,
       workers,
-      compatible: d.aspect === aspect,
+      compatible: d.aspect === aspect || formats.includes(d.aspect),
+      ...(d.aspect !== aspect && formats.includes(d.aspect)
+        ? { composition: formatFileName(d.aspect) }
+        : {}),
     };
   });
 }
@@ -75,6 +90,7 @@ export function renderArgs({ projectDir, outFile, job, variablesFile }) {
   ];
   if (job.quality) args.push("--quality", job.quality);
   if (job.resolution) args.push("--resolution", job.resolution);
+  if (job.composition) args.push("--composition", job.composition);
   if (variablesFile) args.push("--variables-file", variablesFile);
   args.push("--workers", String(job.workers ?? 2));
   return args;
@@ -96,7 +112,8 @@ export async function runBatch({
   const name = basename(project);
   const rendersDir = outBase ?? join(project, "renders");
   mkdirSync(rendersDir, { recursive: true });
-  const plan = planBatch({ dest, aspect, quality, workers });
+  const html = await readFile(join(project, "index.html"), "utf8");
+  const plan = planBatch({ dest, aspect, quality, workers, formats: formatsIn(html) });
   const ext = { mp4: "mp4", webm: "webm", gif: "gif" };
   const results = [];
   for (const job of plan) {
@@ -109,6 +126,10 @@ export async function runBatch({
         skipped: `aspecto ${aspect} ≠ ${job.aspect}`,
       });
       continue;
+    }
+    // Derivado del index.html actual: lo editado en el Studio llega a todos los formatos.
+    if (job.composition && !dryRun) {
+      writeFileSync(join(project, job.composition), applyFormat(html, job.aspect), "utf8");
     }
     const args = renderArgs({ projectDir: project, outFile: file, job, variablesFile });
     if (dryRun) {
@@ -147,7 +168,7 @@ if (process.argv.includes("--project")) {
   const project = opt(args, "--project");
   if (!project) {
     console.error(
-      "Uso: node render-batch.mjs --project dir [--dest all|id] [--variables-file f] [--quality q] [--workers n] [--force] [--dry-run]",
+      "Uso: node render-batch.mjs --project dir [--dest all|id (square, feed…)] [--variables-file f] [--quality q] [--workers n] [--force] [--dry-run]",
     );
     process.exit(2);
   }

@@ -99,6 +99,7 @@ export function NuevoVideoWizard({
   const [brands] = useState(listSavedBrands);
   const [brandName, setBrandName] = useState("");
   const [templateId, setTemplateId] = useState(WISSMOTION_TEMPLATES[0].id);
+  const [format, setFormat] = useState(WISSMOTION_TEMPLATES[0].format);
   const [vars, setVars] = useState<Record<string, unknown>>({});
   const [edited, setEdited] = useState<Set<string>>(new Set());
   const [working, setWorking] = useState(false);
@@ -121,6 +122,7 @@ export function NuevoVideoWizard({
 
   const pickTemplate = (id: string) => {
     setTemplateId(id);
+    setFormat(WISSMOTION_TEMPLATES.find((item) => item.id === id)?.format ?? "16:9");
     setVars({});
     setEdited(new Set());
   };
@@ -137,6 +139,7 @@ export function NuevoVideoWizard({
       const compPath = await installWissmotionTemplate(targetId, template, {
         brand,
         vars: effective,
+        format,
       });
       onOpenProject(targetId, compPath);
     } catch (e) {
@@ -224,6 +227,30 @@ export function NuevoVideoWizard({
           ) : null}
           {step === 1 ? (
             <div className="grid grid-cols-3 gap-4" data-testid="wizard-templates">
+              {template.formats.length > 1 ? (
+                <div
+                  className="col-span-3 flex flex-wrap items-center gap-2"
+                  role="group"
+                  aria-label={t("wizard.format")}
+                >
+                  <span className="text-step-13 text-text-1">{t("wizard.format")}</span>
+                  {template.formats.map((f) => (
+                    <button
+                      key={f}
+                      type="button"
+                      onClick={() => setFormat(f)}
+                      aria-pressed={f === format}
+                      className={
+                        f === format
+                          ? "h-8 rounded-full bg-on px-3 text-step-12 font-semibold text-text-0"
+                          : "h-8 rounded-full border border-border px-3 text-step-12 text-text-2 hover:text-text-0"
+                      }
+                    >
+                      {f}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
               {WISSMOTION_TEMPLATES.map((item) => (
                 <button
                   key={item.id}

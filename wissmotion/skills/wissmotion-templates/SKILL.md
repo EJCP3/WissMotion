@@ -5,6 +5,8 @@ description: Plantillas promocionales de WissMotion — 13 promos con variables,
 
 # WissMotion Templates
 
+Multiformato: 11 de ellas traen layout propio para 16:9, 9:16, 1:1 y 4:5 (`instantiate.mjs --format 9:16`, `template_instantiate` con `format`; `render-batch.mjs --dest all` rinde cada destino en su formato). Ver `templates/README.md`.
+
 13 plantillas en `wissmotion/templates/<id>/` (`index.html` + `template.json` + `preview.png`): promo-app, promo-web, logo-sting, feature-highlight, stats, testimonios, oferta, precios, evento, lanzamiento, antes-después, historia (9:16), lista-cinetica (9:16).
 
 ## Anatomía

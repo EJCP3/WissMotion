@@ -20,8 +20,11 @@ describe("wissmotionReferences", () => {
     expect(brief).toContain("«Flight Tracker (píldora → widget)» (16:9 / 9:16, 16.5 s)");
     expect(brief).toContain("presets morph-box");
     expect(brief).toContain("plantilla promo-app");
-    expect(brief).toContain("Aún no existe en WissMotion");
+    expect(brief).toContain("mockups wm-phone");
     expect(brief).toContain('"flight-tracker"');
+    const partial = WISSMOTION_REFERENCES.find((ref) => ref.status === "parcial");
+    if (!partial) throw new Error("sin referencias parciales");
+    expect(buildReferenceBrief(partial)).toContain("Aún no existe en WissMotion");
   });
 
   it("una referencia lista no menciona faltas", () => {

@@ -65,8 +65,8 @@
         "transitions": [],
         "mockups": ["wm-phone"]
       },
-      "status": "parcial",
-      "missing": ["multiformato desde una plantilla (16:9 ↔ 9:16)"]
+      "status": "lista",
+      "missing": []
     },
     {
       "id": "ruleta-colores",
