@@ -17,6 +17,7 @@ const TIMES = {
   "promo-web": 4.5,
   lanzamiento: 4.5,
   palabra: 1.2,
+  "ruleta-colores": 5,
   "lista-cinetica": 4,
 };
 

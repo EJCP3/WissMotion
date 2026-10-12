@@ -108,11 +108,11 @@ describe("mcp.mjs (stdio)", () => {
     }
   });
 
-  it("template_list trae 16 plantillas con variables", async () => {
+  it("template_list trae 17 plantillas con variables", async () => {
     const list = JSON.parse(
       textOf(await send("tools/call", { name: "template_list", arguments: {} })),
     );
-    assert.equal(list.length, 16);
+    assert.equal(list.length, 17);
     const app = list.find((t) => t.id === "promo-app");
     assert.ok(app.variables.some((v) => v.id === "brandPrimary" && v.type === "color"));
   });

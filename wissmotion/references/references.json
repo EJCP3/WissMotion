@@ -78,13 +78,13 @@
       "description": "Ruleta vertical de nombres de colores; el fondo cambia al color de la palabra activa y el HEX de la esquina se actualiza.",
       "techniques": ["lista con snap", "fondo sincronizado con el ítem activo"],
       "recreate": {
-        "templates": ["lista-cinetica"],
+        "templates": ["ruleta-colores"],
         "presets": [],
         "transitions": [],
         "mockups": []
       },
-      "status": "parcial",
-      "missing": ["variante de lista-cinetica con el fondo ligado a cada ítem"]
+      "status": "lista",
+      "missing": []
     },
     {
       "id": "app-metricas",

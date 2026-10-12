@@ -37,6 +37,8 @@ import tablaUiManifest from "../../../../wissmotion/templates/tabla-ui/template.
 import tablaUiPoster from "../../../../wissmotion/templates/tabla-ui/preview.png";
 import fichasLogoManifest from "../../../../wissmotion/templates/fichas-logo/template.json";
 import fichasLogoPoster from "../../../../wissmotion/templates/fichas-logo/preview.png";
+import ruletaColoresManifest from "../../../../wissmotion/templates/ruleta-colores/template.json";
+import ruletaColoresPoster from "../../../../wissmotion/templates/ruleta-colores/preview.png";
 
 export interface WissmotionTemplateVariable {
   id: string;
@@ -124,4 +126,5 @@ export const WISSMOTION_TEMPLATES: WissmotionTemplate[] = [
   entry("palabra", palabraManifest, palabraPoster),
   entry("tabla-ui", tablaUiManifest, tablaUiPoster),
   entry("fichas-logo", fichasLogoManifest, fichasLogoPoster),
+  entry("ruleta-colores", ruletaColoresManifest, ruletaColoresPoster),
 ];

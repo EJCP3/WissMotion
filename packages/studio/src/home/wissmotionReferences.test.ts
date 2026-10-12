@@ -22,9 +22,11 @@ describe("wissmotionReferences", () => {
     expect(brief).toContain("plantilla promo-app");
     expect(brief).toContain("mockups wm-phone");
     expect(brief).toContain('"flight-tracker"');
-    const partial = WISSMOTION_REFERENCES.find((ref) => ref.status === "parcial");
-    if (!partial) throw new Error("sin referencias parciales");
-    expect(buildReferenceBrief(partial)).toContain("Aún no existe en WissMotion");
+    // Con faltas (todas las reales están "lista" hoy): el brief las lista.
+    const partial = { ...flight, status: "parcial" as const, missing: ["algo pendiente"] };
+    expect(buildReferenceBrief(partial)).toContain(
+      "Aún no existe en WissMotion (resuélvelo a mano): algo pendiente",
+    );
   });
 
   it("una referencia lista no menciona faltas", () => {

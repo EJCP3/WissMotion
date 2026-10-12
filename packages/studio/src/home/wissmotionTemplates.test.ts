@@ -4,8 +4,8 @@ import { WISSMOTION_TEMPLATES, parseTemplateVariables } from "./wissmotionTempla
 import { TEMPLATE_HTML } from "./wissmotionTemplates.generated";
 
 describe("wissmotionTemplates", () => {
-  it("expone las 16 plantillas con manifiesto, póster y variables", () => {
-    expect(WISSMOTION_TEMPLATES).toHaveLength(16);
+  it("expone las 17 plantillas con manifiesto, póster y variables", () => {
+    expect(WISSMOTION_TEMPLATES).toHaveLength(17);
     const ids = WISSMOTION_TEMPLATES.map((t) => t.id).sort();
     expect(ids).toEqual([
       "antes-despues",
@@ -21,6 +21,7 @@ describe("wissmotionTemplates", () => {
       "precios",
       "promo-app",
       "promo-web",
+      "ruleta-colores",
       "stats",
       "tabla-ui",
       "testimonios",

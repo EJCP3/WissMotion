@@ -14,7 +14,7 @@ node wissmotion/server/mcp.mjs   # los agentes lo lanzan como `npx wissmotion mc
 | `brand_validate`                          | Valida una marca inline contra el esquema v1                       |
 | `brand_extract`                           | Marca desde URL (sin IA)                                           |
 | `brand_list` / `brand_save` / `brand_get` | Biblioteca (`--dir` o `WISSMOTION_BRANDS_DIR`)                     |
-| `template_list`                           | 16 plantillas con sus variables                                    |
+| `template_list`                           | 17 plantillas con sus variables                                    |
 | `template_instantiate`                    | Proyecto desde plantilla + marca + vars (`format` opcional)        |
 | `motion_list`                             | Personalidades, 38 presets y 4 transiciones                        |
 | `render_plan`                             | Lote por destino con chequeo de aspecto y formatos (no renderiza)  |

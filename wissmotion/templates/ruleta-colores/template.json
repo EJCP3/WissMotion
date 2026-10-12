@@ -1,0 +1,10 @@
+{
+  "id": "ruleta-colores",
+  "name": "Ruleta de colores",
+  "description": "Columna de palabras que rueda y se detiene en cada una; el fondo cambia a su color y el HEX de la esquina se actualiza. Palabras y colores editables. 9,8 s. Multiformato.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 9.8,
+  "formats": ["16:9", "9:16", "1:1", "4:5"]
+}

@@ -1,0 +1,255 @@
+<!doctype html>
+<html
+  lang="es"
+  data-composition-variables='[
+    {"id":"words","type":"string","label":"Palabras (separadas por coma)","default":"Yellow, Green, Black, Grey, Purple, Orange, Blue"},
+    {"id":"colors","type":"string","label":"Colores HEX (mismo orden)","default":"#E4C011, #BAD029, #171717, #A8AEC7, #9608FF, #EA5A1D, #174BE8"},
+    {"id":"label","type":"string","label":"Etiqueta de esquina","default":"HEX"},
+    {"id":"inactiveOpacity","type":"number","label":"Opacidad de palabras inactivas (0–1)","default":0.22},
+    {"id":"brandHeading","type":"string","label":"Fuente titulares","default":"Inter"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      data-wm-fonts
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block"
+    />
+    <title>Ruleta de colores · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        --size: 130px;
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #e4c011;
+        font-family: var(--brandHeading);
+      }
+      /* La columna se centra en la palabra activa moviendo solo y (transform). */
+      #reel {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        margin-top: calc(var(--size) * -0.55);
+        text-align: center;
+      }
+      .w {
+        display: block;
+        height: calc(var(--size) * 1.1);
+        font-weight: 800;
+        font-size: var(--size);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+      }
+      .corner {
+        position: absolute;
+        font-weight: 600;
+        font-size: 15px;
+        letter-spacing: 1px;
+      }
+      #hexes {
+        left: 28px;
+        top: 24px;
+        width: 200px;
+        height: 20px;
+      }
+      #hexes span {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      #label {
+        left: 28px;
+        bottom: 24px;
+        margin: 0;
+      }
+      #label2 {
+        right: 28px;
+        top: 24px;
+        margin: 0;
+      }
+
+      /* ── Multiformato (wissmotion/templates/formats.mjs) ── */
+      /* 9:16 — vertical para Reels/TikTok/Shorts */
+      #stage[data-format="9:16"] {
+        --size: 150px;
+      }
+      #stage[data-format="9:16"] .corner {
+        font-size: 24px;
+      }
+      #stage[data-format="9:16"] #hexes {
+        left: 48px;
+        top: 60px;
+      }
+      #stage[data-format="9:16"] #label {
+        left: 48px;
+        bottom: 60px;
+      }
+      #stage[data-format="9:16"] #label2 {
+        right: 48px;
+        top: 60px;
+      }
+      /* 1:1 — cuadrado */
+      #stage[data-format="1:1"] {
+        --size: 140px;
+      }
+      #stage[data-format="1:1"] .corner {
+        font-size: 18px;
+      }
+      /* 4:5 — feed (el formato de la referencia) */
+      #stage[data-format="4:5"] {
+        --size: 150px;
+      }
+      #stage[data-format="4:5"] .corner {
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="ruleta-colores"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="reel" class="clip" data-start="0" data-duration="9.8" data-track-index="0"></div>
+      <div
+        id="hexes"
+        class="corner clip"
+        data-start="0"
+        data-duration="9.8"
+        data-track-index="1"
+      ></div>
+      <p
+        id="label"
+        class="corner clip"
+        data-start="0"
+        data-duration="9.8"
+        data-track-index="2"
+        data-var-text="label"
+      >
+        HEX
+      </p>
+      <p
+        id="label2"
+        class="corner clip"
+        data-start="0"
+        data-duration="9.8"
+        data-track-index="3"
+        data-var-text="label"
+      >
+        HEX
+      </p>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        (function () {
+          var vars =
+            window.__hyperframes && typeof window.__hyperframes.getVariables === "function"
+              ? window.__hyperframes.getVariables() || {}
+              : {};
+          function list(value, fallback) {
+            var items = String(value || fallback)
+              .split(",")
+              .map(function (s) {
+                return s.trim();
+              })
+              .filter(Boolean);
+            return items.length ? items : fallback.split(", ");
+          }
+          var words = list(vars.words, "Yellow, Green, Black, Grey, Purple, Orange, Blue").slice(
+            0,
+            10,
+          );
+          var colors = list(
+            vars.colors,
+            "#E4C011, #BAD029, #171717, #A8AEC7, #9608FF, #EA5A1D, #174BE8",
+          ).map(function (c) {
+            return CSS.supports("color", c) ? c : "#171717";
+          });
+          // Texto claro u oscuro según la luminancia del fondo (contraste legible).
+          function inkFor(bg) {
+            var probe = document.createElement("span");
+            probe.style.color = bg;
+            document.body.appendChild(probe);
+            var rgb = getComputedStyle(probe).color.match(/\d+/g).map(Number);
+            probe.remove();
+            var l = (0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]) / 255;
+            return l > 0.6 ? "#151515" : "#ffffff";
+          }
+          var stage = document.getElementById("stage");
+          var reel = document.getElementById("reel");
+          var hexes = document.getElementById("hexes");
+          // Lista circular: tres vueltas para que siempre haya palabras arriba y abajo.
+          var n = words.length;
+          var dim = Math.min(Math.max(Number(vars.inactiveOpacity) || 0.22, 0), 1);
+          for (var k = 0; k < 3 * n; k++) {
+            var el = document.createElement("span");
+            el.className = "w";
+            el.textContent = words[k % n];
+            el.style.opacity = k === n ? "1" : String(dim);
+            reel.appendChild(el);
+          }
+          words.forEach(function (w, i) {
+            var hx = document.createElement("span");
+            hx.textContent = (colors[i % colors.length] || "").toUpperCase();
+            hx.style.opacity = i === 0 ? "0.8" : "0";
+            hexes.appendChild(hx);
+          });
+          var items = reel.querySelectorAll(".w");
+          var codes = hexes.querySelectorAll("span");
+          var step = items[0] ? items[0].getBoundingClientRect().height : 140;
+          var hold = 9.8 / n;
+          reel.style.transform = "translateY(" + -n * step + "px)";
+
+          // Estado inicial en el DOM (no con tl.set en 0: no pinta en el fotograma 0).
+          stage.style.backgroundColor = colors[0];
+          stage.style.color = inkFor(colors[0]);
+          var tl = gsap.timeline({ paused: true });
+          words.forEach(function (_, i) {
+            var at = i * hold;
+            var bg = colors[i % colors.length];
+            var move = i === 0 ? 0.01 : 0.55;
+            tl.to(reel, { y: -(n + i) * step, duration: move, ease: "expo.inOut" }, at);
+            tl.to(
+              stage,
+              { backgroundColor: bg, color: inkFor(bg), duration: move, ease: "power2.inOut" },
+              at,
+            );
+            tl.to(
+              items,
+              {
+                opacity: function (j) {
+                  return j === n + i ? 1 : dim;
+                },
+                duration: move,
+                ease: "power2.out",
+              },
+              at,
+            );
+            tl.to(
+              codes,
+              {
+                opacity: function (j) {
+                  return j === i ? 0.8 : 0;
+                },
+                duration: Math.min(move, 0.3),
+              },
+              at,
+            );
+          });
+          window.__timelines = window.__timelines || {};
+          window.__timelines["ruleta-colores"] = tl;
+        })();
+      </script>
+    </div>
+  </body>
+</html>
