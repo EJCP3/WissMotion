@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>wall-pan · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #0d0d0d;
+      }
+      /* El muro es la "cámara": se escala y desplaza entero. Origen en la
+         tarjeta destacada (fila 2, col 3) para que el zoom salga de ella. */
+      #wall {
+        position: absolute;
+        left: -260px;
+        top: -170px;
+        display: grid;
+        grid-template-columns: repeat(6, 300px);
+        grid-auto-rows: 190px;
+        gap: 14px;
+        transform-origin: 778px 299px;
+      }
+      .t {
+        border-radius: 6px;
+        font:
+          500 30px Inter,
+          sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .a {
+        background: #f3f3ee;
+        color: #0f3d2e;
+      }
+      .b {
+        background: #e8ff3a;
+        color: #0f3d2e;
+      }
+      .c {
+        background: #bfd5d3;
+        color: #0f3d2e;
+      }
+      .d {
+        background: #1b1b1b;
+        color: #f3f3ee;
+      }
+      .hero {
+        background: #ffffff;
+        color: #0f3d2e;
+        font-size: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="wall-pan"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="wall" class="clip" data-start="0" data-duration="4" data-track-index="0">
+        <div class="t a">1440 × 900</div>
+        <div class="t b">Studio</div>
+        <div class="t c">Brand</div>
+        <div class="t d">Motion</div>
+        <div class="t a">Type</div>
+        <div class="t b">Grid</div>
+        <div class="t c">Web</div>
+        <div class="t d">App</div>
+        <div class="t hero">1440 × 900</div>
+        <div class="t b">Deck</div>
+        <div class="t a">Poster</div>
+        <div class="t c">Film</div>
+        <div class="t b">Social</div>
+        <div class="t a">UI</div>
+        <div class="t d">Print</div>
+        <div class="t c">Store</div>
+        <div class="t b">Labs</div>
+        <div class="t a">Icons</div>
+        <div class="t d">Case</div>
+        <div class="t c">Retail</div>
+        <div class="t a">Signage</div>
+        <div class="t b">Book</div>
+        <div class="t d">Pack</div>
+        <div class="t c">Merch</div>
+        <div class="t a">Ads</div>
+        <div class="t d">Event</div>
+        <div class="t b">Site</div>
+        <div class="t c">Logo</div>
+        <div class="t a">Font</div>
+        <div class="t d">Color</div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(
+          "#wall",
+          { scale: 2.6, x: 122, y: 231 },
+          { scale: 1, x: -90, y: -40, duration: 3.2, ease: "power3.inOut" },
+          0.3,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["wall-pan"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

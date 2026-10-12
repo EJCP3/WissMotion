@@ -152,11 +152,11 @@
       "techniques": ["carrusel en anillo 3D", "tarjetas de medios mixtos"],
       "recreate": {
         "templates": [],
-        "presets": ["card-carousel"],
+        "presets": ["ring-carousel"],
         "transitions": []
       },
-      "status": "parcial",
-      "missing": ["carrusel 3D en anillo (perspectiva + rotationY por tarjeta)"]
+      "status": "lista",
+      "missing": []
     },
     {
       "id": "degradado-procedural",
@@ -169,11 +169,11 @@
       "techniques": ["fondo procedural de degradados"],
       "recreate": {
         "templates": [],
-        "presets": [],
+        "presets": ["gradient-columns"],
         "transitions": []
       },
-      "status": "falta",
-      "missing": ["fondos generativos (CSS animado o shader)"]
+      "status": "lista",
+      "missing": []
     },
     {
       "id": "identidad-bento",
@@ -186,11 +186,11 @@
       "techniques": ["construcción de logo", "bento que se reacomoda", "mockups de producto"],
       "recreate": {
         "templates": ["logo-sting"],
-        "presets": ["logo-build", "feature-grid"],
+        "presets": ["logo-build", "feature-grid", "bento-shuffle"],
         "transitions": []
       },
       "status": "parcial",
-      "missing": ["bento con transiciones de layout (FLIP)", "mockups de dispositivos y productos"]
+      "missing": ["mockups de dispositivos y productos"]
     },
     {
       "id": "editorial-letra",
@@ -326,11 +326,11 @@
       "techniques": ["muro en cuadrícula", "movimiento de cámara (zoom out + paneo)"],
       "recreate": {
         "templates": [],
-        "presets": ["scale-fade"],
+        "presets": ["wall-pan"],
         "transitions": []
       },
-      "status": "parcial",
-      "missing": ["preset de muro / masonry", "movimiento de cámara (skill hyperframes-keyframes)"]
+      "status": "lista",
+      "missing": []
     },
     {
       "id": "launch-skills-blur",
@@ -394,14 +394,11 @@
       ],
       "recreate": {
         "templates": [],
-        "presets": ["kinetic-type", "logo-build", "spring-pop"],
+        "presets": ["marquee", "kinetic-type", "logo-build", "spring-pop"],
         "transitions": []
       },
       "status": "parcial",
-      "missing": [
-        "preset de marquesina",
-        "película multi-escena (hoy: agente + /product-launch-video)"
-      ]
+      "missing": ["película multi-escena (hoy: agente + /product-launch-video)"]
     }
   ]
 }

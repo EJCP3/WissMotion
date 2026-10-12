@@ -16,7 +16,7 @@ node wissmotion/server/mcp.mjs   # los agentes lo lanzan como `npx wissmotion mc
 | `brand_list` / `brand_save` / `brand_get` | Biblioteca (`--dir` o `WISSMOTION_BRANDS_DIR`)            |
 | `template_list`                           | 13 plantillas con sus variables                           |
 | `template_instantiate`                    | Proyecto desde plantilla + marca (nombre u objeto) + vars |
-| `motion_list`                             | Personalidades, 30 presets y 4 transiciones               |
+| `motion_list`                             | Personalidades, 35 presets y 4 transiciones               |
 | `render_plan`                             | Lote por destino con chequeo de aspecto (no renderiza)    |
 
 `server.test.mjs` levanta el servidor por stdio y prueba handshake,

@@ -7,8 +7,12 @@
       "ease": "power3.out",
       "duration": 0.9,
       "gsap": {
-        "from": { "clipPath": "inset(0 100% 0 0)" },
-        "to": { "clipPath": "inset(0 0% 0 0)" }
+        "from": {
+          "clipPath": "inset(0 100% 0 0)"
+        },
+        "to": {
+          "clipPath": "inset(0 0% 0 0)"
+        }
       }
     },
     "stagger-words": {
@@ -18,8 +22,14 @@
       "duration": 0.7,
       "stagger": 0.06,
       "gsap": {
-        "from": { "y": "100%", "opacity": 0 },
-        "to": { "y": "0%", "opacity": 1 }
+        "from": {
+          "y": "100%",
+          "opacity": 0
+        },
+        "to": {
+          "y": "0%",
+          "opacity": 1
+        }
       }
     },
     "blur-in": {
@@ -28,8 +38,14 @@
       "ease": "circ.out",
       "duration": 0.8,
       "gsap": {
-        "from": { "opacity": 0, "filter": "blur(12px)" },
-        "to": { "opacity": 1, "filter": "blur(0px)" }
+        "from": {
+          "opacity": 0,
+          "filter": "blur(12px)"
+        },
+        "to": {
+          "opacity": 1,
+          "filter": "blur(0px)"
+        }
       }
     },
     "spring-pop": {
@@ -38,8 +54,14 @@
       "ease": "back.out(1.7)",
       "duration": 0.7,
       "gsap": {
-        "from": { "scale": 0.6, "opacity": 0 },
-        "to": { "scale": 1, "opacity": 1 }
+        "from": {
+          "scale": 0.6,
+          "opacity": 0
+        },
+        "to": {
+          "scale": 1,
+          "opacity": 1
+        }
       }
     },
     "slide-stack": {
@@ -49,8 +71,14 @@
       "duration": 0.6,
       "stagger": 0.08,
       "gsap": {
-        "from": { "y": 60, "opacity": 0 },
-        "to": { "y": 0, "opacity": 1 }
+        "from": {
+          "y": 60,
+          "opacity": 0
+        },
+        "to": {
+          "y": 0,
+          "opacity": 1
+        }
       }
     },
     "scale-fade": {
@@ -59,8 +87,14 @@
       "ease": "power2.out",
       "duration": 0.8,
       "gsap": {
-        "from": { "scale": 0.92, "opacity": 0 },
-        "to": { "scale": 1, "opacity": 1 }
+        "from": {
+          "scale": 0.92,
+          "opacity": 0
+        },
+        "to": {
+          "scale": 1,
+          "opacity": 1
+        }
       }
     },
     "wipe": {
@@ -69,8 +103,13 @@
       "ease": "power3.inOut",
       "duration": 0.7,
       "gsap": {
-        "from": { "scaleX": 0, "transformOrigin": "left center" },
-        "to": { "scaleX": 1 }
+        "from": {
+          "scaleX": 0,
+          "transformOrigin": "left center"
+        },
+        "to": {
+          "scaleX": 1
+        }
       }
     },
     "typewriter": {
@@ -80,8 +119,12 @@
       "duration": 0.04,
       "stagger": 0.035,
       "gsap": {
-        "from": { "opacity": 0 },
-        "to": { "opacity": 1 }
+        "from": {
+          "opacity": 0
+        },
+        "to": {
+          "opacity": 1
+        }
       }
     },
     "stagger-chars": {
@@ -91,8 +134,16 @@
       "duration": 0.6,
       "stagger": 0.05,
       "gsap": {
-        "from": { "y": "60%", "rotation": 20, "opacity": 0 },
-        "to": { "y": "0%", "rotation": 0, "opacity": 1 }
+        "from": {
+          "y": "60%",
+          "rotation": 20,
+          "opacity": 0
+        },
+        "to": {
+          "y": "0%",
+          "rotation": 0,
+          "opacity": 1
+        }
       }
     },
     "tracking-in": {
@@ -102,8 +153,14 @@
       "duration": 0.9,
       "stagger": 0.04,
       "gsap": {
-        "from": { "x": 140, "opacity": 0 },
-        "to": { "x": 0, "opacity": 1 }
+        "from": {
+          "x": 140,
+          "opacity": 0
+        },
+        "to": {
+          "x": 0,
+          "opacity": 1
+        }
       }
     },
     "flip-3d": {
@@ -112,8 +169,16 @@
       "ease": "power3.out",
       "duration": 0.9,
       "gsap": {
-        "from": { "rotationY": 90, "transformPerspective": 1200, "opacity": 0 },
-        "to": { "rotationY": 0, "transformPerspective": 1200, "opacity": 1 }
+        "from": {
+          "rotationY": 90,
+          "transformPerspective": 1200,
+          "opacity": 0
+        },
+        "to": {
+          "rotationY": 0,
+          "transformPerspective": 1200,
+          "opacity": 1
+        }
       }
     },
     "morph-box": {
@@ -122,8 +187,12 @@
       "ease": "expo.inOut",
       "duration": 0.9,
       "gsap": {
-        "from": { "clipPath": "inset(44% 30% 44% 30% round 120px)" },
-        "to": { "clipPath": "inset(0% 0% 0% 0% round 32px)" }
+        "from": {
+          "clipPath": "inset(44% 30% 44% 30% round 120px)"
+        },
+        "to": {
+          "clipPath": "inset(0% 0% 0% 0% round 32px)"
+        }
       }
     },
     "fade-slide-out": {
@@ -132,7 +201,10 @@
       "ease": "power2.in",
       "duration": 0.5,
       "gsap": {
-        "to": { "y": -30, "opacity": 0 }
+        "to": {
+          "y": -30,
+          "opacity": 0
+        }
       }
     },
     "blur-out": {
@@ -141,7 +213,10 @@
       "ease": "power2.in",
       "duration": 0.5,
       "gsap": {
-        "to": { "opacity": 0, "filter": "blur(12px)" }
+        "to": {
+          "opacity": 0,
+          "filter": "blur(12px)"
+        }
       }
     },
     "pulse": {
@@ -150,7 +225,11 @@
       "ease": "sine.inOut",
       "duration": 0.4,
       "gsap": {
-        "to": { "scale": 1.06, "yoyo": true, "repeat": 3 }
+        "to": {
+          "scale": 1.06,
+          "yoyo": true,
+          "repeat": 3
+        }
       }
     },
     "highlight-sweep": {
@@ -159,8 +238,13 @@
       "ease": "power3.out",
       "duration": 0.6,
       "gsap": {
-        "from": { "scaleX": 0, "transformOrigin": "left center" },
-        "to": { "scaleX": 1 }
+        "from": {
+          "scaleX": 0,
+          "transformOrigin": "left center"
+        },
+        "to": {
+          "scaleX": 1
+        }
       }
     },
     "underline-draw": {
@@ -169,8 +253,13 @@
       "ease": "power3.out",
       "duration": 0.6,
       "gsap": {
-        "from": { "scaleX": 0, "transformOrigin": "left center" },
-        "to": { "scaleX": 1 }
+        "from": {
+          "scaleX": 0,
+          "transformOrigin": "left center"
+        },
+        "to": {
+          "scaleX": 1
+        }
       }
     },
     "counter-up": {
@@ -179,7 +268,9 @@
       "ease": "power2.out",
       "duration": 1.5,
       "gsap": {
-        "to": { "value": 100 }
+        "to": {
+          "value": 100
+        }
       }
     },
     "number-roll": {
@@ -188,7 +279,9 @@
       "ease": "power3.inOut",
       "duration": 1.2,
       "gsap": {
-        "to": { "y": "-7em" }
+        "to": {
+          "y": "-7em"
+        }
       }
     },
     "shake": {
@@ -197,7 +290,25 @@
       "ease": "none",
       "duration": 0.4,
       "gsap": {
-        "to": { "keyframes": [{ "x": -10 }, { "x": 10 }, { "x": -6 }, { "x": 6 }, { "x": 0 }] }
+        "to": {
+          "keyframes": [
+            {
+              "x": -10
+            },
+            {
+              "x": 10
+            },
+            {
+              "x": -6
+            },
+            {
+              "x": 6
+            },
+            {
+              "x": 0
+            }
+          ]
+        }
       }
     },
     "glow": {
@@ -206,8 +317,14 @@
       "ease": "sine.inOut",
       "duration": 0.6,
       "gsap": {
-        "from": { "opacity": 0.55 },
-        "to": { "opacity": 1, "yoyo": true, "repeat": 1 }
+        "from": {
+          "opacity": 0.55
+        },
+        "to": {
+          "opacity": 1,
+          "yoyo": true,
+          "repeat": 1
+        }
       }
     },
     "negative-mask": {
@@ -216,8 +333,14 @@
       "ease": "power2.inOut",
       "duration": 2.4,
       "gsap": {
-        "from": { "xPercent": -150, "mixBlendMode": "difference" },
-        "to": { "xPercent": 150, "mixBlendMode": "difference" }
+        "from": {
+          "xPercent": -150,
+          "mixBlendMode": "difference"
+        },
+        "to": {
+          "xPercent": 150,
+          "mixBlendMode": "difference"
+        }
       }
     },
     "device-mockup-scroll": {
@@ -226,8 +349,13 @@
       "ease": "power3.out",
       "duration": 1.2,
       "gsap": {
-        "from": { "y": 80, "opacity": 0 },
-        "to": { "y": -160 }
+        "from": {
+          "y": 80,
+          "opacity": 0
+        },
+        "to": {
+          "y": -160
+        }
       }
     },
     "browser-scroll": {
@@ -236,8 +364,13 @@
       "ease": "power3.out",
       "duration": 1.2,
       "gsap": {
-        "from": { "y": 60, "opacity": 0 },
-        "to": { "y": -180 }
+        "from": {
+          "y": 60,
+          "opacity": 0
+        },
+        "to": {
+          "y": -180
+        }
       }
     },
     "card-carousel": {
@@ -247,8 +380,14 @@
       "duration": 0.6,
       "stagger": 0.5,
       "gsap": {
-        "from": { "x": 120, "opacity": 0 },
-        "to": { "x": -120, "opacity": 0 }
+        "from": {
+          "x": 120,
+          "opacity": 0
+        },
+        "to": {
+          "x": -120,
+          "opacity": 0
+        }
       }
     },
     "feature-grid": {
@@ -258,8 +397,14 @@
       "duration": 0.6,
       "stagger": 0.12,
       "gsap": {
-        "from": { "scale": 0.9, "opacity": 0 },
-        "to": { "scale": 1, "opacity": 1 }
+        "from": {
+          "scale": 0.9,
+          "opacity": 0
+        },
+        "to": {
+          "scale": 1,
+          "opacity": 1
+        }
       }
     },
     "split-screen": {
@@ -268,8 +413,12 @@
       "ease": "power3.inOut",
       "duration": 0.7,
       "gsap": {
-        "from": { "scaleX": 0 },
-        "to": { "scaleX": 1 }
+        "from": {
+          "scaleX": 0
+        },
+        "to": {
+          "scaleX": 1
+        }
       }
     },
     "logo-build": {
@@ -278,8 +427,12 @@
       "ease": "back.out(1.7)",
       "duration": 0.7,
       "gsap": {
-        "from": { "scale": 0 },
-        "to": { "scale": 1 }
+        "from": {
+          "scale": 0
+        },
+        "to": {
+          "scale": 1
+        }
       }
     },
     "card-stack": {
@@ -289,8 +442,16 @@
       "duration": 0.6,
       "stagger": 1,
       "gsap": {
-        "from": { "y": 36, "scale": 0.9, "opacity": 0.5 },
-        "to": { "y": -60, "scale": 1.04, "opacity": 0 }
+        "from": {
+          "y": 36,
+          "scale": 0.9,
+          "opacity": 0.5
+        },
+        "to": {
+          "y": -60,
+          "scale": 1.04,
+          "opacity": 0
+        }
       }
     },
     "kinetic-type": {
@@ -300,8 +461,92 @@
       "duration": 0.7,
       "stagger": 0.15,
       "gsap": {
-        "from": { "y": "110%" },
-        "to": { "y": "0%" }
+        "from": {
+          "y": "110%"
+        },
+        "to": {
+          "y": "0%"
+        }
+      }
+    },
+    "marquee": {
+      "kind": "escena",
+      "description": "Marquesina: filas de texto (el contenido repetido dos veces) que se desplazan sin fin; filas alternas en sentido contrario (from/to invertidos). Banda inclinada opcional. Solo transforms.",
+      "ease": "none",
+      "duration": 6,
+      "gsap": {
+        "from": {
+          "xPercent": 0
+        },
+        "to": {
+          "xPercent": -50
+        }
+      }
+    },
+    "ring-carousel": {
+      "kind": "escena",
+      "description": "Anillo 3D de tarjetas: cada tarjeta fija en rotateY(i·360/n) translateZ(r) con preserve-3d; se gira el anillo entero. Elige r ≈ ancho/(2·tan(180°/n)) para que queden pegadas.",
+      "ease": "power2.inOut",
+      "duration": 3.6,
+      "gsap": {
+        "from": {
+          "rotationY": 0
+        },
+        "to": {
+          "rotationY": -90
+        }
+      }
+    },
+    "wall-pan": {
+      "kind": "escena",
+      "description": "Cámara sobre un muro de tarjetas: arranca con zoom en una tarjeta (transform-origin en su centro + x/y para centrarla) y se aleja hasta ver la pared.",
+      "ease": "power3.inOut",
+      "duration": 3.2,
+      "gsap": {
+        "from": {
+          "scale": 2.6,
+          "x": 122,
+          "y": 231
+        },
+        "to": {
+          "scale": 1,
+          "x": -90,
+          "y": -40
+        }
+      }
+    },
+    "gradient-columns": {
+      "kind": "escena",
+      "description": "Fondo procedural: columnas con una tira de degradado 3 veces más alta que se desplaza en Y; columnas alternas en sentido contrario. Sin animar background (solo transforms).",
+      "ease": "sine.inOut",
+      "duration": 4,
+      "stagger": 0.15,
+      "gsap": {
+        "from": {
+          "yPercent": 0
+        },
+        "to": {
+          "yPercent": -66
+        }
+      }
+    },
+    "bento-shuffle": {
+      "kind": "escena",
+      "description": "Bento que se reacomoda (FLIP a mano): el layout final va en CSS y cada pieza nace desplazada según sus data-dx, data-dy y data-ds (leídos al construir la timeline) y vuelve a 0. Los valores de abajo son de ejemplo.",
+      "ease": "expo.inOut",
+      "duration": 1.1,
+      "stagger": 0.05,
+      "gsap": {
+        "from": {
+          "x": 780,
+          "y": 320,
+          "scale": 0.7
+        },
+        "to": {
+          "x": 0,
+          "y": 0,
+          "scale": 1
+        }
       }
     }
   }

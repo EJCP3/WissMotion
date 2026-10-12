@@ -45,6 +45,11 @@ const TIMES = {
   "negative-mask": 1.2,
   "morph-box": 0.85,
   "card-stack": 1.75,
+  marquee: 2,
+  "ring-carousel": 2,
+  "wall-pan": 1.6,
+  "gradient-columns": 2,
+  "bento-shuffle": 0.9,
 };
 
 export function previewTime(id) {

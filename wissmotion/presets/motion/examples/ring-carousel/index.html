@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ring-carousel · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: linear-gradient(180deg, #e9eaec 0%, #d5d7da 60%, #9fa2a7 100%);
+        perspective: 1400px;
+      }
+      /* Inclinación fija del anillo; GSAP solo gira #ring en Y. */
+      #tilt {
+        position: absolute;
+        left: 640px;
+        top: 250px;
+        transform-style: preserve-3d;
+        transform: rotateX(-10deg);
+      }
+      #ring {
+        position: absolute;
+        transform-style: preserve-3d;
+      }
+      .card {
+        position: absolute;
+        left: -110px;
+        top: -160px;
+        width: 220px;
+        height: 320px;
+        box-sizing: border-box;
+        padding: 18px;
+        border-radius: 18px;
+        backface-visibility: hidden;
+        font:
+          900 34px/0.95 Inter,
+          sans-serif;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      }
+      .k0 {
+        background: #0e0e0e;
+        color: #fff;
+      }
+      .k1 {
+        background: #f2f2f2;
+        color: #0e0e0e;
+      }
+      .k2 {
+        background: #ffd400;
+        color: #0e0e0e;
+      }
+      .k3 {
+        background: linear-gradient(160deg, #3c3c3c, #0e0e0e);
+        color: #fff;
+      }
+      .k4 {
+        background: #2f5bff;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="ring-carousel"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="tilt" class="clip" data-start="0" data-duration="4" data-track-index="0">
+        <!-- 12 tarjetas a 30° sobre un radio de 430px: quedan pegadas. -->
+        <div id="ring">
+          <div class="card k0" style="transform: rotateY(0deg) translateZ(430px)">BODY 197</div>
+          <div class="card k1" style="transform: rotateY(30deg) translateZ(430px)">WORK NOW</div>
+          <div class="card k2" style="transform: rotateY(60deg) translateZ(430px)">Park</div>
+          <div class="card k3" style="transform: rotateY(90deg) translateZ(430px)">USD</div>
+          <div class="card k4" style="transform: rotateY(120deg) translateZ(430px)">ETH</div>
+          <div class="card k1" style="transform: rotateY(150deg) translateZ(430px)">XRP</div>
+          <div class="card k0" style="transform: rotateY(180deg) translateZ(430px)">NOW</div>
+          <div class="card k2" style="transform: rotateY(210deg) translateZ(430px)">197</div>
+          <div class="card k3" style="transform: rotateY(240deg) translateZ(430px)">ORBIT</div>
+          <div class="card k4" style="transform: rotateY(270deg) translateZ(430px)">rico</div>
+          <div class="card k1" style="transform: rotateY(300deg) translateZ(430px)">BODY</div>
+          <div class="card k0" style="transform: rotateY(330deg) translateZ(430px)">WORK</div>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(
+          "#ring",
+          { rotationY: 0 },
+          { rotationY: -90, duration: 3.6, ease: "power2.inOut" },
+          0.2,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["ring-carousel"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>gradient-columns · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #2a8fd8;
+      }
+      #cols {
+        position: absolute;
+        inset: 0;
+        display: flex;
+      }
+      /* Cada columna recorta una tira 3 veces más alta que se desplaza en Y:
+         el degradado "fluye" sin animar background (solo transforms). */
+      .col {
+        flex: 1;
+        overflow: hidden;
+      }
+      .strip {
+        height: 300%;
+        background: linear-gradient(
+          180deg,
+          #0a1622 0%,
+          #2a8fd8 16%,
+          #d9e7f2 30%,
+          #2a8fd8 46%,
+          #0a1622 62%,
+          #3aa0e8 78%,
+          #0a1622 100%
+        );
+      }
+      .col:nth-child(2) .strip,
+      .col:nth-child(4) .strip {
+        background: linear-gradient(
+          180deg,
+          #2a8fd8 0%,
+          #0a1622 22%,
+          #8cc6ee 44%,
+          #2a8fd8 66%,
+          #0a1622 84%,
+          #2a8fd8 100%
+        );
+      }
+      #t {
+        position: absolute;
+        left: 150px;
+        top: 150px;
+        margin: 0;
+        font:
+          900 200px/0.85 Inter,
+          sans-serif;
+        letter-spacing: -0.04em;
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="gradient-columns"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="cols" class="clip" data-start="0" data-duration="4" data-track-index="0">
+        <div class="col"><div class="strip up"></div></div>
+        <div class="col"><div class="strip down"></div></div>
+        <div class="col"><div class="strip up"></div></div>
+        <div class="col"><div class="strip down"></div></div>
+        <div class="col"><div class="strip up"></div></div>
+      </div>
+      <h1 id="t" class="clip" data-start="0" data-duration="4" data-track-index="1">
+        Love<br />wins.
+      </h1>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(
+          "#cols .up",
+          { yPercent: 0 },
+          { yPercent: -66, duration: 4, ease: "sine.inOut", stagger: 0.15 },
+          0,
+        );
+        tl.fromTo(
+          "#cols .down",
+          { yPercent: -66 },
+          { yPercent: 0, duration: 4, ease: "sine.inOut", stagger: 0.15 },
+          0,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["gradient-columns"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

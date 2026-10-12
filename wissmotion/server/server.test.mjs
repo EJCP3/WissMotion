@@ -155,7 +155,7 @@ describe("mcp.mjs (stdio)", () => {
   it("motion_list trae personalidades, presets y transiciones", async () => {
     const m = JSON.parse(textOf(await send("tools/call", { name: "motion_list", arguments: {} })));
     assert.equal(Object.keys(m.personalities).length, 6);
-    assert.equal(Object.keys(m.presets).length, 30);
+    assert.equal(Object.keys(m.presets).length, 35);
     assert.equal(Object.keys(m.transitions).length, 4);
   });
 

@@ -22,7 +22,7 @@ solo). Reglas:
 
 `brand.json` trae `motionPersonality` (suave, enérgico, premium, juguetón,
 corporativo, tech). Cada una fija easing, ritmo y recursos en
-`presets/motion/personalities.json`. Los 30 presets + 4 transiciones son
+`presets/motion/personalities.json`. Los 35 presets + 4 transiciones son
 bloques GSAP copiables con ejemplo lint-clean y póster.
 
 ## Determinismo

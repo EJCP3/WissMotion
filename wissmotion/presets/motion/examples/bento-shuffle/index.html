@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>bento-shuffle · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #0d0d0d;
+      }
+      /* Layout FINAL en CSS. data-dx/dy/ds = desfase desde el layout inicial
+         (FLIP a mano): la pieza nace ahí y vuelve a 0, solo con transforms. */
+      #bento {
+        position: absolute;
+        inset: 40px;
+      }
+      .tile {
+        position: absolute;
+        box-sizing: border-box;
+        padding: 24px;
+        border-radius: 14px;
+        transform-origin: 0 0;
+        font:
+          700 30px Inter,
+          sans-serif;
+      }
+      .p1 {
+        left: 0;
+        top: 0;
+        width: 380px;
+        height: 300px;
+        background: #f6b6c8;
+        color: #0b3d2a;
+      }
+      .p2 {
+        left: 400px;
+        top: 0;
+        width: 360px;
+        height: 300px;
+        background: #0f3d2e;
+        color: #f3ead8;
+      }
+      .p3 {
+        left: 780px;
+        top: 0;
+        width: 420px;
+        height: 300px;
+        background: #f3ead8;
+        color: #0f8a4b;
+      }
+      .p4 {
+        left: 0;
+        top: 320px;
+        width: 580px;
+        height: 320px;
+        background: #0f8a4b;
+        color: #f3ead8;
+      }
+      .p5 {
+        left: 600px;
+        top: 320px;
+        width: 600px;
+        height: 320px;
+        background: #f3ead8;
+        color: #0f3d2e;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="bento-shuffle"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="bento" class="clip" data-start="0" data-duration="3" data-track-index="0">
+        <div class="tile p1" data-dx="780" data-dy="320" data-ds="0.7">Watch</div>
+        <div class="tile p2" data-dx="-400" data-dy="320" data-ds="1.2">Let's create</div>
+        <div class="tile p3" data-dx="-780" data-dy="0" data-ds="0.85">Clint.</div>
+        <div class="tile p4" data-dx="400" data-dy="-320" data-ds="0.6">Stickers</div>
+        <div class="tile p5" data-dx="-200" data-dy="-320" data-ds="0.65">Clever internet.</div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        // Valores por pieza leídos del DOM al construir: deterministas.
+        tl.from(
+          "#bento .tile",
+          {
+            x: (i, el) => Number(el.dataset.dx),
+            y: (i, el) => Number(el.dataset.dy),
+            scale: (i, el) => Number(el.dataset.ds),
+            duration: 1.1,
+            ease: "expo.inOut",
+            stagger: 0.05,
+          },
+          0.5,
+        );
+        window.__timelines = window.__timelines || {};
+        window.__timelines["bento-shuffle"] = tl;
+      </script>
+    </div>
+  </body>
+</html>
