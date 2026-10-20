@@ -37,6 +37,10 @@ const COMMANDS = {
     file: ["templates", "templateize.mjs"],
     help: "--project dir --id slug [--name n]",
   },
+  determinism: {
+    file: ["templates", "determinism.mjs"],
+    help: "--project dir [--at 1.5] [--other 4] — mismo instante = mismo fotograma",
+  },
   render: {
     file: ["render", "render-batch.mjs"],
     help: "--project dir [--dest all|id] [--dry-run]",

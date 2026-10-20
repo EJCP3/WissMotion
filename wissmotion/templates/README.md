@@ -36,6 +36,13 @@ node instantiate.mjs --template promo-app --brand b.json --format 9:16 --out ./v
 node ../render/render-batch.mjs --project ./mi-promo --dest all   # cada destino en su formato
 ```
 
+**Calidad**: `lint.test.mjs` pasa `hyperframes lint` a las 17 plantillas
+(base y re-escaladas a 30 s). `determinism.mjs` comprueba que un instante da
+el mismo PNG capturado en orden A → B → A y en otra ejecución
+(`wissmotion determinism --project dir --at 1.5`);
+`WISSMOTION_DETERMINISM=1 node --test templates/determinism.test.mjs` lo
+corre sobre las 17 plantillas y los 42 ejemplos de presets (~10 min).
+
 **Duraciones variables**: `--duration 15` (o `duration` en el MCP y en cada
 escena de `film`) re-escala la plantilla a 6, 15, 30, 60 s… `retime.mjs`
 multiplica `data-start`/`data-duration` de los clips y envuelve la timeline
