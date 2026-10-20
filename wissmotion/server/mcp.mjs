@@ -11,6 +11,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateBrand } from "../brand-kit/validate-brand.mjs";
 import { extractBrand } from "../brand-kit/extract-lib.mjs";
+import { brandFromImages } from "../brand-kit/extract-from-images.mjs";
 import { getBrand, listBrands, resolveLibraryDir, saveBrand } from "../brand-kit/brand-library.mjs";
 import { instantiate, parseDeclaredVariables } from "../templates/instantiate.mjs";
 import {
@@ -129,6 +130,35 @@ const TOOLS = [
       const { brand, debug } = await extractBrand(url);
       const { valid, errors } = await validateBrand(brand);
       return text({ brand, debug, valid, errors });
+    },
+  },
+  {
+    def: {
+      name: "brand_extract_images",
+      description:
+        "Marca desde capturas de la app (App Store, Play Store o sueltas): colores por área + candidatos a color de marca. Si el primario no es el de la marca, repite con primary (uno de los candidatos). Fuentes: Inter por defecto.",
+      inputSchema: {
+        type: "object",
+        required: ["files"],
+        properties: {
+          files: { type: "array", items: { type: "string" } },
+          name: { type: "string" },
+          logo: { type: "string" },
+          primary: { type: "string" },
+          accent: { type: "string" },
+        },
+      },
+    },
+    run: async ({ files, name, logo, primary, accent }) => {
+      const { brand, candidates } = brandFromImages({
+        files: files.map((f) => resolve(f)),
+        name,
+        logo,
+        primary: primary?.toLowerCase(),
+        accent: accent?.toLowerCase(),
+      });
+      const { valid, errors } = await validateBrand(brand);
+      return text({ brand, candidates, valid, errors });
     },
   },
   {

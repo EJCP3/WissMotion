@@ -13,6 +13,7 @@ node wissmotion/server/mcp.mjs   # los agentes lo lanzan como `npx wissmotion mc
 | ----------------------------------------- | ------------------------------------------------------------------ |
 | `brand_validate`                          | Valida una marca inline contra el esquema v1                       |
 | `brand_extract`                           | Marca desde URL (sin IA)                                           |
+| `brand_extract_images`                    | Marca desde capturas + candidatos a color de marca (`primary`)     |
 | `brand_list` / `brand_save` / `brand_get` | Biblioteca (`--dir` o `WISSMOTION_BRANDS_DIR`)                     |
 | `template_list`                           | 17 plantillas con sus variables                                    |
 | `template_instantiate`                    | Proyecto desde plantilla + marca + vars (`format` opcional)        |
@@ -78,7 +79,7 @@ revisión de fotogramas. La lógica de proyecto vive en `project-ops.mjs`; los
 recursos y prompts en `mcp-context.mjs`.
 
 `server.test.mjs` levanta el servidor por stdio y prueba handshake,
-las 22 herramientas, recursos, prompts y el error de herramienta desconocida.
+las 23 herramientas, recursos, prompts y el error de herramienta desconocida.
 
 ## Plugin de Claude Code
 

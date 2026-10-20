@@ -20,6 +20,10 @@ const COMMANDS = {
     file: ["brand-kit", "extract-from-url.mjs"],
     help: "<url> --out b.json [--save nombre]",
   },
+  "brand-images": {
+    file: ["brand-kit", "extract-from-images.mjs"],
+    help: 'captura.png [más…] --name "App" [--primary #hex] [--logo icono.png] --out b.json',
+  },
   brands: { file: ["brand-kit", "brand-library.mjs"], help: "--list [--dir d] | --get <nombre>" },
   template: {
     file: ["templates", "instantiate.mjs"],

@@ -35,7 +35,7 @@
       tipografías (heading, body, pesos), tono, personalidad de movimiento, tagline, features, CTA, URL, capturas, redes sociales.
 - [x] **Extractor desde URL (sin IA)**: colores del CSS, fuentes, favicon/logo, imagen OG, título, meta descripción,
       capturas desktop y móvil (reutilizar `hyperframes capture`).
-- [ ] **Extractor desde app**: subir capturas de App Store / Play Store o imágenes sueltas.
+- [x] **Extractor desde app**: subir capturas de App Store / Play Store o imágenes sueltas (`extract-from-images.mjs`, MCP `brand_extract_images`).
 - [ ] **Importar desde Figma**: variables/tokens y logo.
 - [ ] **Enriquecimiento con IA (opcional)**: tono, tagline, beneficios, público objetivo, guion sugerido.
 - [x] **Editor manual de marca** (panel en el Studio): selector de color, subir logo, buscador de Google Fonts, vista previa en vivo.
