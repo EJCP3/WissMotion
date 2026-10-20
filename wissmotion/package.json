@@ -1,0 +1,14 @@
+{
+  "name": "wissmotion",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WissMotion: videos promo con marca sobre HyperFrames (CLI + MCP).",
+  "license": "Apache-2.0",
+  "bin": {
+    "wissmotion": "cli.mjs"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  }
+}

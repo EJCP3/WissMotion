@@ -55,7 +55,7 @@ const COMMANDS = {
 
 export function usage() {
   const rows = Object.entries(COMMANDS).map(([name, c]) => `  ${name} ${c.help}`);
-  return `wissmotion — estudio local de promos con marca\n\nUso: node wissmotion/cli.mjs <comando> [args]\n\n${rows.join("\n")}\n`;
+  return `wissmotion — estudio local de promos con marca\n\nUso: wissmotion <comando> [args]   (o node wissmotion/cli.mjs …)\n\n${rows.join("\n")}\n`;
 }
 
 export function resolveCommand(name) {

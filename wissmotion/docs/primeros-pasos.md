@@ -12,6 +12,17 @@ bun run build
 Necesitas Node 22+, FFmpeg y Chrome (el CLI los detecta con
 `node packages/cli/dist/cli.js doctor`).
 
+Opcional: instala el comando `wissmotion` para usarlo desde cualquier
+carpeta (enlaza esta copia del repo; `npm uninstall -g wissmotion` lo quita):
+
+```bash
+npm install -g ./wissmotion
+wissmotion help
+```
+
+Con eso, `wissmotion template …`, `wissmotion render …`, `wissmotion mcp`
+equivalen a los `node wissmotion/….mjs` de esta guía.
+
 ## 2. Extrae tu marca (1 min)
 
 ```bash
