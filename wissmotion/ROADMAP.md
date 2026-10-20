@@ -113,7 +113,7 @@
 - [x] Formatos: MP4 (H.264/H.265), WebM, MOV con alfa, GIF, secuencia PNG, miniatura/póster (heredados: `render --format`, `snapshot`).
 - [x] Presets de destino: Instagram Reels, TikTok, YouTube, YouTube Shorts, LinkedIn, X, web hero (loop).
 - [x] **Render por lotes**: un proyecto → todos los formatos en un clic (reutilizar `batchRender`).
-- [ ] Calidad: 720p / 1080p / 4K, 24/30/60 fps.
+- [x] Calidad: 720p / 1080p / 4K, 24/30/60 fps (Studio: cola de render heredada; lotes y MCP: `--scale 4k`, `--fps`).
 - [x] Render en la nube opcional (Lambda / Cloud Run ya existen) detrás de configuración (heredado: `lambda`, `cloud`).
 
 ## Fase 7 — IA integrada en la app
@@ -161,7 +161,7 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 - [x] `AGENTS.md` de WissMotion (estándar leído por OpenCode, Codex, Antigravity, Cursor y otros).
 - [x] `CLAUDE.md` apuntando a `AGENTS.md` (raíz y `wissmotion/`).
 - [x] **Skills** de WissMotion (formato Agent Skills): `wissmotion` (entrada), `wissmotion-brand`, `wissmotion-templates`, `wissmotion-motion`.
-- [ ] Reutilizar las skills de HyperFrames para el contrato de composición.
+- [x] Reutilizar las skills de HyperFrames para el contrato de composición (la skill `wissmotion` remite a `/hyperframes*`).
 
 ### 8.3 Configuración por agente (un comando o un snippet cada uno)
 
@@ -174,10 +174,10 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 
 ### 8.4 Colaboración en vivo y seguridad
 
-- [ ] Recarga en vivo cuando un agente modifica archivos (el Studio ya vigila archivos y avisa de conflictos).
+- [x] (heredado: `useExternalFileChangeCoordinator`) Recarga en vivo cuando un agente modifica archivos (el Studio ya vigila archivos y avisa de conflictos).
 - [ ] Indicador de "el agente está editando" y bloqueo suave para evitar choques con la edición manual.
 - [ ] Permisos por herramienta (lectura / edición / render) y confirmación para acciones costosas.
-- [ ] Registro de acciones de cada agente en el historial, reversibles.
+- [x] (vía puente `studio_call`: pasa por el historial del Studio) Registro de acciones de cada agente en el historial, reversibles.
 
 ## Fase 9 — Proyectos y colaboración
 

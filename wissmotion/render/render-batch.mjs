@@ -34,6 +34,14 @@ export const DESTINATIONS = {
 
 export const DEST_IDS = Object.keys(DESTINATIONS);
 
+// Presets 4K del CLI por aspecto (4:5 no tiene: se queda en su tamaño).
+const RESOLUTION_4K = { "16:9": "landscape-4k", "9:16": "portrait-4k", "1:1": "square-4k" };
+
+/** Resolución de salida: 4k usa el preset del aspecto; si no, la del destino. */
+export function resolutionFor(aspect, scale, fallback) {
+  return scale === "4k" ? (RESOLUTION_4K[aspect] ?? fallback) : fallback;
+}
+
 function gcd(a, b) {
   return b === 0 ? a : gcd(b, a % b);
 }
@@ -60,7 +68,7 @@ export function formatsIn(html) {
   return [...found];
 }
 
-export function planBatch({ dest, aspect, quality, workers, formats = [] }) {
+export function planBatch({ dest, aspect, quality, workers, formats = [], scale, fps }) {
   const ids = dest === "all" ? DEST_IDS : [dest];
   if (dest !== "all" && !DESTINATIONS[dest]) throw new Error(`destino desconocido: ${dest}`);
   return ids.map((id) => {
@@ -69,6 +77,8 @@ export function planBatch({ dest, aspect, quality, workers, formats = [] }) {
       dest: id,
       ...d,
       quality: quality ?? d.quality,
+      fps: fps ?? d.fps,
+      resolution: resolutionFor(d.aspect, scale, d.resolution),
       workers,
       compatible: d.aspect === aspect || formats.includes(d.aspect),
       ...(d.aspect !== aspect && formats.includes(d.aspect)
@@ -102,6 +112,8 @@ export async function runBatch({
   dest = "all",
   variablesFile,
   quality,
+  scale,
+  fps,
   workers = 2,
   force = false,
   dryRun = false,
@@ -114,7 +126,7 @@ export async function runBatch({
   const rendersDir = outBase ?? join(project, "renders");
   mkdirSync(rendersDir, { recursive: true });
   const html = await readFile(join(project, "index.html"), "utf8");
-  const plan = planBatch({ dest, aspect, quality, workers, formats: formatsIn(html) });
+  const plan = planBatch({ dest, aspect, quality, workers, formats: formatsIn(html), scale, fps });
   const ext = { mp4: "mp4", webm: "webm", gif: "gif" };
   const results = [];
   for (const job of plan) {
@@ -172,7 +184,7 @@ if (process.argv.includes("--project")) {
   const project = opt(args, "--project");
   if (!project) {
     console.error(
-      "Uso: node render-batch.mjs --project dir [--dest all|id (square, feed…)] [--variables-file f] [--quality q] [--workers n] [--force] [--dry-run]",
+      "Uso: node render-batch.mjs --project dir [--dest all|id (square, feed…)] [--variables-file f] [--quality q] [--scale 4k] [--fps 24|30|60] [--workers n] [--force] [--dry-run]",
     );
     process.exit(2);
   }
@@ -182,6 +194,8 @@ if (process.argv.includes("--project")) {
       dest: opt(args, "--dest") ?? "all",
       variablesFile: opt(args, "--variables-file"),
       quality: opt(args, "--quality"),
+      scale: opt(args, "--scale"),
+      fps: opt(args, "--fps") ? Number(opt(args, "--fps")) : undefined,
       workers: Number(opt(args, "--workers") ?? 2),
       force: has(args, "--force"),
       dryRun: has(args, "--dry-run"),

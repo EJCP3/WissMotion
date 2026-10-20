@@ -394,12 +394,16 @@ const TOOLS = [
           project: { type: "string" },
           dest: { type: "string" },
           quality: { type: "string" },
+          scale: { type: "string", enum: ["1080p", "4k"] },
+          fps: { type: "number", enum: [24, 30, 60] },
           dryRun: { type: "boolean" },
         },
       },
     },
-    run: async ({ project, dest, quality, dryRun }) =>
-      text(await runBatch({ projectDir: project, dest, quality, dryRun: Boolean(dryRun) })),
+    run: async ({ project, dest, quality, scale, fps, dryRun }) =>
+      text(
+        await runBatch({ projectDir: project, dest, quality, scale, fps, dryRun: Boolean(dryRun) }),
+      ),
   },
   {
     def: {

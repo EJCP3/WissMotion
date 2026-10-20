@@ -44,6 +44,16 @@ describe("render-batch.mjs (dry-run)", () => {
     assert.ok(plan.find((j) => j.dest === "reels" && !j.compatible));
   });
 
+  it("planBatch: --scale 4k usa el preset 4K del aspecto y --fps pisa al destino", () => {
+    const [yt] = planBatch({ dest: "youtube", aspect: "16:9", scale: "4k", fps: 60 });
+    assert.equal(yt.resolution, "landscape-4k");
+    assert.equal(yt.fps, 60);
+    const [reels] = planBatch({ dest: "reels", aspect: "9:16", scale: "4k" });
+    assert.equal(reels.resolution, "portrait-4k");
+    const [feed] = planBatch({ dest: "feed", aspect: "4:5", scale: "4k" });
+    assert.equal(feed.resolution, undefined);
+  });
+
   it("planBatch rechaza destino desconocido y respeta quality", () => {
     assert.throws(() => planBatch({ dest: "cine", aspect: "16:9" }), /desconocido/);
     const [job] = planBatch({ dest: "youtube", aspect: "16:9", quality: "draft" });
