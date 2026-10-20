@@ -19,7 +19,7 @@ El aspecto se lee del `index.html`. Si el destino pide otro y la plantilla
 trae ese layout (multiformato, ver `templates/README.md`), se genera
 `.format-<WxH>.html` y se renderiza con `--composition`; si no, se omite con
 aviso (salvo `--force`). Salida: `renders/<nombre>.<dest>.<ext>` + `manifest.json`.
-`--dry-run` imprime el plan sin renderizar. `--quality` global opcional,
+`--dry-run` imprime el plan sin renderizar. `--quality` global opcional, `--scale 4k` (preset 4K del aspecto) y `--fps 24|30|60`,
 `--workers` por defecto 2 (1 en máquinas justas).
 
 ## Variantes A/B e idiomas
