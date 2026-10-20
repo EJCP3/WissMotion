@@ -1,0 +1,8 @@
+{
+  "name": "wissmotion",
+  "description": "WissMotion: videos promo adaptados a la marca sobre HyperFrames. Skills del producto + servidor MCP (marca, plantillas, movimiento, proyectos, visión y render).",
+  "version": "0.1.0",
+  "author": { "name": "EJCP3" },
+  "repository": "https://github.com/EJCP3/WissMotion",
+  "license": "Apache-2.0"
+}

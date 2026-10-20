@@ -1,0 +1,15 @@
+{
+  "name": "wissmotion",
+  "description": "Marketplace local de WissMotion (videos promo con marca).",
+  "owner": {
+    "name": "EJCP3"
+  },
+  "plugins": [
+    {
+      "name": "wissmotion",
+      "source": "./",
+      "description": "Skills de WissMotion + servidor MCP local (node server/mcp.mjs).",
+      "license": "Apache-2.0"
+    }
+  ]
+}

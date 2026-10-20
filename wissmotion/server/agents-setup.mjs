@@ -25,7 +25,15 @@ export function agentCatalog(home = homedir(), appData = process.env.APPDATA) {
       name: "Claude Code",
       candidates: [p(home, ".claude.json")],
       kind: "command",
-      command: (server) => `claude mcp add wissmotion -- node ${server}`,
+      // Plugin (skills + MCP) recomendado; el MCP suelto queda como alternativa.
+      command: (server) => {
+        const pluginDir = dirname(dirname(server));
+        return [
+          `claude plugin marketplace add "${pluginDir}"`,
+          "claude plugin install wissmotion@wissmotion",
+          `# o solo el MCP: claude mcp add wissmotion -- node "${server}"`,
+        ].join("\n");
+      },
     },
     {
       id: "claude-desktop",

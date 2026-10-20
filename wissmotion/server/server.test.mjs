@@ -54,9 +54,9 @@ function textOf(result) {
 }
 
 describe("mcp.mjs (stdio)", () => {
-  it("tools/list expone 11 herramientas", async () => {
+  it("tools/list expone 18 herramientas", async () => {
     const { tools } = await send("tools/list", {});
-    assert.equal(tools.length, 11);
+    assert.equal(tools.length, 18);
     assert.ok(tools.some((t) => t.name === "template_instantiate"));
   });
 
@@ -171,6 +171,64 @@ describe("mcp.mjs (stdio)", () => {
     assert.equal(plan.aspect, "9:16");
     assert.ok(plan.plan.find((j) => j.dest === "reels" && j.compatible));
     assert.ok(plan.plan.find((j) => j.dest === "youtube" && !j.compatible));
+  });
+
+  it("resources/list y resources/read dan contexto legible", async () => {
+    const { resources } = await send("resources/list", {});
+    assert.ok(resources.some((r) => r.uri === "wissmotion://templates"));
+    const { contents } = await send("resources/read", { uri: "wissmotion://brand-schema" });
+    assert.ok(JSON.parse(contents[0].text).properties.colors);
+  });
+
+  it("prompts/get arma el flujo con las herramientas", async () => {
+    const { prompts } = await send("prompts/list", {});
+    assert.equal(prompts.length, 3);
+    const { messages } = await send("prompts/get", {
+      name: "adaptar-formato",
+      arguments: { project: "./p", format: "9:16" },
+    });
+    assert.match(messages[0].content.text, /project_info/);
+  });
+
+  it("brand_apply, project_set_variables y project_info sobre un proyecto", async () => {
+    const dir = await mkdtemp(join(tmpdir(), "wissmotion-mcp-"));
+    const out = join(dir, "promo");
+    const brand = (primary) => ({
+      brandVersion: 1,
+      name: "X",
+      colors: {
+        primary,
+        secondary: "#111111",
+        accent: "#222222",
+        background: "#ffffff",
+        surface: "#eeeeee",
+        text: "#000000",
+      },
+      fonts: { heading: "Poppins", body: "Inter" },
+    });
+    const call = async (name, args) =>
+      JSON.parse(textOf(await send("tools/call", { name, arguments: args })));
+    try {
+      await call("template_instantiate", {
+        template: "logo-sting",
+        brand: brand("#000000"),
+        vars: {},
+        out,
+      });
+      const applied = await call("brand_apply", { project: out, brand: brand("#ff0000") });
+      assert.ok(applied.applied.includes("brandPrimary"));
+      const fs = await import("node:fs/promises");
+      const html = await fs.readFile(join(out, "index.html"), "utf8");
+      assert.match(html, /"default":"#ff0000"/);
+      assert.match(html, /family=Poppins/);
+      await call("project_set_variables", { project: out, values: { brandName: "Nueva" } });
+      const info = await call("project_info", { project: out });
+      assert.equal(info.brand.colors.primary, "#ff0000");
+      assert.equal(info.values.brandName, "Nueva");
+      assert.ok(info.variables.some((v) => v.id === "brandName" && v.default === "Nueva"));
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
   });
 
   it("herramienta desconocida da error", async () => {

@@ -122,7 +122,7 @@
 - [x] **Proveedores configurables (BYOK)**: Anthropic Claude, Google Gemini, OpenAI/compatibles, OpenRouter, **Ollama/LM Studio local** (gratis, sin tokens).
 - [x] Flujo **brief → guion → storyboard → composición**, con aprobación del usuario en cada paso.
 - [ ] Ediciones por chat: "haz la escena 2 más lenta", "usa el color accent en el CTA", "versión 9:16".
-- [ ] La IA ve el video: snapshots de frames para revisar y corregir su propio trabajo (reutilizar `snapshot`).
+- [x] (vía MCP `frame_snapshot`) La IA ve el video: snapshots de frames para revisar y corregir su propio trabajo (reutilizar `snapshot`).
 - [ ] Generación de copy: titulares, CTA y variaciones A/B.
 - [x] **Medidor de consumo** de tokens/costo por proveedor y límite configurable.
 - [x] **Degradación elegante**: si se acaban los tokens o falla el proveedor, el panel lo indica y sugiere la acción manual equivalente.
@@ -136,7 +136,7 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 ### 8.1 Servidor MCP de WissMotion
 
 - [x] Comando `wissmotion mcp` con transporte **stdio** (agentes locales). Streamable HTTP pendiente.
-- [ ] Herramientas expuestas:
+- [x] Herramientas expuestas (18; las de escenas/elementos/animación en vivo esperan al puente con el Studio):
 
 | Grupo      | Herramientas                                                                                      |
 | ---------- | ------------------------------------------------------------------------------------------------- |
@@ -152,20 +152,20 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 
 - [ ] **Puente con el Studio abierto**: el servidor MCP reenvía a las herramientas WebMCP que ya registra el Studio
       (`studio_select`, `studio_set_text`, `studio_add_animation`…), así el usuario ve cada edición en vivo.
-- [ ] Si el Studio está cerrado, las herramientas operan sobre los archivos y el CLI.
-- [ ] Recursos MCP: `brand.json`, timeline, lista de plantillas y presets como contexto legible.
-- [ ] Prompts MCP: "crear promo de app", "crear promo de web", "adaptar a 9:16".
+- [x] Si el Studio está cerrado, las herramientas operan sobre los archivos y el CLI (`project-ops.mjs`).
+- [x] Recursos MCP: plantillas, kit de movimiento, marcas, esquema `brand.json` y guía (`mcp-context.mjs`).
+- [x] Prompts MCP: `crear-promo-app`, `crear-promo-web`, `adaptar-formato`.
 
 ### 8.2 Contexto e instrucciones para agentes
 
 - [x] `AGENTS.md` de WissMotion (estándar leído por OpenCode, Codex, Antigravity, Cursor y otros).
-- [ ] `CLAUDE.md` apuntando a `AGENTS.md`.
+- [x] `CLAUDE.md` apuntando a `AGENTS.md` (raíz y `wissmotion/`).
 - [x] **Skills** de WissMotion (formato Agent Skills): `wissmotion` (entrada), `wissmotion-brand`, `wissmotion-templates`, `wissmotion-motion`.
 - [ ] Reutilizar las skills de HyperFrames para el contrato de composición.
 
 ### 8.3 Configuración por agente (un comando o un snippet cada uno)
 
-- [ ] **Claude Code**: plugin (`.claude-plugin/`) + `claude mcp add wissmotion -- npx wissmotion mcp`.
+- [x] **Claude Code**: plugin (`.claude-plugin/`) + `claude mcp add wissmotion -- npx wissmotion mcp`.
 - [x] **Antigravity**: entrada en su configuración MCP (`mcpServers`) + reglas basadas en `AGENTS.md`.
 - [x] **OpenCode**: entrada `mcp` en `opencode.json` (`type: local`, `command: ["npx","wissmotion","mcp"]`) + `AGENTS.md`.
 - [x] **Codex / Cursor / Gemini CLI**: adaptar los plugins existentes (`.codex-plugin`, `.cursor-plugin`, `gemini-extension.json`).

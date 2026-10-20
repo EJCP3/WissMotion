@@ -4,18 +4,75 @@
 // JSON-RPC NDJSON sobre stdin/stdout según el protocolo MCP
 // (initialize → notifications/initialized → tools/list → tools/call).
 // Uso: node mcp.mjs  (los agentes lo lanzan con `npx wissmotion mcp`).
-import { readFile, readdir } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
+import { mkdir, readFile, readdir } from "node:fs/promises";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateBrand } from "../brand-kit/validate-brand.mjs";
 import { extractBrand } from "../brand-kit/extract-lib.mjs";
 import { getBrand, listBrands, resolveLibraryDir, saveBrand } from "../brand-kit/brand-library.mjs";
 import { instantiate, parseDeclaredVariables } from "../templates/instantiate.mjs";
-import { formatsIn, planBatch, readCompositionSize, DEST_IDS } from "../render/render-batch.mjs";
+import {
+  formatsIn,
+  planBatch,
+  readCompositionSize,
+  runBatch,
+  DEST_IDS,
+} from "../render/render-batch.mjs";
 import { buildFilm, reviewFilm } from "../film/film.mjs";
+import { runVoiceover } from "../audio/voiceover.mjs";
+import { applyBrand, projectInfo, setProjectVariables } from "./project-ops.mjs";
+import { PROMPTS, RESOURCES } from "./mcp-context.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "..");
+const CLI = join(root, "..", "packages", "cli", "dist", "cli.js");
+
+function runCli(args, timeout = 300_000) {
+  const r = spawnSync(process.execPath, [CLI, ...args], {
+    encoding: "utf8",
+    timeout,
+    maxBuffer: 32 * 1024 * 1024,
+  });
+  return { status: r.status, stdout: r.stdout ?? "", stderr: r.stderr ?? "" };
+}
+
+async function resolveBrand(brand, brandsDir) {
+  return typeof brand === "string" ? getBrand(resolveLibraryDir(brandsDir), brand) : brand;
+}
+
+export async function listTemplates() {
+  const dirs = (await readdir(join(root, "templates"), { withFileTypes: true }))
+    .filter((d) => d.isDirectory() && !d.name.startsWith("."))
+    .map((d) => d.name)
+    .sort();
+  const out = [];
+  for (const id of dirs) {
+    const manifest = await readJson(join(root, "templates", id, "template.json"));
+    const html = await readFile(join(root, "templates", id, "index.html"), "utf8");
+    out.push({
+      ...manifest,
+      variables: parseDeclaredVariables(html).map((v) => ({
+        id: v.id,
+        type: v.type,
+        label: v.label,
+      })),
+    });
+  }
+  return out;
+}
+
+export async function motionKit() {
+  const personalities = await readJson(join(root, "presets", "motion", "personalities.json"));
+  const presets = await readJson(join(root, "presets", "motion", "presets.json"));
+  const transitions = await readJson(join(root, "presets", "motion", "transitions.json"));
+  return {
+    personalities: personalities.personalities,
+    presets: presets.presets,
+    transitions: transitions.transitions,
+  };
+}
 
 async function readJson(path) {
   return JSON.parse(await readFile(path, "utf8"));
@@ -102,26 +159,7 @@ const TOOLS = [
       description: "Lista las plantillas (id, nombre, formato, duración, variables).",
       inputSchema: { type: "object", properties: {} },
     },
-    run: async () => {
-      const dirs = (await readdir(join(root, "templates"), { withFileTypes: true }))
-        .filter((d) => d.isDirectory() && !d.name.startsWith("."))
-        .map((d) => d.name)
-        .sort();
-      const out = [];
-      for (const id of dirs) {
-        const manifest = await readJson(join(root, "templates", id, "template.json"));
-        const html = await readFile(join(root, "templates", id, "index.html"), "utf8");
-        out.push({
-          ...manifest,
-          variables: parseDeclaredVariables(html).map((v) => ({
-            id: v.id,
-            type: v.type,
-            label: v.label,
-          })),
-        });
-      }
-      return text(out);
-    },
+    run: async () => text(await listTemplates()),
   },
   {
     def: {
@@ -142,10 +180,7 @@ const TOOLS = [
       },
     },
     run: async ({ template, brand, vars, out, format, brandsDir }) => {
-      const brandObj =
-        typeof brand === "string"
-          ? await getBrand(resolveLibraryDir(brandsDir), brand)
-          : (brand ?? {});
+      const brandObj = (await resolveBrand(brand, brandsDir)) ?? {};
       return text(
         await instantiate({
           templateId: template,
@@ -163,16 +198,7 @@ const TOOLS = [
       description: "Lista personalidades de movimiento, presets y transiciones con sus easings.",
       inputSchema: { type: "object", properties: {} },
     },
-    run: async () => {
-      const personalities = await readJson(join(root, "presets", "motion", "personalities.json"));
-      const presets = await readJson(join(root, "presets", "motion", "presets.json"));
-      const transitions = await readJson(join(root, "presets", "motion", "transitions.json"));
-      return text({
-        personalities: personalities.personalities,
-        presets: presets.presets,
-        transitions: transitions.transitions,
-      });
-    },
+    run: async () => text(await motionKit()),
   },
   {
     def: {
@@ -238,6 +264,157 @@ const TOOLS = [
     },
     run: async ({ out }) => text(await reviewFilm({ outDir: out })),
   },
+  {
+    def: {
+      name: "project_info",
+      description:
+        "Estado de un proyecto: tamaño, aspecto, duración, composiciones, variables declaradas, variables.json y brand.json.",
+      inputSchema: {
+        type: "object",
+        required: ["project"],
+        properties: { project: { type: "string" } },
+      },
+    },
+    run: async ({ project }) => text(await projectInfo(project)),
+  },
+  {
+    def: {
+      name: "project_set_variables",
+      description:
+        "Fija valores de variables (textos, colores, imágenes): hornea los defaults en cada HTML y fusiona variables.json.",
+      inputSchema: {
+        type: "object",
+        required: ["project", "values"],
+        properties: { project: { type: "string" }, values: { type: "object" } },
+      },
+    },
+    run: async ({ project, values }) =>
+      text({ changed: await setProjectVariables(project, values) }),
+  },
+  {
+    def: {
+      name: "brand_apply",
+      description:
+        "Aplica una marca (objeto o nombre de biblioteca) a un proyecto existente: variables brand*, fuentes y brand.json.",
+      inputSchema: {
+        type: "object",
+        required: ["project", "brand"],
+        properties: {
+          project: { type: "string" },
+          brand: { type: ["object", "string"] },
+          brandsDir: { type: "string" },
+        },
+      },
+    },
+    run: async ({ project, brand, brandsDir }) =>
+      text(await applyBrand(project, await resolveBrand(brand, brandsDir))),
+  },
+  {
+    def: {
+      name: "lint_check",
+      description:
+        "hyperframes lint del proyecto (errores de estructura). 0 errores antes de entregar.",
+      inputSchema: {
+        type: "object",
+        required: ["project"],
+        properties: { project: { type: "string" } },
+      },
+    },
+    run: async ({ project }) => {
+      const r = runCli(["lint", resolve(project), "--json"], 120_000);
+      try {
+        return text(JSON.parse(r.stdout.slice(r.stdout.indexOf("{"))));
+      } catch {
+        return text({ status: r.status, output: (r.stdout + r.stderr).slice(0, 4000) });
+      }
+    },
+  },
+  {
+    def: {
+      name: "frame_snapshot",
+      description:
+        "Captura fotogramas del video y los devuelve como imágenes para revisarlos con visión. at = segundos.",
+      inputSchema: {
+        type: "object",
+        required: ["project"],
+        properties: {
+          project: { type: "string" },
+          at: { type: "array", items: { type: "number" } },
+          frames: { type: "number" },
+        },
+      },
+    },
+    run: async ({ project, at, frames }) => {
+      const dir = resolve(project);
+      const outDir = join(dir, "snapshots", "mcp");
+      await mkdir(outDir, { recursive: true });
+      const args = ["snapshot", dir, "-o", outDir, "--describe", "false"];
+      if (at?.length) args.push("--at", at.join(","), "--no-end");
+      else args.push("--frames", String(Math.min(frames ?? 4, 8)));
+      const r = runCli(args);
+      const pngs = existsSync(outDir)
+        ? (await readdir(outDir))
+            .filter((f) => f.endsWith(".png"))
+            .sort()
+            .slice(0, 8)
+        : [];
+      if (pngs.length === 0) {
+        return text(`error: sin fotogramas\n${(r.stdout + r.stderr).slice(0, 2000)}`);
+      }
+      const content = [{ type: "text", text: `Fotogramas en ${outDir}: ${pngs.join(", ")}` }];
+      for (const f of pngs) {
+        const data = (await readFile(join(outDir, f))).toString("base64");
+        content.push({ type: "image", data, mimeType: "image/png" });
+      }
+      return { content };
+    },
+  },
+  {
+    def: {
+      name: "render_batch",
+      description:
+        "Renderiza el proyecto para los destinos (reels, tiktok, youtube… o all). Tarda: usa dryRun para ver el plan primero.",
+      inputSchema: {
+        type: "object",
+        required: ["project"],
+        properties: {
+          project: { type: "string" },
+          dest: { type: "string" },
+          quality: { type: "string" },
+          dryRun: { type: "boolean" },
+        },
+      },
+    },
+    run: async ({ project, dest, quality, dryRun }) =>
+      text(await runBatch({ projectDir: project, dest, quality, dryRun: Boolean(dryRun) })),
+  },
+  {
+    def: {
+      name: "voiceover_generate",
+      description:
+        "Voz en off local (Kokoro vía hyperframes tts): un WAV por segmento del guion en outDir.",
+      inputSchema: {
+        type: "object",
+        required: ["script", "outDir"],
+        properties: {
+          script: {
+            type: "array",
+            items: {
+              type: "object",
+              required: ["text"],
+              properties: { id: { type: "string" }, text: { type: "string" } },
+            },
+          },
+          outDir: { type: "string" },
+          voice: { type: "string" },
+          lang: { type: "string" },
+          dryRun: { type: "boolean" },
+        },
+      },
+    },
+    run: async ({ script, outDir, voice, lang, dryRun }) =>
+      text(await runVoiceover({ script, outDir, voice, lang, dryRun: Boolean(dryRun) })),
+  },
 ];
 
 function result(id, data) {
@@ -251,7 +428,7 @@ async function handle(message) {
     return result(id, {
       result: {
         protocolVersion: "2024-11-05",
-        capabilities: { tools: {} },
+        capabilities: { tools: {}, resources: {}, prompts: {} },
         serverInfo: { name: "wissmotion", version: "0.1.0" },
       },
     });
@@ -259,6 +436,38 @@ async function handle(message) {
   if (method === "notifications/initialized" || method.startsWith("notifications/")) return null;
   if (method === "tools/list") {
     return result(id, { result: { tools: TOOLS.map((t) => t.def) } });
+  }
+  if (method === "resources/list") {
+    return result(id, { result: { resources: RESOURCES.map(({ read: _read, ...r }) => r) } });
+  }
+  if (method === "resources/read") {
+    const res = RESOURCES.find((r) => r.uri === params?.uri);
+    if (!res)
+      return result(id, {
+        error: { code: -32602, message: `recurso desconocido: ${params?.uri}` },
+      });
+    const payload = await res.read({ listTemplates, motionKit });
+    const body = typeof payload === "string" ? payload : JSON.stringify(payload, null, 2);
+    return result(id, {
+      result: { contents: [{ uri: res.uri, mimeType: res.mimeType, text: body }] },
+    });
+  }
+  if (method === "prompts/list") {
+    return result(id, { result: { prompts: PROMPTS.map(({ build: _build, ...p }) => p) } });
+  }
+  if (method === "prompts/get") {
+    const prompt = PROMPTS.find((p) => p.name === params?.name);
+    if (!prompt)
+      return result(id, {
+        error: { code: -32602, message: `prompt desconocido: ${params?.name}` },
+      });
+    const textBody = prompt.build(params?.arguments ?? {});
+    return result(id, {
+      result: {
+        description: prompt.description,
+        messages: [{ role: "user", content: { type: "text", text: textBody } }],
+      },
+    });
   }
   if (method === "tools/call") {
     const tool = TOOLS.find((t) => t.def.name === params?.name);

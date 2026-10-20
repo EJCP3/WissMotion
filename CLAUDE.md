@@ -1,5 +1,7 @@
 # Hyperframes
 
+> **WissMotion** (rama `wissmotion`): el producto vive en `wissmotion/`. Lee primero @wissmotion/AGENTS.md.
+
 Open-source video rendering framework: write HTML, render video.
 
 ## Skills
