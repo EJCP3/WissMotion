@@ -41,8 +41,8 @@
 - [x] **Editor manual de marca** (panel en el Studio): selector de color, subir logo, buscador de Google Fonts, vista previa en vivo.
 - [x] Generar paleta derivada (tonos, contraste AA/AAA) y aviso de contraste (reutilizar `contrast-*` del CLI).
 - [x] **Biblioteca de marcas**: varias marcas guardadas, duplicar, exportar/importar.
-- [ ] Aplicar marca como **tokens CSS** (`--brand-primary`, `--brand-font-heading`…) inyectados en toda composición.
-- [ ] Cambiar de marca en un proyecto existente y que el video se re-adapte al instante.
+- [x] Aplicar marca como **tokens CSS** (`--brand-primary`, `--brand-font-heading`…) inyectados en toda composición.
+- [x] Cambiar de marca en un proyecto existente y que el video se re-adapte al instante (botón "Aplicar al video": variables brand\* + fuentes + `brand.json` del proyecto).
 
 ## Fase 2 — Kit de movimiento (el "look Jitter")
 
@@ -52,7 +52,7 @@
 - [x] **Presets de énfasis**: pulse, highlight-sweep, underline-draw, counter-up, number-roll, shake, glow.
 - [x] **Presets de escena**: device-mockup-scroll, browser-scroll, card-carousel, feature-grid, split-screen, logo-build, kinetic-type.
 - [x] **Transiciones** entre escenas (push, zoom-through, morph, shader-transitions existentes, whip).
-- [ ] **Editor de curvas de easing** (bézier visual + spring con masa/rigidez/amortiguación) estilo Jitter.
+- [x] **Editor de curvas de easing** (bézier visual + spring con masa/rigidez/amortiguación) estilo Jitter.
 - [ ] Controles de **stagger** (orden, dirección, desde el centro, aleatorio).
 - [x] Vista previa de cada preset en miniatura (póster fijo por preset; la animada llega con la galería de Fase 3).
 - [ ] Todos los presets **seek-safe** y deterministas (render frame a frame idéntico al preview).
@@ -84,17 +84,17 @@
 
 - [ ] **Home / dashboard**: proyectos recientes, crear desde plantilla, desde URL, desde cero o desde prompt.
 - [x] Flujo guiado "Nuevo video promo": marca → plantilla/IA → contenido → preview → render.
-- [ ] **Panel de marca** integrado (Fase 1).
-- [ ] **Inspector de propiedades** estilo Jitter: posición, tamaño, rotación, opacidad, blur, radio, sombras, relleno, borde.
-- [ ] **Inspector de animación**: lista de animaciones del elemento, preset, duración, delay, easing (editor de curvas), stagger.
-- [ ] Timeline: arrastrar, recortar, dividir, snapping, zoom, marcadores, keyframes visibles por propiedad.
-- [ ] Panel de capas con agrupar, bloquear, ocultar, renombrar.
+- [x] **Panel de marca** integrado (Fase 1).
+- [x] (heredado: `PropertyPanel`) **Inspector de propiedades** estilo Jitter: posición, tamaño, rotación, opacidad, blur, radio, sombras, relleno, borde.
+- [x] (heredado: `GsapAnimationSection`, `EaseCurveSection`) **Inspector de animación**: lista de animaciones del elemento, preset, duración, delay, easing (editor de curvas), stagger.
+- [x] (heredado) Timeline: arrastrar, recortar, dividir, snapping, zoom, marcadores, keyframes visibles por propiedad.
+- [x] (heredado: `LayersPanel`) Panel de capas con agrupar, bloquear, ocultar, renombrar.
 - [ ] Herramientas de canvas: texto, formas, imagen, video, ícono, mockup; alineación y distribución; guías.
 - [ ] **Biblioteca de assets**: logos, imágenes, íconos, videos, fuentes del proyecto y de la marca.
-- [ ] Deshacer/rehacer ilimitado, autoguardado, historial de versiones (reutilizar `history`).
+- [x] (heredado: historial + guardado inmediato) Deshacer/rehacer ilimitado, autoguardado, historial de versiones (reutilizar `history`).
 - [ ] Atajos de teclado y paleta de comandos.
-- [ ] Panel de **variables de plantilla** editable.
-- [ ] Modo código (CodeMirror ya existe) para usuarios avanzados.
+- [x] (heredado: `VariablesPanel`) Panel de **variables de plantilla** editable.
+- [x] Modo código (CodeMirror ya existe) para usuarios avanzados.
 - [ ] Rendimiento: preview fluido a 60 fps con proyectos de 60 s.
 
 ## Fase 5 — Audio y medios
@@ -103,13 +103,13 @@
 - [x] Sincronizar cortes y animaciones al **beat** (reutilizar `beats` / bpm-detective).
 - [x] **Voz en off**: TTS local o por API (reutilizar `tts`), o subir grabación propia.
 - [x] **Subtítulos** automáticos (reutilizar `transcribe`) con estilos de la marca.
-- [ ] Mezcla: volumen, fades, ducking de música bajo la voz.
+- [x] (heredado: efectos de audio, carve, automatización) Mezcla: volumen, fades, ducking de música bajo la voz.
 - [x] Quitar fondo de imágenes/videos (reutilizar `remove-background`, heredado del CLI).
 - [x] Grabación/importación de screencasts de la app o web para escenas reales (heredado: `hyperframes capture`).
 
 ## Fase 6 — Render y exportación
 
-- [ ] Cola de render local con progreso, cancelar y reintentar.
+- [x] (heredado: `RenderQueue`; reintentar = volver a lanzar) Cola de render local con progreso, cancelar y reintentar.
 - [x] Formatos: MP4 (H.264/H.265), WebM, MOV con alfa, GIF, secuencia PNG, miniatura/póster (heredados: `render --format`, `snapshot`).
 - [x] Presets de destino: Instagram Reels, TikTok, YouTube, YouTube Shorts, LinkedIn, X, web hero (loop).
 - [x] **Render por lotes**: un proyecto → todos los formatos en un clic (reutilizar `batchRender`).
