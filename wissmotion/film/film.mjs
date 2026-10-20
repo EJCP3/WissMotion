@@ -15,6 +15,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { instantiate } from "../templates/instantiate.mjs";
 import { FORMAT_SIZES } from "../templates/formats.mjs";
+import { generateSynth, resolveAudio } from "../audio/library.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const CLI = join(here, "..", "..", "packages", "cli", "dist", "cli.js");
@@ -195,7 +196,7 @@ export async function buildFilm({
     if (r.status !== 0 || !existsSync(s.file)) throw new Error(`falló el render de ${s.dir}`);
     s.duration = probeDuration(s.file);
   }
-  const music = storyboard.music ? resolve(baseDir, storyboard.music) : undefined;
+  const music = storyboard.music ? musicFile(storyboard.music, baseDir) : undefined;
   const { args, total } = xfadeArgs({
     clips: scenes,
     transitions: scenes.slice(0, -1).map((s) => s.transition),
@@ -210,6 +211,19 @@ export async function buildFilm({
   }
   await writeFile(join(out, "film.json"), `${JSON.stringify(result, null, 2)}\n`, "utf8");
   return result;
+}
+
+/** Música: ruta (relativa a baseDir) o nombre/mood de la biblioteca de audio. */
+export function musicFile(value, baseDir) {
+  const path = resolve(baseDir, value);
+  if (existsSync(path)) return path;
+  generateSynth();
+  const hit = resolveAudio(value);
+  if (!hit)
+    throw new Error(
+      `música no encontrada: ${value} (ruta, o nombre/mood de wissmotion audio --list)`,
+    );
+  return hit;
 }
 
 /** Hornea valores en los defaults de data-composition-variables (como el Studio). */

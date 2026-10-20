@@ -54,9 +54,9 @@ function textOf(result) {
 }
 
 describe("mcp.mjs (stdio)", () => {
-  it("tools/list expone 20 herramientas", async () => {
+  it("tools/list expone 22 herramientas", async () => {
     const { tools } = await send("tools/list", {});
-    assert.equal(tools.length, 20);
+    assert.equal(tools.length, 22);
     assert.ok(tools.some((t) => t.name === "template_instantiate"));
   });
 

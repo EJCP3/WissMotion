@@ -27,6 +27,7 @@ node wissmotion/server/mcp.mjs   # los agentes lo lanzan como `npx wissmotion mc
 | `frame_snapshot`                          | Fotogramas devueltos como imágenes (`at` en segundos)              |
 | `render_batch`                            | Render por destinos (`dryRun` para ver el plan)                    |
 | `voiceover_generate`                      | Voz en off local por segmento (Kokoro vía `hyperframes tts`)       |
+| `audio_list` / `audio_import`             | Biblioteca de audio: SFX y pads sintéticos + música con licencia   |
 | `studio_status`                           | ¿Studio abierto? + sus herramientas en vivo (`studio_*`)           |
 | `studio_call`                             | Ejecuta una herramienta del Studio abierto (se ve en vivo, undo)   |
 
@@ -77,7 +78,7 @@ revisión de fotogramas. La lógica de proyecto vive en `project-ops.mjs`; los
 recursos y prompts en `mcp-context.mjs`.
 
 `server.test.mjs` levanta el servidor por stdio y prueba handshake,
-las 20 herramientas, recursos, prompts y el error de herramienta desconocida.
+las 22 herramientas, recursos, prompts y el error de herramienta desconocida.
 
 ## Plugin de Claude Code
 

@@ -20,5 +20,13 @@ node voiceover.mjs --script guion.json --out audio/ [--voice af_heart] [--lang e
   Sin backend (`pip install kokoro-onnx soundfile`) no falla: marca
   pendientes con la acción exacta. El WAV se referencia como `<audio>` en la
   composición o se mezcla en el render.
+- `library.mjs` (`wissmotion audio`): biblioteca en `~/.wissmotion/audio`
+  (o `WISSMOTION_AUDIO_DIR`). **SFX** `whoosh`, `click`, `pop`, `riser`,
+  `impact`, `ding` y **fondos** `pad-calma`, `pad-brillante` sintetizados con
+  FFmpeg: sin derechos y deterministas (mismo archivo siempre). **Música
+  propia** con `--import pista.mp3 --mood energico --license CC0`: solo
+  pistas cuya licencia permita usarlas. `film` acepta en `music` una ruta, un
+  nombre o un mood (`"music": "calma"`); el MCP lo expone como `audio_list` /
+  `audio_import`.
 - Mezcla (volumen/fades/ducking), música de fondo y quitar-fondos: vía CLI
   (`render` con lanes, `remove-background`) y paneles del Studio.

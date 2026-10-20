@@ -22,6 +22,7 @@ import {
 } from "../render/render-batch.mjs";
 import { buildFilm, reviewFilm } from "../film/film.mjs";
 import { runVoiceover } from "../audio/voiceover.mjs";
+import { generateSynth, importMusic, listAudio } from "../audio/library.mjs";
 import { applyBrand, projectInfo, setProjectVariables } from "./project-ops.mjs";
 import { PROMPTS, RESOURCES } from "./mcp-context.mjs";
 
@@ -485,6 +486,38 @@ const TOOLS = [
       return text(data.result);
     },
   },
+  {
+    def: {
+      name: "audio_list",
+      description:
+        "Biblioteca de audio: SFX sintéticos (whoosh, click, pop, riser, impact, ding), fondos pad y música importada con su licencia. Usa el nombre o el mood en film_build (music) o la ruta en un <audio>.",
+      inputSchema: { type: "object", properties: { mood: { type: "string" } } },
+    },
+    run: async ({ mood }) => {
+      generateSynth();
+      return text(listAudio(undefined, { mood }));
+    },
+  },
+  {
+    def: {
+      name: "audio_import",
+      description:
+        "Importa una pista propia a la biblioteca con mood y licencia (CC0, CC-BY 4.0, propia…). Solo música con licencia que permita usarla.",
+      inputSchema: {
+        type: "object",
+        required: ["file", "mood", "license"],
+        properties: {
+          file: { type: "string" },
+          mood: { type: "string" },
+          license: { type: "string" },
+          source: { type: "string" },
+          name: { type: "string" },
+        },
+      },
+    },
+    run: async ({ file, mood, license, source, name }) =>
+      text(importMusic({ file: resolve(file), mood, license, source, name })),
+  },
 ];
 
 // Permisos (Fase 8.4): nivel de cada herramienta y tope por entorno.
@@ -497,6 +530,7 @@ const WRITE_TOOLS = new Set([
   "project_set_variables",
   "brand_apply",
   "studio_call",
+  "audio_import",
 ]);
 const RENDER_TOOLS = new Set(["render_batch", "film_build", "voiceover_generate"]);
 

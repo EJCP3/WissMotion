@@ -42,6 +42,10 @@ const COMMANDS = {
     help: "--in subs.srt --brand b.json --out subs.ass",
   },
   beats: { file: ["audio", "beat-marks.mjs"], help: "--beats beats/m.json --out marks.json" },
+  audio: {
+    file: ["audio", "library.mjs"],
+    help: "--list [--mood m] | --generate | --import f.mp3 --mood m --license l | --resolve nombre",
+  },
   package: {
     file: ["export", "package.mjs"],
     help: "--export dir --out x.wissmotion | --import x.wissmotion --out dir",

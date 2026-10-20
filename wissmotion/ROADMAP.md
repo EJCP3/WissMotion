@@ -99,7 +99,7 @@
 
 ## Fase 5 — Audio y medios
 
-- [ ] Biblioteca de música libre de derechos y SFX (whoosh, click, pop, riser).
+- [x] Biblioteca de música libre de derechos y SFX (whoosh, click, pop, riser): SFX y pads sintetizados + música propia con licencia (`audio/library.mjs`).
 - [x] Sincronizar cortes y animaciones al **beat** (reutilizar `beats` / bpm-detective).
 - [x] **Voz en off**: TTS local o por API (reutilizar `tts`), o subir grabación propia.
 - [x] **Subtítulos** automáticos (reutilizar `transcribe`) con estilos de la marca.
