@@ -231,6 +231,52 @@ describe("mcp.mjs (stdio)", () => {
     }
   });
 
+  it("render real sin confirm se frena y pide confirmación", async () => {
+    const res = await send("tools/call", {
+      name: "render_batch",
+      arguments: { project: join(here, "..", "templates", "historia") },
+    });
+    assert.equal(res.isError, true);
+    assert.match(textOf(res), /confirm: true/);
+  });
+
+  it("tools/list anota lectura y añade confirm a las de render", async () => {
+    const { tools } = await send("tools/list", {});
+    const byName = Object.fromEntries(tools.map((t) => [t.name, t]));
+    assert.equal(byName.project_info.annotations.readOnlyHint, true);
+    assert.equal(byName.brand_apply.annotations.readOnlyHint, false);
+    assert.ok(byName.render_batch.inputSchema.properties.confirm);
+  });
+
+  it("WISSMOTION_MCP_ACCESS=read oculta y rechaza lo que escribe", async () => {
+    const { spawnSync } = await import("node:child_process");
+    const input = [
+      { jsonrpc: "2.0", id: 1, method: "tools/list" },
+      {
+        jsonrpc: "2.0",
+        id: 2,
+        method: "tools/call",
+        params: { name: "brand_apply", arguments: { project: ".", brand: {} } },
+      },
+    ]
+      .map((m) => JSON.stringify(m))
+      .join("\n");
+    const r = spawnSync(process.execPath, [server], {
+      input: `${input}\n`,
+      encoding: "utf8",
+      env: { ...process.env, WISSMOTION_MCP_ACCESS: "read" },
+    });
+    const [list, call] = r.stdout
+      .trim()
+      .split("\n")
+      .map((l) => JSON.parse(l));
+    const names = list.result.tools.map((t) => t.name);
+    assert.ok(names.includes("project_info"));
+    assert.ok(!names.includes("brand_apply"));
+    assert.ok(!names.includes("render_batch"));
+    assert.match(call.result.content[0].text, /permiso denegado/);
+  });
+
   it("herramienta desconocida da error", async () => {
     await assert.rejects(send("tools/call", { name: "nope", arguments: {} }), /desconocida/);
   });

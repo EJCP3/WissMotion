@@ -30,6 +30,31 @@ node wissmotion/server/mcp.mjs   # los agentes lo lanzan como `npx wissmotion mc
 | `studio_status`                           | ¿Studio abierto? + sus herramientas en vivo (`studio_*`)           |
 | `studio_call`                             | Ejecuta una herramienta del Studio abierto (se ve en vivo, undo)   |
 
+## Permisos
+
+Cada herramienta tiene nivel **lectura**, **escritura** o **render**
+(`toolAccess` en `mcp.mjs`; `tools/list` lo anota con `readOnlyHint`).
+
+- `WISSMOTION_MCP_ACCESS=read` → solo consulta (marca, plantillas, info, lint, fotogramas).
+- `WISSMOTION_MCP_ACCESS=write` → además crea y edita proyectos, sin render.
+- Sin variable (o `all`) → todo.
+
+Lo que pasa del tope no se lista ni se ejecuta. Las de render
+(`render_batch`, `film_build`, `voiceover_generate`) piden `confirm: true`
+salvo con `dryRun`: el agente tiene que preguntarte antes de gastar minutos de CPU.
+
+```json
+{
+  "mcpServers": {
+    "wissmotion": {
+      "command": "node",
+      "args": ["…/mcp.mjs"],
+      "env": { "WISSMOTION_MCP_ACCESS": "write" }
+    }
+  }
+}
+```
+
 ## Puente en vivo con el Studio
 
 El servidor del Studio expone `/api/agent-bridge/*` (`packages/studio-server/src/routes/agentBridge.ts`):

@@ -487,6 +487,59 @@ const TOOLS = [
   },
 ];
 
+// Permisos (Fase 8.4): nivel de cada herramienta y tope por entorno.
+// WISSMOTION_MCP_ACCESS=read|write|all (por defecto all). Lo que pasa del tope
+// ni se lista ni se ejecuta. Las acciones costosas piden confirm: true.
+const LEVELS = { read: 0, write: 1, render: 2 };
+const WRITE_TOOLS = new Set([
+  "brand_save",
+  "template_instantiate",
+  "project_set_variables",
+  "brand_apply",
+  "studio_call",
+]);
+const RENDER_TOOLS = new Set(["render_batch", "film_build", "voiceover_generate"]);
+
+export function toolAccess(name) {
+  if (RENDER_TOOLS.has(name)) return "render";
+  return WRITE_TOOLS.has(name) ? "write" : "read";
+}
+
+export function accessCeiling(env = process.env.WISSMOTION_MCP_ACCESS) {
+  return env === "read" ? 0 : env === "write" ? 1 : 2;
+}
+
+function allowed(name) {
+  return LEVELS[toolAccess(name)] <= accessCeiling();
+}
+
+/** Render real (no dryRun) sin confirm: devuelve el aviso en vez de ejecutar. */
+export function needsConfirm(name, args) {
+  return RENDER_TOOLS.has(name) && !args?.dryRun && args?.confirm !== true;
+}
+
+function publicDef(def) {
+  const access = toolAccess(def.name);
+  const schema = def.inputSchema ?? { type: "object", properties: {} };
+  return {
+    ...def,
+    inputSchema:
+      access === "render"
+        ? {
+            ...schema,
+            properties: {
+              ...schema.properties,
+              confirm: {
+                type: "boolean",
+                description: "true solo tras confirmarlo con el usuario (tarda y gasta CPU)",
+              },
+            },
+          }
+        : schema,
+    annotations: { readOnlyHint: access === "read", destructiveHint: false },
+  };
+}
+
 function result(id, data) {
   return JSON.stringify({ jsonrpc: "2.0", id, ...data });
 }
@@ -505,7 +558,9 @@ async function handle(message) {
   }
   if (method === "notifications/initialized" || method.startsWith("notifications/")) return null;
   if (method === "tools/list") {
-    return result(id, { result: { tools: TOOLS.map((t) => t.def) } });
+    return result(id, {
+      result: { tools: TOOLS.filter((t) => allowed(t.def.name)).map((t) => publicDef(t.def)) },
+    });
   }
   if (method === "resources/list") {
     return result(id, { result: { resources: RESOURCES.map(({ read: _read, ...r }) => r) } });
@@ -544,6 +599,32 @@ async function handle(message) {
     if (!tool) {
       return result(id, {
         error: { code: -32602, message: `herramienta desconocida: ${params?.name}` },
+      });
+    }
+    if (!allowed(tool.def.name)) {
+      return result(id, {
+        result: {
+          content: [
+            {
+              type: "text",
+              text: `permiso denegado: ${tool.def.name} es de ${toolAccess(tool.def.name)} y WISSMOTION_MCP_ACCESS=${process.env.WISSMOTION_MCP_ACCESS}`,
+            },
+          ],
+          isError: true,
+        },
+      });
+    }
+    if (needsConfirm(tool.def.name, params?.arguments)) {
+      return result(id, {
+        result: {
+          content: [
+            {
+              type: "text",
+              text: `${tool.def.name} renderiza de verdad (tarda minutos). Pregunta al usuario y repite con confirm: true, o usa dryRun: true para ver el plan.`,
+            },
+          ],
+          isError: true,
+        },
       });
     }
     try {

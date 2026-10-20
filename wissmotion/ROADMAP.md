@@ -176,7 +176,7 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 
 - [x] (heredado: `useExternalFileChangeCoordinator`) Recarga en vivo cuando un agente modifica archivos (el Studio ya vigila archivos y avisa de conflictos).
 - [ ] Indicador de "el agente está editando" y bloqueo suave para evitar choques con la edición manual.
-- [ ] Permisos por herramienta (lectura / edición / render) y confirmación para acciones costosas.
+- [x] Permisos por herramienta (lectura / edición / render) y confirmación para acciones costosas (`WISSMOTION_MCP_ACCESS`, `confirm: true`).
 - [x] (vía puente `studio_call`: pasa por el historial del Studio) Registro de acciones de cada agente en el historial, reversibles.
 
 ## Fase 9 — Proyectos y colaboración
