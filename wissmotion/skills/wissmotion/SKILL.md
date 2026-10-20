@@ -22,7 +22,7 @@ Producto: videos promocionales adaptados a la marca del usuario, editables a man
 - `wissmotion/templates/` — plantillas con `data-composition-variables` + instanciador.
 - `wissmotion/references/` — videos de referencia ya analizados: técnica, `recreate` (plantilla/preset/transición) y hoja de fotogramas. Si el usuario pide "como tal referencia", empieza aquí.
 - `wissmotion/render/` — lote por destinos con chequeo de aspecto.
-- `wissmotion/server/mcp.mjs` — 18 herramientas MCP stdio + recursos y prompts (este mismo pipeline por protocolo; `frame_snapshot` devuelve fotogramas para revisarlos con visión).
+- `wissmotion/server/mcp.mjs` — 20 herramientas MCP stdio + recursos y prompts; `studio_status`/`studio_call` editan el Studio abierto en vivo (este mismo pipeline por protocolo; `frame_snapshot` devuelve fotogramas para revisarlos con visión).
 
 ## Invariantes (no negociables)
 

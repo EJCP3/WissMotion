@@ -10,6 +10,7 @@ import { SlideshowPanel } from "./panels/SlideshowPanel";
 import { VariablesPanel } from "./panels/VariablesPanel";
 import { BrandPanel } from "../brand/BrandPanel";
 import { AiChatPanel } from "../ai/AiChatPanel";
+import { ConnectAgentSection } from "../ai/ConnectAgentSection";
 import { Dock } from "./dock/Dock";
 import { useDockLayoutStore } from "./dock/dockLayoutStore";
 import type { RenderJob } from "./renders/useRenderQueue";
@@ -308,6 +309,7 @@ export const StudioRightPanels = memo(function StudioRightPanels({
         <BrandPanel projectId={projectId} recordEdit={recordEdit} reloadPreview={reloadPreview} />
       </Dock.Panel>
       <Dock.Panel id="assistant">
+        <ConnectAgentSection />
         <AiChatPanel projectId={projectId} />
       </Dock.Panel>
       <Dock.Panel id="slideshow">

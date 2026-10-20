@@ -4,6 +4,7 @@ import { readStudioUiPreferences } from "../utils/studioUiPreferences";
 import { makeStudioDebugLogger } from "../utils/studioDebug";
 import { loadModelContextPolyfill } from "./polyfill";
 import { registerStudioTools, type ToolRegistrationReport } from "./registrar";
+import { startAgentBridge } from "./agentBridgeClient";
 import { runToolBody, type ToolResult } from "./toolResult";
 import { getModelContext, type ModelContext, type ModelContextTool } from "./types";
 import {
@@ -322,6 +323,9 @@ export function useStudioAgentTools(deps: StudioAgentToolsDeps): void {
     }
 
     const controller = new AbortController();
+    const tools = buildStudioTools(depsRef);
+    // WissMotion: el MCP externo llega por el puente del servidor (sin extensión).
+    void startAgentBridge(tools, controller.signal);
 
     void (async () => {
       const native: ModelContext | null = getModelContext();
@@ -335,11 +339,7 @@ export function useStudioAgentTools(deps: StudioAgentToolsDeps): void {
       // The import is async, so the component may already be gone.
       if (controller.signal.aborted) return;
 
-      const report = await registerStudioTools(
-        modelContext,
-        buildStudioTools(depsRef),
-        controller.signal,
-      );
+      const report = await registerStudioTools(modelContext, tools, controller.signal);
       reportRegistration(report, native !== null);
     })();
 

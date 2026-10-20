@@ -150,7 +150,7 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 | Visión     | `frame_snapshot`, `studio_look`, `lint_check`                                                     |
 | Render     | `render_start`, `render_status`, `render_batch`                                                   |
 
-- [ ] **Puente con el Studio abierto**: el servidor MCP reenvía a las herramientas WebMCP que ya registra el Studio
+- [x] **Puente con el Studio abierto** (`/api/agent-bridge` + `studio_status`/`studio_call`, sin extensión): el servidor MCP reenvía a las herramientas WebMCP que ya registra el Studio
       (`studio_select`, `studio_set_text`, `studio_add_animation`…), así el usuario ve cada edición en vivo.
 - [x] Si el Studio está cerrado, las herramientas operan sobre los archivos y el CLI (`project-ops.mjs`).
 - [x] Recursos MCP: plantillas, kit de movimiento, marcas, esquema `brand.json` y guía (`mcp-context.mjs`).
@@ -170,7 +170,7 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 - [x] **OpenCode**: entrada `mcp` en `opencode.json` (`type: local`, `command: ["npx","wissmotion","mcp"]`) + `AGENTS.md`.
 - [x] **Codex / Cursor / Gemini CLI**: adaptar los plugins existentes (`.codex-plugin`, `.cursor-plugin`, `gemini-extension.json`).
 - [x] Comando `wissmotion agents setup` que detecta los agentes instalados y escribe su configuración.
-- [ ] Página "Conectar agente" en el Studio con los snippets listos para copiar y un indicador de agente conectado.
+- [x] (sección en el panel Asistente) Página "Conectar agente" en el Studio con los snippets listos para copiar y un indicador de agente conectado.
 
 ### 8.4 Colaboración en vivo y seguridad
 

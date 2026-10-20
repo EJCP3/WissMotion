@@ -38,6 +38,19 @@ function runCli(args, timeout = 300_000) {
   return { status: r.status, stdout: r.stdout ?? "", stderr: r.stderr ?? "" };
 }
 
+// Puente con el Studio abierto (rutas /api/agent-bridge del servidor del Studio).
+export const STUDIO_URL = process.env.WISSMOTION_STUDIO_URL ?? "http://127.0.0.1:5190";
+
+async function studioFetch(path, body) {
+  const res = await fetch(`${STUDIO_URL}/api/agent-bridge${path}`, {
+    method: body === undefined ? "GET" : "POST",
+    headers: { "Content-Type": "application/json" },
+    body: body === undefined ? undefined : JSON.stringify(body),
+    signal: AbortSignal.timeout(90_000),
+  });
+  return { status: res.status, data: await res.json().catch(() => null) };
+}
+
 async function resolveBrand(brand, brandsDir) {
   return typeof brand === "string" ? getBrand(resolveLibraryDir(brandsDir), brand) : brand;
 }
@@ -414,6 +427,54 @@ const TOOLS = [
     },
     run: async ({ script, outDir, voice, lang, dryRun }) =>
       text(await runVoiceover({ script, outDir, voice, lang, dryRun: Boolean(dryRun) })),
+  },
+  {
+    def: {
+      name: "studio_status",
+      description:
+        "¿Está el Studio abierto en el navegador? Devuelve sus herramientas en vivo (studio_*: seleccionar, cambiar textos, animar, mover…) para usarlas con studio_call.",
+      inputSchema: { type: "object", properties: {} },
+    },
+    run: async () => {
+      try {
+        const { data } = await studioFetch("/hello", {});
+        return text({
+          studioUrl: STUDIO_URL,
+          studioConnected: Boolean(data?.studioConnected),
+          tools: (data?.tools ?? []).map((t) => ({
+            name: t.name,
+            description: t.description,
+            inputSchema: t.inputSchema,
+          })),
+          hint: data?.studioConnected
+            ? "Usa studio_call con { tool, input }: el usuario ve cada cambio en vivo."
+            : "Abre el Studio (bun run studio) en el navegador; mientras tanto usa las herramientas de archivos (project_*).",
+        });
+      } catch (e) {
+        return text({
+          studioUrl: STUDIO_URL,
+          studioConnected: false,
+          error: `servidor del Studio no responde (${e.message}). Arráncalo con bun run studio o fija WISSMOTION_STUDIO_URL.`,
+        });
+      }
+    },
+  },
+  {
+    def: {
+      name: "studio_call",
+      description:
+        "Ejecuta una herramienta del Studio abierto (ver studio_status) sobre el proyecto que el usuario tiene delante; la edición se ve en vivo y se puede deshacer.",
+      inputSchema: {
+        type: "object",
+        required: ["tool"],
+        properties: { tool: { type: "string" }, input: { type: "object" } },
+      },
+    },
+    run: async ({ tool, input }) => {
+      const { status, data } = await studioFetch("/call", { tool, input: input ?? {} });
+      if (status !== 200) throw new Error(data?.error ?? `Studio respondió ${status}`);
+      return text(data.result);
+    },
   },
 ];
 

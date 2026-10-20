@@ -18,6 +18,7 @@ import { registerMediaRoutes } from "./routes/media.js";
 import { registerGlobalAssetRoutes } from "./routes/globalAssets.js";
 import { registerHistoryRoutes } from "./routes/history.js";
 import { registerBrandExtractRoutes } from "./routes/brandExtract.js";
+import { registerAgentBridgeRoutes } from "./routes/agentBridge.js";
 import { replaceWithProjectDirMissing } from "./helpers/projectDirMissing.js";
 import { folderGone, isProjectRootMissing } from "./helpers/safePath.js";
 
@@ -82,6 +83,7 @@ export function createStudioApi(adapter: StudioApiAdapter): Hono {
   registerGlobalAssetRoutes(api);
   registerHistoryRoutes(api, adapter);
   registerBrandExtractRoutes(api);
+  registerAgentBridgeRoutes(api);
 
   return api;
 }

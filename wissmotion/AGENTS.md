@@ -14,7 +14,7 @@ paquetes `packages/` de HyperFrames (no duplicar: reutilizar CLI/API).
 | Referencias de estilo: ficha, técnica y cómo recrear cada video      | `references/references.json`         |
 | Mockups de dispositivos (CSS puro, tema claro/oscuro)                | `mockups/` + `README.md`             |
 | Render por lotes + destinos                                          | `render/` + `README.md`              |
-| Servidor MCP (stdio, 18 herramientas, recursos, prompts) + plugin    | `server/` + `README.md`              |
+| Servidor MCP (20 herramientas, puente en vivo al Studio) + plugin    | `server/` + `README.md`              |
 | Skills del producto                                                  | `skills/`                            |
 | Plan por fases                                                       | `ROADMAP.md`                         |
 

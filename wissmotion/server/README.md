@@ -2,8 +2,8 @@
 
 `mcp.mjs` expone el producto a agentes (Claude Code, OpenCode, Cursor…)
 por JSON-RPC NDJSON, sin dependencias. Cubre marca, plantillas, movimiento,
-proyectos en disco, visión (fotogramas como imágenes) y render; el puente en
-vivo con el Studio abierto y el transporte HTTP llegan después.
+proyectos en disco, visión (fotogramas como imágenes), render y el **puente en
+vivo con el Studio abierto**. El transporte HTTP llega después.
 
 ```bash
 node wissmotion/server/mcp.mjs   # los agentes lo lanzan como `npx wissmotion mcp`
@@ -27,6 +27,22 @@ node wissmotion/server/mcp.mjs   # los agentes lo lanzan como `npx wissmotion mc
 | `frame_snapshot`                          | Fotogramas devueltos como imágenes (`at` en segundos)              |
 | `render_batch`                            | Render por destinos (`dryRun` para ver el plan)                    |
 | `voiceover_generate`                      | Voz en off local por segmento (Kokoro vía `hyperframes tts`)       |
+| `studio_status`                           | ¿Studio abierto? + sus herramientas en vivo (`studio_*`)           |
+| `studio_call`                             | Ejecuta una herramienta del Studio abierto (se ve en vivo, undo)   |
+
+## Puente en vivo con el Studio
+
+El servidor del Studio expone `/api/agent-bridge/*` (`packages/studio-server/src/routes/agentBridge.ts`):
+el MCP deja la llamada, la pestaña del Studio la recoge por long-poll
+(`packages/studio/src/webmcp/agentBridgeClient.ts`) y la ejecuta con sus
+herramientas WebMCP reales (`studio_look`, `studio_select`, `studio_set_text`,
+`studio_add_animation`…), así que cada edición se ve en vivo y entra al
+historial. Sin extensión de navegador. URL del Studio: `WISSMOTION_STUDIO_URL`
+(por defecto `http://127.0.0.1:5190`). Con el Studio cerrado, las herramientas
+de archivos (`project_*`, `brand_apply`…) siguen funcionando.
+
+En el Studio, panel **Asistente → Conectar agente**: comandos listos para
+copiar por agente y estado del puente y del último agente activo.
 
 **Recursos** (`resources/read`): `wissmotion://templates`, `://motion`,
 `://brands`, `://brand-schema`, `://guide` (AGENTS.md).
@@ -36,7 +52,7 @@ revisión de fotogramas. La lógica de proyecto vive en `project-ops.mjs`; los
 recursos y prompts en `mcp-context.mjs`.
 
 `server.test.mjs` levanta el servidor por stdio y prueba handshake,
-las 18 herramientas, recursos, prompts y el error de herramienta desconocida.
+las 20 herramientas, recursos, prompts y el error de herramienta desconocida.
 
 ## Plugin de Claude Code
 
