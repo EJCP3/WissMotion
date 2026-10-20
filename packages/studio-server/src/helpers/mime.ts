@@ -1,5 +1,5 @@
 export const MIME_TYPES: Record<string, string> = {
-  ".html": "text/html",
+  ".html": "text/html; charset=utf-8",
   ".css": "text/css",
   ".js": "text/javascript",
   ".mjs": "text/javascript",

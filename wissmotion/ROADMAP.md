@@ -55,7 +55,7 @@
 - [x] **Editor de curvas de easing** (bézier visual + spring con masa/rigidez/amortiguación) estilo Jitter.
 - [ ] Controles de **stagger** (orden, dirección, desde el centro, aleatorio).
 - [x] Vista previa de cada preset en miniatura (póster fijo por preset; la animada llega con la galería de Fase 3).
-- [ ] Todos los presets **seek-safe** y deterministas (render frame a frame idéntico al preview).
+- [x] Todos los presets **seek-safe** y deterministas (render frame a frame idéntico al preview): 59/59 composiciones verificadas con `templates/determinism.test.mjs`.
 
 ## Fase 3 — Plantillas promocionales
 
@@ -189,7 +189,7 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 
 ## Fase 10 — Calidad, distribución y decisión sobre Vue
 
-- [ ] Tests de plantillas y presets (render determinista, snapshot visual). Hecho: `templates/lint.test.mjs` (lint de las 17, base y re-escaladas).
+- [x] Tests de plantillas y presets: `templates/lint.test.mjs` (lint de las 17, base y re-escaladas) y `templates/determinism.test.mjs` (A → B → A + ejecución nueva).
 - [x] Documentación de usuario en español (`wissmotion/docs/`; los tutoriales en video llegan cuando haya voz/música de Fase 5).
 - [x] Onboarding: primer video en menos de 5 minutos (`primeros-pasos.md`).
 - [ ] Empaquetado: instalador local (CLI global) y evaluar app de escritorio (Electron/Tauri).

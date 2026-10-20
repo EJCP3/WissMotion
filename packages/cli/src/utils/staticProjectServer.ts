@@ -181,7 +181,10 @@ export async function serveStaticProjectHtml(
   const server = createServer((req, res) => {
     const url = req.url ?? "/";
     if (url === "/" || url === "/index.html") {
-      res.writeHead(200, { "Content-Type": "text/html" });
+      // Explicit charset: an HTML whose <meta charset> sits past the first 1024
+      // bytes (long data-composition-variables on <html>) is otherwise decoded
+      // by guess, and "Básico" can come out as "BÃ¡sico" in one run out of N.
+      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
       res.end(servedHtml);
       return;
     }
