@@ -61,6 +61,9 @@ export function validateStoryboard(sb, templateIds) {
     if (t && !TRANSITIONS.includes(t.type)) {
       errors.push(`scenes[${i}].transition.type desconocida: ${t.type}`);
     }
+    if (scene.duration !== undefined && !(scene.duration > 0 && scene.duration <= 120)) {
+      errors.push(`scenes[${i}].duration entre 0 y 120 s`);
+    }
     if (t && !(t.duration > 0 && t.duration <= 2)) {
       errors.push(`scenes[${i}].transition.duration entre 0 y 2 s`);
     }
@@ -154,6 +157,7 @@ export async function buildFilm({
       contentVars: scene.vars ?? {},
       outDir: dir,
       format: fmt,
+      duration: scene.duration,
     });
     scenes.push({
       dir,

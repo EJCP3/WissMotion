@@ -188,11 +188,15 @@ const TOOLS = [
           vars: { type: "object" },
           out: { type: "string" },
           format: { type: "string", enum: ["16:9", "9:16", "1:1", "4:5"] },
+          duration: {
+            type: "number",
+            description: "Segundos (6, 15, 30, 60…): re-escala el timing",
+          },
           brandsDir: { type: "string" },
         },
       },
     },
-    run: async ({ template, brand, vars, out, format, brandsDir }) => {
+    run: async ({ template, brand, vars, out, format, duration, brandsDir }) => {
       const brandObj = (await resolveBrand(brand, brandsDir)) ?? {};
       return text(
         await instantiate({
@@ -201,6 +205,7 @@ const TOOLS = [
           contentVars: vars ?? {},
           outDir: out,
           format,
+          duration,
         }),
       );
     },

@@ -7,6 +7,7 @@ import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { brandToVariables, instantiate, parseDeclaredVariables } from "./instantiate.mjs";
 import { templateize } from "./templateize.mjs";
+import { retimeHtml } from "./retime.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const cli = join(here, "..", "..", "packages", "cli", "dist", "cli.js");
@@ -61,6 +62,37 @@ before(async () => {
 after(async () => rm(tmp, { recursive: true, force: true }));
 
 describe("templates", () => {
+  it("retimeHtml escala clips y envuelve la timeline raíz", () => {
+    const html = `<div data-composition-id="x" data-start="0"><p class="clip" data-start="1.5" data-duration="4.5"></p><script>const tl = gsap.timeline({ paused: true }); window.__timelines["x"] = tl;</script></div>`;
+    const out = retimeHtml(html, { from: 6, to: 12 });
+    assert.match(out, /data-start="3" data-duration="9"/);
+    assert.match(out, /inner\.timeScale\(0\.5\)/);
+    assert.ok(out.indexOf("data-wm-retime") > out.indexOf('__timelines["x"] = tl'));
+    assert.equal(retimeHtml(html, { from: 6, to: 6 }), html);
+    assert.throws(() => retimeHtml(html, { from: 6, to: 0 }), /inválida/);
+  });
+
+  it("instantiate con duration re-escala la plantilla", async () => {
+    const dir = await mkdtemp(join(tmpdir(), "wm-retime-"));
+    try {
+      const brand = JSON.parse(
+        await readFile(join(here, "..", "brand-kit", "brand.example.json"), "utf8"),
+      );
+      const res = await instantiate({
+        templateId: "logo-sting",
+        brand,
+        contentVars: {},
+        outDir: dir,
+        duration: 15,
+      });
+      assert.equal(res.duration, 15);
+      const html = await readFile(join(dir, "index.html"), "utf8");
+      assert.match(html, /data-wm-retime="2\.5"/);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
   it("las 3 plantillas declaran variables válidas y bindeadas", async () => {
     for (const id of IDS) {
       const html = await readFile(join(here, id, "index.html"), "utf8");

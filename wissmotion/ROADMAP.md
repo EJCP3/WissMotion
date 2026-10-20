@@ -76,7 +76,7 @@
   - [x] Lista cinética vertical (estilo Jitter List, 9:16)
 - [x] **Variables de plantilla**: textos, imágenes, colores, duración, número de escenas → formulario sin código.
 - [x] Multi-formato desde la misma plantilla: 16:9, 9:16, 1:1, 4:5 con layouts propios por formato (11 plantillas; `templates/formats.mjs`).
-- [ ] Duraciones variables (6 s, 15 s, 30 s, 60 s) re-escalando el timing.
+- [x] Duraciones variables (6 s, 15 s, 30 s, 60 s) re-escalando el timing (`--duration`, `retime.mjs`).
 - [x] El usuario puede **guardar sus propios proyectos como plantilla**.
 - [x] Mockups de dispositivos (teléfono, laptop, navegador, tablet, reloj) con tema claro/oscuro (`mockups/`).
 

@@ -5,6 +5,7 @@
 // deja el comando de render listo en README.md. El render usa
 // `--variables-file` (y `--strict-variables` en CI).
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { retimeHtml } from "./retime.mjs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateBrand } from "../brand-kit/validate-brand.mjs";
@@ -64,6 +65,7 @@ export async function instantiate({
   contentVars,
   outDir,
   format,
+  duration,
   templatesDir = here,
 }) {
   const dir = join(templatesDir, templateId);
@@ -97,9 +99,13 @@ export async function instantiate({
   // el render no incrusta la fuente de marca y cae a Times; ver fonts.mjs).
   const effective = Object.fromEntries(declared.map((v) => [v.id, overrides[v.id] ?? v.default]));
   const formatted = format && format !== manifest.format ? applyFormat(html, format) : html;
+  // Duración pedida (6, 15, 30, 60 s…): re-escala clips y timeline (retime.mjs).
+  const timed = duration
+    ? retimeHtml(formatted, { from: manifest.duration, to: duration })
+    : formatted;
   await writeFile(
     join(outDir, "index.html"),
-    brandFontsLink(formatted, effective, brand.fonts?.weights),
+    brandFontsLink(timed, effective, brand.fonts?.weights),
     "utf8",
   );
   await writeFile(
@@ -113,7 +119,7 @@ export async function instantiate({
     `# ${manifest.name} (instancia de ${templateId})\n\nVariables en \`variables.json\` (editables en el panel Variables del Studio).\n\n\`\`\`bash\nnode packages/cli/dist/cli.js render . --variables-file variables.json\n\`\`\`\n`,
     "utf8",
   );
-  return { manifest, variables: overrides };
+  return { manifest, variables: overrides, duration: duration ?? manifest.duration };
 }
 
 function opt(args, name) {
@@ -133,7 +139,7 @@ if (process.argv.includes("--template")) {
   const out = opt(process.argv.slice(2), "--out");
   if (!templateId || !out) {
     console.error(
-      "Uso: node instantiate.mjs --template <id> --brand brand.json [--vars vars.json] [--format 9:16] --out dir",
+      "Uso: node instantiate.mjs --template <id> --brand brand.json [--vars vars.json] [--format 9:16] [--duration 15] --out dir",
     );
     process.exit(2);
   }
@@ -148,6 +154,9 @@ if (process.argv.includes("--template")) {
       contentVars,
       outDir: resolve(out),
       format: opt(process.argv.slice(2), "--format"),
+      duration: opt(process.argv.slice(2), "--duration")
+        ? Number(opt(process.argv.slice(2), "--duration"))
+        : undefined,
     });
     console.log(`OK: ${manifest.name} en ${out} (${Object.keys(variables).length} variables)`);
   } catch (e) {

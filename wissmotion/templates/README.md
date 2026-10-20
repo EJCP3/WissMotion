@@ -36,6 +36,15 @@ node instantiate.mjs --template promo-app --brand b.json --format 9:16 --out ./v
 node ../render/render-batch.mjs --project ./mi-promo --dest all   # cada destino en su formato
 ```
 
+**Duraciones variables**: `--duration 15` (o `duration` en el MCP y en cada
+escena de `film`) re-escala la plantilla a 6, 15, 30, 60 s… `retime.mjs`
+multiplica `data-start`/`data-duration` de los clips y envuelve la timeline
+raíz en otra con `timeScale`, así que sigue siendo seek-safe.
+
+```bash
+node instantiate.mjs --template logo-sting --brand b.json --duration 15 --out ./sting-15s
+```
+
 `formats.mjs` (`applyFormat`) fija tamaño y `data-format`; el render por
 lotes genera `.format-9x16.html` desde el `index.html` actual (lo editado en
 el Studio llega a todos los formatos). `formats.test.mjs` comprueba que lo
