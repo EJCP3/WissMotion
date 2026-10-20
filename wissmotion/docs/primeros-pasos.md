@@ -16,6 +16,7 @@ Opcional: instala el comando `wissmotion` para usarlo desde cualquier
 carpeta (enlaza esta copia del repo; `npm uninstall -g wissmotion` lo quita):
 
 ```bash
+npm install --prefix wissmotion   # dependencias (SDK de Claude para brand-enrich)
 npm install -g ./wissmotion
 wissmotion help
 ```

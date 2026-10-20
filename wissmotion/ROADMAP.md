@@ -37,7 +37,7 @@
       capturas desktop y móvil (reutilizar `hyperframes capture`).
 - [x] **Extractor desde app**: subir capturas de App Store / Play Store o imágenes sueltas (`extract-from-images.mjs`, MCP `brand_extract_images`).
 - [ ] **Importar desde Figma**: variables/tokens y logo.
-- [ ] **Enriquecimiento con IA (opcional)**: tono, tagline, beneficios, público objetivo, guion sugerido.
+- [x] **Enriquecimiento con IA (opcional)**: tono, tagline, beneficios, público objetivo, guion sugerido (`brand-kit/enrich.mjs`).
 - [x] **Editor manual de marca** (panel en el Studio): selector de color, subir logo, buscador de Google Fonts, vista previa en vivo.
 - [x] Generar paleta derivada (tonos, contraste AA/AAA) y aviso de contraste (reutilizar `contrast-*` del CLI).
 - [x] **Biblioteca de marcas**: varias marcas guardadas, duplicar, exportar/importar.

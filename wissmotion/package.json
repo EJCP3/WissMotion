@@ -8,6 +8,9 @@
     "wissmotion": "cli.mjs"
   },
   "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.135.0"
+  },
   "engines": {
     "node": ">=20"
   }

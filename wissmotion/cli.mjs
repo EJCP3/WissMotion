@@ -20,6 +20,10 @@ const COMMANDS = {
     file: ["brand-kit", "extract-from-url.mjs"],
     help: "<url> --out b.json [--save nombre]",
   },
+  "brand-enrich": {
+    file: ["brand-kit", "enrich.mjs"],
+    help: 'b.json [--url https://…] [--notes "…"] [--overwrite] — tono, tagline, beneficios y guion con IA',
+  },
   "brand-images": {
     file: ["brand-kit", "extract-from-images.mjs"],
     help: 'captura.png [más…] --name "App" [--primary #hex] [--logo icono.png] --out b.json',
