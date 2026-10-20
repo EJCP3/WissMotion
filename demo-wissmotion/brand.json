@@ -1,0 +1,41 @@
+{
+  "brandVersion": 1,
+  "name": "Estudio Demo",
+  "tagline": "Videos promo que parecen hechos a mano",
+  "url": "https://example.com",
+  "logo": {
+    "full": "assets/logo.svg",
+    "icon": "assets/icon.svg",
+    "mono": "assets/logo-mono.svg",
+    "light": "assets/logo-light.svg",
+    "dark": "assets/logo-dark.svg"
+  },
+  "colors": {
+    "primary": "#6d28d9",
+    "secondary": "#0ea5e9",
+    "accent": "#f59e0b",
+    "background": "#faf9f7",
+    "surface": "#ffffff",
+    "text": "#1c1917"
+  },
+  "fonts": {
+    "heading": "Sora",
+    "body": "Inter",
+    "weights": [400, 600, 700]
+  },
+  "tone": "Cercano y directo, sin humo",
+  "motionPersonality": "enérgico",
+  "features": ["Plantillas con tu marca", "Exporta a todas las redes", "Sin escribir código"],
+  "cta": {
+    "label": "Crear mi video",
+    "url": "https://example.com/empezar"
+  },
+  "screenshots": {
+    "desktop": "assets/shot-desktop.png",
+    "mobile": "assets/shot-mobile.png"
+  },
+  "social": {
+    "instagram": "https://instagram.com/estudiodemo",
+    "youtube": "https://youtube.com/@estudiodemo"
+  }
+}
