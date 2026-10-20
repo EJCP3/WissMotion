@@ -189,7 +189,7 @@ videos WissMotion, viendo los cambios en vivo en el Studio.
 
 ## Fase 10 — Calidad, distribución y decisión sobre Vue
 
-- [ ] Tests de plantillas y presets (render determinista, snapshot visual).
+- [ ] Tests de plantillas y presets (render determinista, snapshot visual). Hecho: `templates/lint.test.mjs` (lint de las 17, base y re-escaladas).
 - [x] Documentación de usuario en español (`wissmotion/docs/`; los tutoriales en video llegan cuando haya voz/música de Fase 5).
 - [x] Onboarding: primer video en menos de 5 minutos (`primeros-pasos.md`).
 - [ ] Empaquetado: instalador local (CLI global) y evaluar app de escritorio (Electron/Tauri).
