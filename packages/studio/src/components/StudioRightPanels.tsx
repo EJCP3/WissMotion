@@ -305,7 +305,7 @@ export const StudioRightPanels = memo(function StudioRightPanels({
         />
       </Dock.Panel>
       <Dock.Panel id="brand">
-        <BrandPanel projectId={projectId} />
+        <BrandPanel projectId={projectId} recordEdit={recordEdit} reloadPreview={reloadPreview} />
       </Dock.Panel>
       <Dock.Panel id="assistant">
         <AiChatPanel projectId={projectId} />
