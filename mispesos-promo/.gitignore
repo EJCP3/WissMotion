@@ -1,0 +1,18 @@
+# Renders y material regenerable o con derechos de terceros
+*-30s.mp4
+audio/refreshed_*.mp3
+assets/nubi-frames/
+capturas/
+snapshots/
+# >500 KB y regenerables con el generador de objetos 3D:
+#   node packages/cli/dist/cli.js render wissmotion/objetos-3d --format webm \
+#     --variables '{"objeto":"moneda","color":"#20d472","texto":"RD$","metal":0.5}' --output assets/moneda-rd.webm
+#   (tarjeta: {"objeto":"tarjeta","color":"#1d4ed8","texto":"VISA ORO","metal":0.55})
+assets/moneda-rd.webm
+assets/tarjeta.webm
+estilo-bento.png
+# Videos fuera de git. Nubi se regenera con Blender:
+#   node wissmotion/objetos-3d/blender.mjs run wissmotion/objetos-3d/blender/nubi.py -- --out assets/nubi-frames --frames 48 --res 640 --samples 24
+#   ffmpeg -framerate 24 -i assets/nubi-frames/frame_%04d.png -c:v libvpx-vp9 -pix_fmt yuva420p -b:v 0 -crf 28 assets/nubi.webm
+*.webm
+*.mp4

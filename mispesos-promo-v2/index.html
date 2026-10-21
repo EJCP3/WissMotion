@@ -1,0 +1,1079 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Caveat:wght@700&amp;display=block"
+    />
+    <title>MisPesos v2 · tus finanzas en la nube</title>
+    <style>
+      /* Paleta: cielo (foto), blanco, tinta #0f172a y verde de marca #20d472.
+         Una palabra por frase en manuscrita verde (acento, como PrizePicks). */
+      :root {
+        --ink: #0f172a;
+        --green: #20d472;
+        --app-blue: #2177ff;
+        --muted: #5b6b82;
+      }
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #24557f;
+        font-family: Inter, sans-serif;
+        color: var(--ink);
+      }
+      .bg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        object-fit: cover;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+      }
+      .abs {
+        position: absolute;
+        margin: 0;
+      }
+      .num {
+        font-variant-numeric: tabular-nums;
+      }
+      .acc {
+        font-family: Caveat, cursive;
+        font-weight: 700;
+        color: var(--green);
+        font-size: 1.22em;
+        letter-spacing: 0;
+      }
+      .white {
+        color: #fff;
+        text-shadow: 0 6px 40px rgba(8, 25, 50, 0.45);
+      }
+      .w {
+        display: inline-block;
+      }
+      .glass {
+        position: absolute;
+        border-radius: 34px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(26px) saturate(1.4);
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        box-shadow: 0 30px 80px rgba(8, 25, 50, 0.28);
+      }
+      .k {
+        font: 600 18px Inter;
+        color: var(--muted);
+      }
+      /* Nube realista (técnica de RealisticCloud.vue de mispesos.app) */
+      .cloud {
+        position: absolute;
+        width: 600px;
+        height: 100px;
+      }
+      .cloud i {
+        position: absolute;
+        border-radius: 50%;
+      }
+      .cloud .b {
+        width: 600px;
+        height: 100px;
+        top: 90px;
+        left: -100px;
+        box-shadow: 200px 170px 19px 40px rgba(255, 255, 255, 0.95);
+      }
+      .cloud .k2 {
+        width: 500px;
+        height: 30px;
+        top: 90px;
+        left: -100px;
+        box-shadow: 200px 200px 10px 40px rgba(230, 236, 244, 0.5);
+      }
+      .cloud .m {
+        width: 580px;
+        height: 35px;
+        top: 80px;
+        left: -100px;
+        box-shadow: 210px 250px 28px 30px rgba(66, 105, 146, 0.2);
+      }
+      .cloud .f {
+        width: 450px;
+        height: 40px;
+        top: 70px;
+        left: -20px;
+        box-shadow: 210px 272px 30px 0 rgba(15, 40, 75, 0.25);
+      }
+      .wipe {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .wipe .fill {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 55%, #ffffff 30%, #eef4fb 100%);
+        opacity: 0;
+      }
+
+      /* S1 */
+      #s1-t {
+        left: 0;
+        right: 0;
+        top: 400px;
+        text-align: center;
+        font: 800 110px/1.05 Inter;
+        letter-spacing: -4px;
+      }
+      /* S2 · móvil inclinado */
+      #s2-t {
+        left: 150px;
+        top: 360px;
+        font: 800 104px/1.04 Inter;
+        letter-spacing: -4px;
+      }
+      #phone {
+        position: absolute;
+        left: 1060px;
+        top: 150px;
+        width: 560px;
+        height: 1140px;
+        border-radius: 80px;
+        background: #0b0b0f;
+        box-shadow:
+          inset 0 0 0 6px #22c55e,
+          0 60px 140px rgba(8, 25, 50, 0.45);
+        transform-origin: 50% 30%;
+      }
+      #screen {
+        position: absolute;
+        inset: 16px;
+        border-radius: 66px;
+        overflow: hidden;
+        background: #f1f6fa;
+      }
+      #p-title {
+        left: 34px;
+        top: 70px;
+        font: 800 36px Inter;
+        letter-spacing: -1px;
+      }
+      #p-sub {
+        left: 34px;
+        top: 118px;
+        font: 500 19px Inter;
+        color: var(--muted);
+      }
+      .tx {
+        position: absolute;
+        left: 22px;
+        right: 22px;
+        height: 104px;
+        border-radius: 26px;
+        background: #fff;
+      }
+      .tx .ic {
+        position: absolute;
+        left: 20px;
+        top: 24px;
+        width: 56px;
+        height: 56px;
+        border-radius: 18px;
+        background: #e8f0ff;
+        color: var(--app-blue);
+        font: 800 19px/56px Inter;
+        text-align: center;
+      }
+      .tx .m {
+        position: absolute;
+        left: 92px;
+        top: 22px;
+        margin: 0;
+        font: 700 22px Inter;
+      }
+      .tx .c {
+        position: absolute;
+        left: 92px;
+        top: 58px;
+        margin: 0;
+        font: 600 16px Inter;
+        color: var(--muted);
+      }
+      .tx .a {
+        position: absolute;
+        right: 22px;
+        top: 34px;
+        margin: 0;
+        font: 800 24px Inter;
+      }
+      #tx-new {
+        top: 170px;
+        box-shadow: 0 0 0 3px var(--green);
+      }
+      #tx-new .tag {
+        position: absolute;
+        left: 92px;
+        top: 56px;
+        margin: 0;
+        padding: 3px 12px;
+        border-radius: 999px;
+        font: 700 16px Inter;
+      }
+      #tag-reading {
+        background: #e5e9f0;
+        color: var(--muted);
+      }
+      #tag-done {
+        background: var(--green);
+        color: #fff;
+        opacity: 0;
+      }
+      #notif {
+        position: absolute;
+        left: 22px;
+        right: 22px;
+        top: 26px;
+        height: 104px;
+        border-radius: 30px;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 20px 50px rgba(8, 25, 50, 0.2);
+      }
+      #notif .ic {
+        position: absolute;
+        left: 18px;
+        top: 22px;
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      #notif .ic img {
+        width: 100%;
+      }
+      #notif .t1 {
+        position: absolute;
+        left: 94px;
+        top: 20px;
+        margin: 0;
+        font: 700 20px Inter;
+      }
+      #notif .t2 {
+        position: absolute;
+        left: 94px;
+        top: 52px;
+        margin: 0;
+        font: 500 17px/1.3 Inter;
+        color: #334155;
+      }
+
+      /* S3 · bento en vivo */
+      .cell-txt {
+        position: absolute;
+        text-align: center;
+      }
+      #b-paper {
+        position: absolute;
+        left: 972px;
+        top: 40px;
+        width: 908px;
+        height: 488px;
+        border-radius: 32px;
+        background: #fff;
+        overflow: hidden;
+      }
+      #b-paper .glow {
+        position: absolute;
+        left: 520px;
+        top: 160px;
+        width: 260px;
+        height: 260px;
+        margin: -130px 0 0 -130px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(32, 212, 114, 0.45) 0%, rgba(32, 212, 114, 0) 70%);
+      }
+      #b-paper p {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 196px;
+        margin: 0;
+        text-align: center;
+        font: 800 70px Inter;
+        letter-spacing: -2.5px;
+      }
+      #b-total {
+        left: 110px;
+        top: 120px;
+        width: 640px;
+        height: 330px;
+      }
+      #b-total .v {
+        left: 34px;
+        top: 70px;
+        font: 900 70px Inter;
+        letter-spacing: -2.5px;
+      }
+      #b-total .d {
+        left: 36px;
+        top: 160px;
+        font: 600 18px Inter;
+        color: #e5484d;
+      }
+      #b-total .bars {
+        position: absolute;
+        left: 34px;
+        right: 34px;
+        bottom: 30px;
+        height: 90px;
+        display: flex;
+        align-items: flex-end;
+        gap: 12px;
+      }
+      #b-total .bars i {
+        flex: 1;
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.12);
+        transform-origin: 50% 100%;
+      }
+      #b-total .bars i.t {
+        background: var(--app-blue);
+      }
+      #b-sobre {
+        left: 110px;
+        top: 650px;
+        width: 470px;
+        height: 290px;
+      }
+      #b-sobre .v {
+        left: 34px;
+        top: 70px;
+        font: 900 64px Inter;
+        letter-spacing: -2px;
+      }
+      #b-sobre .s {
+        left: 34px;
+        top: 150px;
+        font: 600 18px Inter;
+        color: var(--app-blue);
+      }
+      #b-sobre .track {
+        position: absolute;
+        left: 34px;
+        right: 34px;
+        top: 214px;
+        height: 12px;
+        border-radius: 6px;
+        background: rgba(15, 23, 42, 0.1);
+        overflow: hidden;
+      }
+      #b-sobre .fill {
+        position: absolute;
+        inset: 0;
+        background: var(--app-blue);
+        transform-origin: 0 50%;
+      }
+      #b-night-t {
+        left: 972px;
+        right: 40px;
+        top: 640px;
+        text-align: center;
+        font: 800 60px/1.1 Inter;
+        letter-spacing: -2px;
+      }
+      .prop {
+        position: absolute;
+        filter: drop-shadow(0 30px 40px rgba(8, 25, 50, 0.3));
+      }
+
+      /* S4 · meta de noche */
+      #m-card {
+        left: 460px;
+        top: 280px;
+        width: 1000px;
+        height: 380px;
+      }
+      #m-card .name {
+        left: 60px;
+        top: 56px;
+        font: 700 34px Inter;
+      }
+      #m-card .sub {
+        left: 60px;
+        top: 104px;
+        font: 500 20px Inter;
+        color: var(--muted);
+      }
+      #m-card .big {
+        left: 60px;
+        top: 150px;
+        font: 900 100px Inter;
+        letter-spacing: -3px;
+      }
+      #m-card .of {
+        right: 60px;
+        top: 196px;
+        font: 600 28px Inter;
+        color: var(--muted);
+      }
+      #m-card .track {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 296px;
+        height: 18px;
+        border-radius: 9px;
+        background: rgba(15, 23, 42, 0.1);
+        overflow: hidden;
+      }
+      #m-card .fill {
+        position: absolute;
+        inset: 0;
+        border-radius: 9px;
+        background: var(--green);
+        transform-origin: 0 50%;
+      }
+      #m-card .pct {
+        right: 60px;
+        top: 324px;
+        font: 700 22px Inter;
+        color: #16a35a;
+      }
+      #s4-t {
+        left: 0;
+        right: 0;
+        top: 760px;
+        text-align: center;
+        font: 800 84px Inter;
+        letter-spacing: -3px;
+      }
+
+      /* S5 · Nubi conversa */
+      .bub {
+        position: absolute;
+        max-width: 680px;
+        padding: 24px 34px;
+        border-radius: 34px;
+        font: 600 34px/1.25 Inter;
+        box-shadow: 0 20px 60px rgba(8, 25, 50, 0.22);
+      }
+      .bub.me {
+        right: 140px;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(20px);
+        border-bottom-right-radius: 10px;
+      }
+      .bub.nubi {
+        left: 900px;
+        background: var(--ink);
+        color: #fff;
+        border-bottom-left-radius: 10px;
+      }
+      .bub.nubi b {
+        color: var(--green);
+      }
+      #typing {
+        position: absolute;
+        left: 900px;
+        top: 470px;
+        padding: 26px 34px;
+        border-radius: 34px;
+        background: var(--ink);
+      }
+      #typing i {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        margin: 0 5px;
+        border-radius: 50%;
+        background: #fff;
+      }
+      #n-label {
+        left: 250px;
+        top: 150px;
+        font: 700 30px Inter;
+      }
+
+      /* S6 · bento final (fotograma de estilo) */
+      #bento {
+        position: absolute;
+        left: 200px;
+        top: 190px;
+        width: 1520px;
+        height: 780px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas:
+          "total total meta nubi"
+          "sobres cats cats nubi";
+        gap: 24px;
+        transform-origin: 50% 50%;
+      }
+      #bento .cell {
+        position: relative;
+        border-radius: 36px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(28px) saturate(1.4);
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        box-shadow: 0 30px 80px rgba(8, 25, 50, 0.28);
+        overflow: hidden;
+      }
+      #bento .cell .k {
+        position: absolute;
+        left: 34px;
+        top: 30px;
+        margin: 0;
+      }
+      #f-total {
+        grid-area: total;
+      }
+      #f-total .v {
+        position: absolute;
+        left: 34px;
+        top: 62px;
+        margin: 0;
+        font: 900 80px Inter;
+        letter-spacing: -3px;
+      }
+      #f-total .bars {
+        position: absolute;
+        right: 34px;
+        bottom: 34px;
+        width: 260px;
+        height: 150px;
+        display: flex;
+        align-items: flex-end;
+        gap: 12px;
+      }
+      #f-total .bars i {
+        flex: 1;
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.12);
+      }
+      #f-total .bars i.t {
+        background: var(--app-blue);
+      }
+      #f-meta {
+        grid-area: meta;
+      }
+      #f-meta svg {
+        position: absolute;
+        left: 50%;
+        top: 56%;
+        width: 200px;
+        height: 200px;
+        transform: translate(-50%, -50%);
+      }
+      #f-meta .pct {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56%;
+        margin: -30px 0 0;
+        text-align: center;
+        font: 900 50px Inter;
+        letter-spacing: -2px;
+      }
+      #f-nubi {
+        grid-area: nubi;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(214, 230, 248, 0.86)) !important;
+      }
+      #f-nubi img {
+        position: absolute;
+        left: -40px;
+        top: 130px;
+        width: 440px;
+      }
+      #f-nubi .t {
+        position: absolute;
+        left: 34px;
+        right: 30px;
+        bottom: 40px;
+        margin: 0;
+        font: 800 34px/1.12 Inter;
+        letter-spacing: -1px;
+      }
+      #f-nubi .t b {
+        color: #16a35a;
+      }
+      #f-sobres {
+        grid-area: sobres;
+      }
+      #f-sobres .v {
+        position: absolute;
+        left: 34px;
+        top: 70px;
+        margin: 0;
+        font: 900 52px Inter;
+        letter-spacing: -2px;
+      }
+      #f-sobres img {
+        position: absolute;
+        right: -30px;
+        bottom: -40px;
+        width: 210px;
+        transform: rotate(-14deg);
+      }
+      #f-cats {
+        grid-area: cats;
+      }
+      #f-cats .tm {
+        position: absolute;
+        left: 34px;
+        right: 34px;
+        top: 76px;
+        bottom: 34px;
+        display: grid;
+        grid-template-columns: 2.4fr 1.9fr 1fr 0.8fr;
+        gap: 10px;
+      }
+      #f-cats .tm div {
+        border-radius: 16px;
+        color: #fff;
+        font: 700 18px/1.3 Inter;
+        padding: 16px;
+      }
+      #s6-t {
+        left: 0;
+        right: 0;
+        top: 64px;
+        text-align: center;
+        font: 800 72px Inter;
+        letter-spacing: -3px;
+      }
+
+      /* S7 · cierre */
+      #logo {
+        left: 0;
+        right: 0;
+        top: 650px;
+        text-align: center;
+        font: 900 140px Inter;
+        letter-spacing: -5px;
+      }
+      #logo em {
+        font-style: normal;
+        color: var(--green);
+      }
+      #url {
+        left: 0;
+        right: 0;
+        top: 840px;
+        text-align: center;
+        font: 600 34px Inter;
+        color: rgba(255, 255, 255, 0.85);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="mispesos-v2"
+      data-start="0"
+      data-width="1920"
+      data-height="1080"
+      data-duration="30"
+    >
+      <!-- ── Audio ── -->
+      <audio id="music" src="audio/refreshed_30s.mp3" data-start="0" data-duration="30" data-track-index="30" data-volume="0.9"></audio>
+      <audio id="sfx-w1" src="audio/sfx/whoosh-cinematic.mp3" data-start="2.2" data-duration="1.4" data-track-index="31" data-volume="0.5"></audio>
+      <audio id="sfx-n" src="audio/sfx/notification.mp3" data-start="3.6" data-duration="1.2" data-track-index="32" data-volume="0.45"></audio>
+      <audio id="sfx-pop" src="audio/sfx/pop.mp3" data-start="5.25" data-duration="0.7" data-track-index="33" data-volume="0.5"></audio>
+      <audio id="sfx-w2" src="audio/sfx/whoosh-short.mp3" data-start="7.55" data-duration="0.57" data-track-index="34" data-volume="0.45"></audio>
+      <audio id="sfx-sp" src="audio/sfx/sparkle.mp3" data-start="15.2" data-duration="1.6" data-track-index="35" data-volume="0.4"></audio>
+      <audio id="sfx-w3" src="audio/sfx/whoosh-cinematic.mp3" data-start="17.2" data-duration="1.4" data-track-index="36" data-volume="0.5"></audio>
+      <audio id="sfx-ty" src="audio/sfx/typing.mp3" data-start="19.2" data-duration="0.8" data-track-index="37" data-volume="0.3"></audio>
+      <audio id="sfx-w4" src="audio/sfx/whoosh-cinematic.mp3" data-start="24.7" data-duration="1.4" data-track-index="38" data-volume="0.5"></audio>
+      <audio id="sfx-ch" src="audio/sfx/chime.mp3" data-start="26.1" data-duration="2.4" data-track-index="39" data-volume="0.4"></audio>
+
+      <!-- ── Fondos de cielo (fotos reales, Pexels) ── -->
+      <video id="v1" class="bg clip" src="stock/arriba-a.mp4" muted data-start="0" data-duration="3.2" data-media-start="2" data-track-index="0"></video>
+      <video id="v2" class="bg clip" src="stock/cielo-d.mp4" muted data-start="2.6" data-duration="5.5" data-media-start="0" data-track-index="1"></video>
+      <!-- bento en vivo: tres celdas con su propio cielo (clip-path = celda) -->
+      <video id="v3a" class="bg clip" src="stock/cielo-a.mp4" muted data-start="7.6" data-duration="5.3" data-media-start="0" data-track-index="2"></video>
+      <video id="v3b" class="bg clip" src="stock/cielo-d.mp4" muted data-start="7.65" data-duration="5.25" data-media-start="6" data-track-index="3"></video>
+      <video id="v3c" class="bg clip" src="stock/noche-a.mp4" muted data-start="7.7" data-duration="10.2" data-media-start="2" data-track-index="4"></video>
+      <video id="v5" class="bg clip" src="stock/cielo-a.mp4" muted data-start="17.6" data-duration="5.4" data-media-start="1.5" data-track-index="5"></video>
+      <video id="v6" class="bg clip" src="stock/cielo-d.mp4" muted data-start="22.6" data-duration="3" data-media-start="8" data-track-index="6"></video>
+      <video id="v7" class="bg clip" src="stock/arriba-a.mp4" muted data-start="25.1" data-duration="4.9" data-media-start="8" data-track-index="7"></video>
+
+      <!-- S1 · 0–2.7 · mar de nubes -->
+      <section id="s1" class="scene clip" data-start="0" data-duration="3.0" data-track-index="10">
+        <p id="s1-t" class="abs white">
+          <span class="w">Tus</span> <span class="w">finanzas,</span><br /><span class="w">en</span>
+          <span class="w">la</span> <span class="w acc">nube.</span>
+        </p>
+      </section>
+
+      <!-- S2 · 2.7–7.7 · el banco avisa, MisPesos lo anota -->
+      <section id="s2" class="scene clip" data-start="2.7" data-duration="5.3" data-track-index="11">
+        <p id="s2-t" class="abs white">
+          <span class="w">MisPesos</span><br /><span class="w">lo</span> <span class="w acc">anota</span><br /><span
+            class="w"
+            >solo.</span
+          >
+        </p>
+        <div id="phone">
+          <div id="screen">
+            <p id="p-title" class="abs">Movimientos</p>
+            <p id="p-sub" class="abs">Hoy · 20 oct</p>
+            <div id="tx-new" class="tx">
+              <div class="ic">BR</div>
+              <p class="m">Super Nacional</p>
+              <p id="tag-reading" class="tag">Leyendo correo…</p>
+              <p id="tag-done" class="tag">✓ Supermercado</p>
+              <p class="a num">−RD$4,380.50</p>
+            </div>
+            <div class="tx tx-old" style="top: 290px">
+              <div class="ic">BP</div>
+              <p class="m">Uber Eats</p>
+              <p class="c">Comida · Popular</p>
+              <p class="a num">−RD$980.00</p>
+            </div>
+            <div class="tx tx-old" style="top: 406px">
+              <div class="ic">BP</div>
+              <p class="m">Amazon</p>
+              <p class="c">Tiendas · Popular</p>
+              <p class="a num">−RD$3,890.00</p>
+            </div>
+            <div class="tx tx-old" style="top: 522px">
+              <div class="ic">BR</div>
+              <p class="m">Sunix</p>
+              <p class="c">Combustible · Banreservas</p>
+              <p class="a num">−RD$2,200.00</p>
+            </div>
+            <div class="tx tx-old" style="top: 638px">
+              <div class="ic">BP</div>
+              <p class="m">Helados Bon</p>
+              <p class="c">Comida · Popular</p>
+              <p class="a num">−RD$425.00</p>
+            </div>
+            <div id="notif">
+              <div class="ic"><img src="assets/icono-app.png" alt="" /></div>
+              <p class="t1">MisPesos · ahora</p>
+              <p class="t2">Banreservas: compra de RD$4,380.50 en Supermercado Nacional</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- S3 · 7.7–12.7 · bento en vivo 2×2 -->
+      <section id="s3" class="scene clip" data-start="7.6" data-duration="5.3" data-track-index="12">
+        <div id="b-paper">
+          <div class="glow"></div>
+          <p>Sin anotar <span class="acc">nada</span>.</p>
+        </div>
+        <div id="b-total" class="glass">
+          <p class="abs k" style="left: 34px; top: 30px">Total gastado · esta semana</p>
+          <p class="abs v num">RD$<span id="b-total-v">0.00</span></p>
+          <p class="abs d">+15% vs semana anterior</p>
+          <div class="bars">
+            <i style="height: 51%"></i><i style="height: 100%"></i><i style="height: 4%"></i
+            ><i style="height: 9%"></i><i style="height: 42%"></i><i style="height: 75%"></i
+            ><i class="t" style="height: 19%"></i>
+          </div>
+        </div>
+        <div id="b-sobre" class="glass">
+          <p class="abs k" style="left: 34px; top: 30px">Sobre · Gastos de casa</p>
+          <p class="abs v num">RD$<span id="b-sobre-v">12,000</span></p>
+          <p class="abs s">restante de RD$12,000</p>
+          <div class="track"><div class="fill"></div></div>
+        </div>
+        <p id="b-night-t" class="abs white">Ahorra<br />mientras <span class="acc">duermes</span>.</p>
+      </section>
+      <video id="coin-a" class="prop clip" src="assets/moneda-rd.webm" muted loop style="left: 600px; top: 560px; width: 380px" data-start="7.9" data-duration="5" data-track-index="13"></video>
+      <video id="coin-b" class="prop clip" src="assets/moneda-rd.webm" muted loop style="left: 700px; top: 850px; width: 220px" data-start="7.95" data-duration="4.95" data-track-index="14"></video>
+
+      <!-- S4 · 12.7–17.7 · la meta, de noche (pausa) -->
+      <section id="s4" class="scene clip" data-start="12.7" data-duration="5.2" data-track-index="15">
+        <div id="m-card" class="glass">
+          <p class="abs name">Vacaciones Punta Cana</p>
+          <p class="abs sub">Meta de ahorro · 3 aportes</p>
+          <p class="abs big num">RD$<span id="m-v">0</span></p>
+          <p class="abs of num">de RD$30,000</p>
+          <div class="track"><div class="fill"></div></div>
+          <p class="abs pct num"><span id="m-p">0</span>%</p>
+        </div>
+        <p id="s4-t" class="abs white">
+          <span class="w">Ahorra</span> <span class="w">sin</span> <span class="w acc">pensarlo.</span>
+        </p>
+      </section>
+
+      <!-- S5 · 17.7–22.7 · Nubi, tu agente -->
+      <section id="s5" class="scene clip" data-start="17.7" data-duration="5.2" data-track-index="16">
+        <p id="b1" class="bub me" style="top: 200px">¿Cuánto gasté en comida esta semana?</p>
+        <div id="typing"><i></i><i></i><i></i></div>
+        <p id="b2" class="bub nubi" style="top: 360px"><b>RD$1,405</b> en comida, el 9 % de tu gasto.</p>
+        <p id="b3" class="bub me" style="top: 560px">¿Y lo de Punta Cana?</p>
+        <p id="b4" class="bub nubi" style="top: 720px">Vas por el <b>48 %</b>. ¡Sigue así!</p>
+        <p id="n-label" class="abs white">Nubi · tu agente</p>
+      </section>
+      <video id="nubi5" class="prop clip" src="assets/nubi.webm" muted loop style="left: 120px; top: 200px; width: 720px" data-start="17.7" data-duration="5.2" data-track-index="17"></video>
+
+      <!-- S6 · 22.7–25.2 · todo en un bento -->
+      <section id="s6" class="scene clip" data-start="22.7" data-duration="2.9" data-track-index="18">
+        <p id="s6-t" class="abs white">Todo tu dinero, en la <span class="acc">nube</span>.</p>
+        <div id="bento">
+          <div id="f-total" class="cell">
+            <p class="k">Total gastado · 13–20 oct</p>
+            <p class="v num">RD$15,520.40</p>
+            <div class="bars">
+              <i style="height: 51%"></i><i style="height: 100%"></i><i style="height: 4%"></i
+              ><i style="height: 9%"></i><i style="height: 42%"></i><i style="height: 75%"></i
+              ><i class="t" style="height: 19%"></i>
+            </div>
+          </div>
+          <div id="f-meta" class="cell">
+            <p class="k">Vacaciones Punta Cana</p>
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(15,23,42,0.08)" stroke-width="10" />
+              <circle cx="50" cy="50" r="42" fill="none" stroke="#20d472" stroke-width="10" stroke-linecap="round" stroke-dasharray="263.9" stroke-dashoffset="137.2" transform="rotate(-90 50 50)" />
+            </svg>
+            <p class="pct num">48%</p>
+          </div>
+          <div id="f-nubi" class="cell">
+            <p class="k">Nubi · tu agente</p>
+            <img src="assets/nubi.png" alt="" />
+            <p class="t">«Comida: <b>RD$1,405</b> esta semana»</p>
+          </div>
+          <div id="f-sobres" class="cell">
+            <p class="k">Sobre · Gastos de casa</p>
+            <p class="v num">RD$7,300</p>
+            <img src="assets/moneda.png" alt="" />
+          </div>
+          <div id="f-cats" class="cell">
+            <p class="k">Categorizado solo</p>
+            <div class="tm">
+              <div style="background: #8b5cf6">Tiendas</div>
+              <div style="background: #38bdf8">Supermercado</div>
+              <div style="background: #f59e0b">Combustible</div>
+              <div style="background: #0ea5e9">Comida</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div id="s6-front" class="scene clip" data-start="22.7" data-duration="2.9" data-track-index="19"></div>
+
+      <!-- S7 · 25.2–30 · cierre sobre el mar de nubes -->
+      <section id="s7" class="scene clip" data-start="25.2" data-duration="4.8" data-track-index="20">
+        <p id="logo" class="abs white">Mis<em>Pesos</em></p>
+        <p id="url" class="abs">mispesos.app</p>
+      </section>
+      <video id="nubi7" class="prop clip" src="assets/nubi.webm" muted loop style="left: 610px; top: 40px; width: 700px" data-start="25.3" data-duration="4.7" data-track-index="21"></video>
+
+      <!-- Transiciones de nube (nubes de la landing) -->
+      <div id="wipe1" class="wipe clip" data-start="2.15" data-duration="1.2" data-track-index="25"><div class="fill"></div></div>
+      <div id="wipe2" class="wipe clip" data-start="17.15" data-duration="1.2" data-track-index="26"><div class="fill"></div></div>
+      <div id="wipe3" class="wipe clip" data-start="24.65" data-duration="1.2" data-track-index="27"><div class="fill"></div></div>
+
+      <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+        <defs id="cloud-defs"></defs>
+      </svg>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        const fmt = (v, dec = 0) =>
+          v.toLocaleString("en-US", { minimumFractionDigits: dec, maximumFractionDigits: dec });
+
+        // ── Nubes de la landing (semillas fijas = deterministas) ──
+        const defs = document.getElementById("cloud-defs");
+        const NS = "http://www.w3.org/2000/svg";
+        let fid = 0;
+        function filter(freq, octaves, seed, scale) {
+          const id = `cf-${fid++}`;
+          const f = document.createElementNS(NS, "filter");
+          f.setAttribute("id", id);
+          f.setAttribute("x", "-50%");
+          f.setAttribute("y", "-50%");
+          f.setAttribute("width", "200%");
+          f.setAttribute("height", "200%");
+          const t = document.createElementNS(NS, "feTurbulence");
+          t.setAttribute("type", "fractalNoise");
+          t.setAttribute("baseFrequency", freq);
+          t.setAttribute("numOctaves", octaves);
+          t.setAttribute("seed", seed);
+          const d = document.createElementNS(NS, "feDisplacementMap");
+          d.setAttribute("in", "SourceGraphic");
+          d.setAttribute("scale", scale);
+          f.append(t, d);
+          defs.append(f);
+          return `url(#${id})`;
+        }
+        function cloud(parent, { x, y, scale, seed, blur, opacity = 1 }) {
+          const el = document.createElement("div");
+          el.className = "cloud";
+          el.style.left = `${x}px`;
+          el.style.top = `${y}px`;
+          el.style.opacity = opacity;
+          el.style.filter = `blur(${blur}px)`;
+          gsap.set(el, { scale });
+          for (const [cls, oct, sc, fr] of [
+            ["b", 5, 120, 0.011],
+            ["k2", 3, 120, 0.011],
+            ["m", 3, 120, 0.011],
+            ["f", 4, 50, 0.009],
+          ]) {
+            const i = document.createElement("i");
+            i.className = cls;
+            i.style.filter = filter(fr, oct, seed, sc);
+            el.append(i);
+          }
+          parent.append(el);
+          return el;
+        }
+
+        // Transición de nube: las nubes suben y crecen hasta cubrir, el
+        // blanco tapa el corte en `at`, y siguen hacia arriba revelando.
+        function cloudWipe(id, at, seedBase) {
+          const wrap = document.getElementById(id);
+          const spots = [
+            [-560, 120, 3.0],
+            [240, 160, 3.4],
+            [1060, 120, 3.2],
+            [-300, 480, 3.1],
+            [600, 520, 3.6],
+            [1320, 480, 3.0],
+          ];
+          spots.forEach(([x, y, s], i) => {
+            const el = cloud(wrap, { x, y, scale: s * 0.6, seed: seedBase + i * 97, blur: 10 });
+            const dx = (i % 2 ? 1 : -1) * 60;
+            tl.fromTo(
+              el,
+              { y: 700, scale: s * 0.5, opacity: 0 },
+              { y: 0, x: dx, scale: s, opacity: 1, duration: 0.55, ease: "power3.out", immediateRender: false },
+              at - 0.55,
+            );
+            tl.to(el, { y: -1400, x: dx * 3, scale: s * 1.2, duration: 0.7, ease: "power2.in" }, at + 0.05);
+          });
+          const fill = wrap.querySelector(".fill");
+          tl.to(fill, { opacity: 0.9, duration: 0.16, ease: "power1.in" }, at - 0.14);
+          tl.to(fill, { opacity: 0, duration: 0.35, ease: "power1.out" }, at + 0.04);
+        }
+        // Lo que tapa cada nube desaparece bajo ella (no asoma al revelar).
+        tl.to("#s1", { opacity: 0, duration: 0.15 }, 2.62);
+        tl.to("#s4", { opacity: 0, duration: 0.15 }, 17.62);
+        tl.to("#s6", { opacity: 0, duration: 0.15 }, 25.12);
+        cloudWipe("wipe1", 2.7, 4100);
+        cloudWipe("wipe2", 17.7, 5200);
+        cloudWipe("wipe3", 25.2, 6300);
+
+        const words = (sel, at, step = 0.1) =>
+          tl.from(sel, { opacity: 0, y: 30, filter: "blur(14px)", duration: 0.75, ease: "expo.out", stagger: step }, at);
+
+        // ── S1 · mar de nubes con empuje de cámara ──
+        tl.fromTo("#v1", { scale: 1 }, { scale: 1.14, duration: 3.2, ease: "none" }, 0);
+        words("#s1-t .w", 0.25, 0.14);
+
+        // ── S2 · móvil inclinado en 3D, a la deriva ──
+        tl.fromTo("#v2", { scale: 1.12 }, { scale: 1, duration: 5.5, ease: "none" }, 2.6);
+        gsap.set("#phone", { transformPerspective: 1800, rotationY: -26, rotationX: 14, rotationZ: 7 });
+        tl.from("#phone", { y: 700, rotationX: 40, duration: 1.2, ease: "expo.out" }, 2.75);
+        tl.to("#phone", { rotationY: -16, rotationZ: 4, y: -30, duration: 4, ease: "sine.inOut" }, 3.9);
+        words("#s2-t .w", 3.1, 0.12);
+        tl.from("#notif", { y: -160, opacity: 0, duration: 0.7, ease: "back.out(1.4)" }, 3.6);
+        tl.to("#notif", { y: -160, opacity: 0, duration: 0.45, ease: "power2.in" }, 4.75);
+        tl.from(".tx-old", { y: -116, duration: 0.55, ease: "power3.out" }, 4.75);
+        tl.from("#tx-new", { scale: 0.9, opacity: 0, duration: 0.55, ease: "back.out(1.6)" }, 4.85);
+        tl.to("#tag-reading", { opacity: 0, duration: 0.2 }, 5.25);
+        tl.fromTo("#tag-done", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2.2)", immediateRender: true }, 5.25);
+        // salida: zoom a través del móvil
+        tl.to("#s2", { scale: 1.35, opacity: 0, filter: "blur(18px)", duration: 0.6, ease: "power2.in" }, 7.25);
+        tl.to("#v2", { opacity: 0, duration: 0.5 }, 7.5);
+
+        // ── S3 · bento en vivo 2×2 (cada celda, su cielo) ──
+        const CELL = { tl: [40, 40], tr: [972, 40], bl: [40, 552], br: [972, 552] };
+        const W = 908;
+        const H = 488;
+        const inset = ([x, y]) => `inset(${y}px ${1920 - x - W}px ${1080 - y - H}px ${x}px round 32px)`;
+        gsap.set("#v3a", { clipPath: inset(CELL.tl) });
+        gsap.set("#v3b", { clipPath: inset(CELL.bl) });
+        gsap.set("#v3c", { clipPath: inset(CELL.br) });
+        tl.from(["#v3a", "#b-paper", "#v3b", "#v3c"], { scale: 0.86, opacity: 0, duration: 0.8, ease: "expo.out", stagger: 0.12 }, 7.6);
+        tl.from("#b-total", { y: 60, opacity: 0, duration: 0.8, ease: "expo.out" }, 8.0);
+        const total = { v: 0 };
+        const totalEl = document.getElementById("b-total-v");
+        const showTotal = () => (totalEl.textContent = fmt(total.v, 2));
+        showTotal();
+        tl.to(total, { v: 15520.4, duration: 1.6, ease: "power2.out", onUpdate: showTotal }, 8.3);
+        tl.from("#b-total .bars i", { scaleY: 0, duration: 0.7, ease: "power3.out", stagger: 0.07 }, 8.4);
+        tl.from("#b-paper p", { opacity: 0, y: 26, filter: "blur(12px)", duration: 0.7, ease: "expo.out" }, 8.2);
+        tl.fromTo("#b-paper .glow", { scale: 0.2, opacity: 0 }, { scale: 2.4, opacity: 1, duration: 1.2, ease: "expo.out", immediateRender: true }, 8.5);
+        tl.from("#b-sobre", { y: 60, opacity: 0, duration: 0.8, ease: "expo.out" }, 8.3);
+        tl.fromTo("#b-sobre .fill", { scaleX: 1 }, { scaleX: 0.61, duration: 1.4, ease: "power2.inOut", immediateRender: true }, 9.2);
+        const sobre = { v: 12000 };
+        const sobreEl = document.getElementById("b-sobre-v");
+        tl.to(sobre, { v: 7300, duration: 1.4, ease: "power2.inOut", onUpdate: () => (sobreEl.textContent = fmt(sobre.v)) }, 9.2);
+        ["#coin-a", "#coin-b"].forEach((sel, i) => {
+          tl.from(sel, { y: 260, rotation: -20, scale: 0.5, opacity: 0, duration: 0.9, ease: "back.out(1.4)" }, 8.6 + i * 0.2);
+          tl.to(sel, { y: -18 - i * 8, rotation: 5, duration: 1.6, ease: "sine.inOut", yoyo: true, repeat: 1 }, 9.5 + i * 0.2);
+        });
+        words("#b-night-t", 8.9);
+        tl.fromTo(["#v3a", "#v3b"], { scale: 1.08 }, { scale: 1, duration: 5.2, ease: "none", immediateRender: false }, 7.7);
+        // la celda de noche se expande a pantalla completa
+        tl.to(["#s3", "#v3a", "#v3b", "#coin-a", "#coin-b"], { opacity: 0, duration: 0.5, ease: "power2.in" }, 12.3);
+        tl.to("#v3c", { clipPath: "inset(0px 0px 0px 0px round 0px)", duration: 1.1, ease: "power3.inOut" }, 12.2);
+
+        // ── S4 · meta, de noche: llena y se queda quieta ──
+        tl.from("#m-card", { y: 80, opacity: 0, duration: 0.9, ease: "expo.out" }, 12.9);
+        const meta = { v: 0 };
+        const mV = document.getElementById("m-v");
+        const mP = document.getElementById("m-p");
+        const showMeta = () => {
+          mV.textContent = fmt(meta.v);
+          mP.textContent = String(Math.round((meta.v / 30000) * 100));
+        };
+        showMeta();
+        tl.to(meta, { v: 14500, duration: 1.8, ease: "power2.out", onUpdate: showMeta }, 13.6);
+        tl.fromTo("#m-card .fill", { scaleX: 0 }, { scaleX: 14500 / 30000, duration: 1.8, ease: "power2.out", immediateRender: true }, 13.6);
+        words("#s4-t .w", 15.2, 0.14);
+        // 15.9–17.2: quieto (pausa en el beneficio clave)
+
+        // ── S5 · Nubi conversa (iMessage sobre el cielo) ──
+        tl.fromTo("#v5", { scale: 1.1 }, { scale: 1, duration: 5.4, ease: "none" }, 17.6);
+        tl.from("#nubi5", { x: -200, opacity: 0, duration: 1, ease: "expo.out" }, 17.8);
+        tl.from("#n-label", { opacity: 0, y: 16, duration: 0.6, ease: "expo.out" }, 18.2);
+        const bubble = (sel, at) => tl.from(sel, { opacity: 0, y: 30, scale: 0.85, transformOrigin: "50% 100%", duration: 0.5, ease: "back.out(1.7)" }, at);
+        bubble("#b1", 18.5);
+        tl.fromTo("#typing", { opacity: 0 }, { opacity: 1, duration: 0.2, immediateRender: true }, 19.2);
+        tl.fromTo("#typing i", { y: 0 }, { y: -8, duration: 0.25, ease: "sine.inOut", yoyo: true, repeat: 3, stagger: 0.1 }, 19.2);
+        tl.to("#typing", { opacity: 0, duration: 0.15 }, 19.95);
+        bubble("#b2", 20.0);
+        bubble("#b3", 20.9);
+        bubble("#b4", 21.6);
+        tl.to(["#s5", "#nubi5"], { opacity: 0, scale: 0.92, filter: "blur(12px)", duration: 0.5, ease: "power2.in" }, 22.45);
+
+        // ── S6 · bento completo, cámara que se aleja entre nubes ──
+        const front = document.getElementById("s6-front");
+        const fronts = [
+          { x: -300, y: 760, scale: 2.4, seed: 8517, blur: 9 },
+          { x: 1300, y: 800, scale: 2.1, seed: 3141, blur: 9 },
+          { x: 600, y: 860, scale: 1.8, seed: 2718, blur: 8 },
+        ].map((c) => cloud(front, c));
+        fronts.forEach((el, i) => tl.fromTo(el, { x: 0 }, { x: 120 + i * 60, duration: 2.9, ease: "none", immediateRender: false }, 22.7));
+        tl.fromTo("#bento", { scale: 1.25 }, { scale: 1, duration: 2.4, ease: "power3.out", immediateRender: false }, 22.7);
+        tl.from("#bento .cell", { opacity: 0, y: 60, duration: 0.7, ease: "expo.out", stagger: 0.08 }, 22.75);
+        tl.from("#s6-t", { opacity: 0, y: 26, filter: "blur(12px)", duration: 0.7, ease: "expo.out" }, 23.2);
+
+        // ── S7 · cierre quieto ──
+        tl.fromTo("#v7", { scale: 1.06 }, { scale: 1, duration: 4.9, ease: "power2.out" }, 25.1);
+        tl.from("#nubi7", { y: 160, scale: 0.7, opacity: 0, duration: 1.1, ease: "back.out(1.5)" }, 25.35);
+        tl.from("#logo", { y: 40, opacity: 0, filter: "blur(12px)", duration: 0.8, ease: "expo.out" }, 25.9);
+        tl.from("#url", { y: 20, opacity: 0, duration: 0.6, ease: "expo.out" }, 26.3);
+        tl.set({}, {}, 30);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["mispesos-v2"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

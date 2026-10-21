@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=block"
+    />
+    <title>MisPesos · promo de marca</title>
+    <style>
+      /* Criterio promo-marca: 3 colores (fondo, tinta, verde de marca).
+         El azul #2177ff solo vive dentro de la UI de la app. */
+      :root {
+        --bg: #f1f6fa;
+        --ink: #0f172a;
+        --green: #20d472;
+        --app-blue: #2177ff;
+        --muted: #64748b;
+      }
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Inter, sans-serif;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+      }
+      .line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0;
+        text-align: center;
+        font-weight: 700;
+        letter-spacing: -1.5px;
+      }
+      .line span {
+        display: inline-block;
+        margin: 0 7px;
+      }
+      .card {
+        position: absolute;
+        background: #fff;
+        border-radius: 32px;
+        box-shadow: 0 30px 80px rgba(15, 23, 42, 0.08);
+      }
+      .num {
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ── S1 gancho ── */
+      #s1-q {
+        top: 486px;
+        font-size: 64px;
+      }
+
+      /* ── S2 notificación + curva ── */
+      #s2-card {
+        left: 510px;
+        top: 250px;
+        width: 900px;
+        height: 150px;
+      }
+      #s2-card .ico {
+        position: absolute;
+        left: 34px;
+        top: 37px;
+        width: 76px;
+        height: 76px;
+        border-radius: 22px;
+        background: #e8f0ff;
+        color: var(--app-blue);
+        font: 800 26px/76px Inter;
+        text-align: center;
+      }
+      #s2-card .t1 {
+        position: absolute;
+        left: 136px;
+        top: 38px;
+        margin: 0;
+        font: 700 24px Inter;
+      }
+      #s2-card .t2 {
+        position: absolute;
+        left: 136px;
+        top: 76px;
+        margin: 0;
+        font: 500 20px Inter;
+        color: var(--muted);
+      }
+      #s2-card .amt {
+        position: absolute;
+        right: 38px;
+        top: 52px;
+        margin: 0;
+        font: 800 34px Inter;
+      }
+      #s2-chip {
+        position: absolute;
+        left: 1206px;
+        top: 372px;
+        padding: 10px 22px;
+        border-radius: 999px;
+        background: var(--green);
+        color: #fff;
+        font: 700 20px Inter;
+      }
+      #s2-track {
+        position: absolute;
+        inset: 0;
+      }
+      .state {
+        position: absolute;
+        margin: 0;
+        font: 600 26px Inter;
+        color: var(--ink);
+        white-space: nowrap;
+        transform: translate(-50%, -64px);
+      }
+      #s2-line {
+        top: 930px;
+        font-size: 44px;
+      }
+
+      /* ── S3 móvil + cámara ── */
+      #s3-camera {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        transform-origin: 0 0;
+      }
+      #phone {
+        position: absolute;
+        left: 745px;
+        top: 90px;
+        width: 430px;
+        height: 900px;
+        border-radius: 64px;
+        background: #0b0b0f;
+        box-shadow: 0 50px 120px rgba(15, 23, 42, 0.18);
+      }
+      #screen {
+        position: absolute;
+        inset: 12px;
+        border-radius: 52px;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      #screen .abs {
+        position: absolute;
+        margin: 0;
+      }
+      #m-title {
+        left: 24px;
+        top: 58px;
+        font: 800 27px Inter;
+        letter-spacing: -0.5px;
+      }
+      #m-range {
+        left: 24px;
+        top: 96px;
+        font: 500 15px Inter;
+        color: var(--muted);
+      }
+      #m-total {
+        left: 14px;
+        top: 136px;
+        width: 378px;
+        height: 300px;
+        border-radius: 26px;
+        background: #fff;
+      }
+      #m-total .k {
+        left: 24px;
+        top: 26px;
+        font: 500 15px Inter;
+      }
+      #m-total .v {
+        left: 24px;
+        top: 50px;
+        font: 800 40px Inter;
+        letter-spacing: -1px;
+      }
+      #m-total .d {
+        left: 24px;
+        top: 104px;
+        font: 600 14px Inter;
+        color: #ef4444;
+      }
+      #bars {
+        position: absolute;
+        left: 24px;
+        right: 24px;
+        bottom: 26px;
+        height: 130px;
+        display: flex;
+        align-items: flex-end;
+        gap: 14px;
+      }
+      #bars i {
+        flex: 1;
+        border-radius: 8px;
+        background: #e5e9f0;
+        transform-origin: 50% 100%;
+      }
+      #bars i.today {
+        background: var(--app-blue);
+      }
+      #m-cats {
+        left: 14px;
+        top: 452px;
+        width: 378px;
+        height: 400px;
+        border-radius: 26px;
+        background: #fff;
+      }
+      #m-cats .k {
+        left: 24px;
+        top: 24px;
+        font: 700 18px Inter;
+      }
+      .blk {
+        position: absolute;
+        border-radius: 12px;
+        color: #fff;
+        font: 700 14px/1.3 Inter;
+        padding: 12px;
+        box-sizing: border-box;
+        transform-origin: 0 0;
+      }
+
+      /* ── S4 sobre ── */
+      #s4-line {
+        top: 150px;
+        font-size: 52px;
+      }
+      #s4-card {
+        left: 610px;
+        top: 300px;
+        width: 700px;
+        height: 560px;
+      }
+      #s4-card .abs {
+        position: absolute;
+        margin: 0;
+      }
+      #s4-card .name {
+        left: 48px;
+        top: 46px;
+        font: 700 30px Inter;
+      }
+      #s4-card .rk {
+        right: 48px;
+        top: 44px;
+        font: 600 15px Inter;
+        letter-spacing: 1.5px;
+        color: var(--muted);
+        text-align: right;
+      }
+      #s4-card .rv {
+        right: 48px;
+        top: 68px;
+        font: 800 30px Inter;
+        color: var(--app-blue);
+      }
+      #s4-card .ak {
+        left: 48px;
+        top: 126px;
+        font: 600 15px Inter;
+        letter-spacing: 1.5px;
+        color: var(--muted);
+      }
+      #s4-card .av {
+        left: 48px;
+        top: 150px;
+        font: 800 72px Inter;
+        letter-spacing: -2px;
+      }
+      .track {
+        position: absolute;
+        height: 12px;
+        border-radius: 6px;
+        background: #e5e9f0;
+        overflow: hidden;
+      }
+      .fill {
+        position: absolute;
+        inset: 0;
+        border-radius: 6px;
+        transform-origin: 0 50%;
+      }
+      #s4-bar {
+        left: 48px;
+        right: 48px;
+        top: 260px;
+      }
+      #s4-bar .fill {
+        background: var(--app-blue);
+      }
+      .row {
+        position: absolute;
+        left: 48px;
+        right: 48px;
+        height: 52px;
+        border-top: 1px solid #eef1f5;
+        font: 500 22px/52px Inter;
+      }
+      .row b {
+        position: absolute;
+        right: 0;
+        font-weight: 700;
+      }
+      .prop {
+        position: absolute;
+        filter: drop-shadow(0 30px 40px rgba(15, 23, 42, 0.18));
+      }
+
+      /* ── S5 meta ── */
+      #s5-card {
+        left: 460px;
+        top: 300px;
+        width: 1000px;
+        height: 380px;
+      }
+      #s5-card .abs {
+        position: absolute;
+        margin: 0;
+      }
+      #s5-card .name {
+        left: 60px;
+        top: 56px;
+        font: 700 34px Inter;
+      }
+      #s5-card .sub {
+        left: 60px;
+        top: 104px;
+        font: 500 20px Inter;
+        color: var(--muted);
+      }
+      #s5-card .big {
+        left: 60px;
+        top: 150px;
+        font: 900 96px Inter;
+        letter-spacing: -3px;
+      }
+      #s5-card .of {
+        right: 60px;
+        top: 196px;
+        font: 600 28px Inter;
+        color: var(--muted);
+      }
+      #s5-bar {
+        left: 60px;
+        right: 60px;
+        top: 290px;
+        height: 18px;
+        border-radius: 9px;
+      }
+      #s5-bar .fill {
+        background: var(--green);
+        border-radius: 9px;
+      }
+      #s5-pct {
+        right: 60px;
+        top: 318px;
+        font: 700 20px Inter;
+        color: var(--green);
+      }
+      #s5-line {
+        top: 800px;
+        font-size: 52px;
+      }
+
+      /* ── S6 bancos ── */
+      #s6-line {
+        top: 300px;
+        font-size: 60px;
+      }
+      #s6-chips {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 470px;
+        display: flex;
+        justify-content: center;
+        gap: 22px;
+      }
+      #s6-chips p {
+        margin: 0;
+        padding: 20px 34px;
+        border-radius: 999px;
+        background: #fff;
+        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+        font: 700 28px Inter;
+      }
+      #s6-chips p::before {
+        content: "";
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        margin-right: 14px;
+        border-radius: 50%;
+        background: var(--green);
+        vertical-align: 3px;
+      }
+
+      /* ── S7 cierre ── */
+      #s7-logo {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 640px;
+        margin: 0;
+        text-align: center;
+        font: 900 112px Inter;
+        letter-spacing: -4px;
+      }
+      #s7-logo em {
+        font-style: normal;
+        color: var(--green);
+      }
+      #s7-url {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 800px;
+        margin: 0;
+        text-align: center;
+        font: 600 30px Inter;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="mispesos-promo"
+      data-start="0"
+      data-width="1920"
+      data-height="1080"
+      data-duration="30"
+    >
+      <audio
+        id="music"
+        src="audio/refreshed_30s.mp3"
+        data-start="0"
+        data-duration="30"
+        data-track-index="9"
+      ></audio>
+
+      <!-- S1 0–3.2 · gancho -->
+      <section id="s1" class="scene clip" data-start="0" data-duration="3.2" data-track-index="0">
+        <p id="s1-q" class="line">
+          <span>¿En</span><span>qué</span><span>se</span><span>te</span><span>fue</span
+          ><span>el</span><span>sueldo?</span>
+        </p>
+      </section>
+
+      <!-- S2 2.7–8.2 · el banco avisa, MisPesos lo anota -->
+      <section id="s2" class="scene clip" data-start="2.7" data-duration="5.5" data-track-index="1">
+        <svg id="s2-track" viewBox="0 0 1920 1080">
+          <defs>
+            <filter id="glow" x="-20%" y="-50%" width="140%" height="200%">
+              <feGaussianBlur stdDeviation="16" />
+            </filter>
+          </defs>
+          <path
+            id="s2-halo"
+            d="M 300 760 C 620 600, 860 900, 1180 720 S 1560 620, 1640 700"
+            fill="none"
+            stroke="#20d472"
+            stroke-width="34"
+            filter="url(#glow)"
+            opacity="0.55"
+          />
+          <path
+            id="s2-path"
+            d="M 300 760 C 620 600, 860 900, 1180 720 S 1560 620, 1640 700"
+            fill="none"
+            stroke="#20d472"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+          <circle id="s2-dot" r="11" fill="#0f172a" />
+        </svg>
+        <p id="st1" class="state" data-at="0.04">Correo del banco</p>
+        <p id="st2" class="state" data-at="0.5">Leído</p>
+        <p id="st3" class="state" data-at="0.96">Categorizado ✓</p>
+        <div id="s2-card" class="card">
+          <div class="ico">BR</div>
+          <p class="t1">Banreservas · Notificación</p>
+          <p class="t2">Supermercado Nacional · 9:41</p>
+          <p class="amt num">−RD$4,380.50</p>
+        </div>
+        <p id="s2-chip">✓ Supermercado</p>
+        <p id="s2-line" class="line">
+          <span>MisPesos</span><span>lo</span><span>anota</span><span>solo.</span>
+        </p>
+      </section>
+
+      <!-- S3 7.7–13.2 · tu semana, de un vistazo (cámara sobre la app) -->
+      <section id="s3" class="scene clip" data-start="7.7" data-duration="5.5" data-track-index="0">
+        <div id="s3-camera">
+          <div id="phone">
+            <div id="screen">
+              <p id="m-title" class="abs">Resumen Financiero</p>
+              <p id="m-range" class="abs">13 oct - 20 oct</p>
+              <div id="m-total" class="abs">
+                <p class="abs k">Total Gastado</p>
+                <p class="abs v num">RD$ <span id="m-total-v">0.00</span></p>
+                <p class="abs d">+15% vs semana anterior</p>
+                <div id="bars">
+                  <i style="height: 51%"></i><i style="height: 100%"></i><i style="height: 3%"></i
+                  ><i style="height: 8%"></i><i style="height: 42%"></i><i style="height: 75%"></i
+                  ><i class="today" style="height: 19%"></i>
+                </div>
+              </div>
+              <div id="m-cats" class="abs">
+                <p class="abs k">Gastos por Categoría</p>
+                <div class="blk" style="left: 20px; top: 70px; width: 190px; height: 170px; background: #8b5cf6">
+                  Tiendas<br />RD$6,565
+                </div>
+                <div class="blk" style="left: 216px; top: 70px; width: 142px; height: 170px; background: #38bdf8">
+                  Super­mercado<br />RD$5,210
+                </div>
+                <div class="blk" style="left: 20px; top: 246px; width: 160px; height: 130px; background: #f59e0b">
+                  Combustible<br />RD$2,200
+                </div>
+                <div class="blk" style="left: 186px; top: 246px; width: 122px; height: 130px; background: #0ea5e9">
+                  Comida<br />RD$1,405
+                </div>
+                <div class="blk" style="left: 314px; top: 246px; width: 44px; height: 130px; background: #94a3b8"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- S4 12.7–18.2 · tu efectivo, en sobres (+ monedas 3D) -->
+      <section id="s4" class="scene clip" data-start="12.7" data-duration="5.5" data-track-index="1">
+        <p id="s4-line" class="line"><span>Tu</span><span>efectivo,</span><span>en</span><span>sobres.</span></p>
+        <div id="s4-card" class="card">
+          <p class="abs name">Gastos de casa</p>
+          <p class="abs rk">RESTANTE</p>
+          <p class="abs rv num">RD$<span id="s4-rest">12,000</span></p>
+          <p class="abs ak">TOTAL ASIGNADO</p>
+          <p class="abs av num">RD$12,000</p>
+          <div id="s4-bar" class="track"><div class="fill"></div></div>
+          <div class="row" style="top: 312px">agua<b class="num">RD$100</b></div>
+          <div class="row" style="top: 364px">gas<b class="num">RD$1,450</b></div>
+          <div class="row" style="top: 416px">metro<b class="num">RD$800</b></div>
+          <div class="row" style="top: 468px">colmado<b class="num">RD$2,350</b></div>
+        </div>
+      </section>
+      <video
+        id="coin-a"
+        class="prop clip"
+        src="assets/moneda-rd.webm"
+        muted
+        loop
+        style="left: 330px; top: 380px; width: 320px"
+        data-start="12.7"
+        data-duration="5.5"
+        data-track-index="2"
+      ></video>
+      <video
+        id="coin-b"
+        class="prop clip"
+        src="assets/moneda-rd.webm"
+        muted
+        loop
+        style="left: 1300px; top: 560px; width: 360px"
+        data-start="12.75"
+        data-duration="5.45"
+        data-track-index="3"
+      ></video>
+      <video
+        id="coin-c"
+        class="prop clip"
+        src="assets/moneda-rd.webm"
+        muted
+        loop
+        style="left: 1360px; top: 220px; width: 200px"
+        data-start="12.8"
+        data-duration="5.4"
+        data-track-index="4"
+      ></video>
+
+      <!-- S5 17.7–23.2 · beneficio clave: la meta (pausa) -->
+      <section id="s5" class="scene clip" data-start="17.7" data-duration="5.5" data-track-index="0">
+        <div id="s5-card" class="card">
+          <p class="abs name">Vacaciones Punta Cana</p>
+          <p class="abs sub">Meta de ahorro · 3 aportes</p>
+          <p class="abs big num">RD$<span id="s5-v">0</span></p>
+          <p class="abs of num">de RD$30,000</p>
+          <div id="s5-bar" class="abs track"><div class="fill"></div></div>
+          <p id="s5-pct" class="abs num"><span id="s5-p">0</span>%</p>
+        </div>
+        <p id="s5-line" class="line"><span>Ahorra</span><span>sin</span><span>pensarlo.</span></p>
+      </section>
+
+      <!-- S6 22.7–25.7 · todos tus bancos (+ tarjeta 3D) -->
+      <section id="s6" class="scene clip" data-start="22.7" data-duration="3" data-track-index="1">
+        <p id="s6-line" class="line">
+          <span>Todos</span><span>tus</span><span>bancos.</span><span>Una</span><span>sola</span><span>vista.</span>
+        </p>
+        <div id="s6-chips">
+          <p>Banreservas</p>
+          <p>Popular</p>
+          <p>BHD</p>
+          <p>Qik</p>
+        </div>
+      </section>
+      <img
+        id="card3d"
+        class="prop clip"
+        src="assets/tarjeta.png"
+        alt=""
+        style="left: 1330px; top: 610px; width: 470px"
+        data-start="22.7"
+        data-duration="3"
+        data-track-index="5"
+      />
+
+      <!-- S7 25.2–30 · cierre: Nubi 3D + logo, quieto -->
+      <section id="s7" class="scene clip" data-start="25.2" data-duration="4.8" data-track-index="0">
+        <p id="s7-logo">Mis<em>Pesos</em></p>
+        <p id="s7-url">mispesos.app</p>
+      </section>
+      <video
+        id="nubi"
+        class="prop clip"
+        src="assets/nubi.webm"
+        muted
+        loop
+        style="left: 610px; top: 40px; width: 700px"
+        data-start="25.2"
+        data-duration="4.8"
+        data-track-index="6"
+      ></video>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        const IN = { opacity: 0, y: 50, filter: "blur(12px)", duration: 0.7, ease: "expo.out" };
+        const OUT = { opacity: 0, y: -50, filter: "blur(12px)", duration: 0.5, ease: "power2.in" };
+        const words = (sel, at, step = 0.09) =>
+          tl.from(`${sel} span`, { ...IN, y: 26, stagger: step }, at);
+        const sceneOut = (sel, at) => tl.to(sel, OUT, at);
+        const fmt = (v, dec = 0) =>
+          v.toLocaleString("en-US", { minimumFractionDigits: dec, maximumFractionDigits: dec });
+
+        // S1 · gancho, palabra a palabra (0–2.7)
+        words("#s1-q", 0.3, 0.1);
+        sceneOut("#s1", 2.6);
+
+        // S2 · notificación → curva con estados (2.7–7.7)
+        tl.from("#s2-card", { y: -40, scale: 0.9, opacity: 0, duration: 0.8, ease: "back.out(1.4)" }, 2.9);
+        const path = document.getElementById("s2-path");
+        const halo = document.getElementById("s2-halo");
+        const dot = document.getElementById("s2-dot");
+        const len = path.getTotalLength();
+        for (const p of [path, halo]) {
+          p.style.strokeDasharray = `${len}`;
+          p.style.strokeDashoffset = `${len}`;
+        }
+        const state = { p: 0 };
+        const place = () => {
+          const pt = path.getPointAtLength(len * state.p);
+          dot.setAttribute("cx", pt.x);
+          dot.setAttribute("cy", pt.y);
+        };
+        place();
+        const T0 = 3.7;
+        const TRAVEL = 2.5;
+        const ease = gsap.parseEase("power2.inOut");
+        const timeAt = (at) => {
+          let lo = 0;
+          let hi = 1;
+          for (let i = 0; i < 30; i++) {
+            const mid = (lo + hi) / 2;
+            if (ease(mid) < at) lo = mid;
+            else hi = mid;
+          }
+          return T0 + TRAVEL * lo;
+        };
+        tl.from(dot, { opacity: 0, duration: 0.3 }, T0 - 0.2);
+        tl.to([path, halo], { strokeDashoffset: 0, duration: TRAVEL, ease: "power2.inOut" }, T0);
+        tl.to(state, { p: 1, duration: TRAVEL, ease: "power2.inOut", onUpdate: place }, T0);
+        for (const el of document.querySelectorAll(".state")) {
+          const at = Number(el.dataset.at);
+          const pt = path.getPointAtLength(len * at);
+          el.style.left = `${pt.x}px`;
+          el.style.top = `${pt.y}px`;
+          tl.from(el, { opacity: 0, y: 10, duration: 0.4, ease: "power3.out" }, timeAt(at));
+        }
+        tl.from("#s2-chip", { scale: 0.4, opacity: 0, duration: 0.5, ease: "back.out(2)" }, timeAt(0.96) + 0.1);
+        words("#s2-line", 6.45);
+        sceneOut("#s2", 7.6);
+
+        // S3 · cámara sobre la app (7.7–12.7)
+        const focus = (fx, fy, s) => ({ x: 960 - fx * s, y: 540 - fy * s, scale: s });
+        const SCREEN = { x: 757, y: 102 };
+        tl.set("#s3-camera", { x: 0, y: 0, scale: 1 }, 7.7);
+        tl.from("#phone", { y: 160, opacity: 0, duration: 1, ease: "expo.out" }, 7.75);
+        tl.to("#s3-camera", { ...focus(SCREEN.x + 203, SCREEN.y + 286, 1.85), duration: 1, ease: "power3.inOut" }, 8.5);
+        const total = { v: 0 };
+        const totalEl = document.getElementById("m-total-v");
+        const showTotal = () => (totalEl.textContent = fmt(total.v, 2));
+        showTotal();
+        tl.to(total, { v: 15520.4, duration: 1.3, ease: "power2.out", onUpdate: showTotal }, 9.1);
+        tl.from("#bars i", { scaleY: 0, duration: 0.7, ease: "power3.out", stagger: 0.07 }, 9.15);
+        tl.to("#s3-camera", { ...focus(SCREEN.x + 203, SCREEN.y + 652, 1.6), duration: 1, ease: "power3.inOut" }, 10.7);
+        tl.from(".blk", { scale: 0.6, opacity: 0, duration: 0.6, ease: "back.out(1.4)", stagger: 0.08 }, 11.2);
+        sceneOut("#s3", 12.6);
+
+        // S4 · sobre + monedas 3D (12.7–17.7)
+        words("#s4-line", 12.8);
+        tl.from("#s4-card", { y: 80, opacity: 0, duration: 0.9, ease: "expo.out" }, 12.95);
+        tl.fromTo("#s4-bar .fill", { scaleX: 0 }, { scaleX: 0.39, duration: 1.2, ease: "power2.inOut", immediateRender: true }, 13.9);
+        const rest = { v: 12000 };
+        const restEl = document.getElementById("s4-rest");
+        tl.to(rest, { v: 7300, duration: 1.2, ease: "power2.inOut", onUpdate: () => (restEl.textContent = fmt(rest.v)) }, 13.9);
+        tl.from("#s4-card .row", { opacity: 0, x: -20, duration: 0.45, ease: "power3.out", stagger: 0.12 }, 14.1);
+        gsap.utils.toArray(["#coin-a", "#coin-b", "#coin-c"]).forEach((el, i) => {
+          const at = 13.3 + i * 0.18;
+          tl.from(el, { y: 200, rotation: -25, scale: 0.5, opacity: 0, duration: 0.9, ease: "back.out(1.4)" }, at);
+          tl.to(el, { y: -16 - i * 6, rotation: 4 - i * 3, duration: 1.4, ease: "sine.inOut", yoyo: true, repeat: 1 }, at + 0.9);
+        });
+        sceneOut(["#s4", "#coin-a", "#coin-b", "#coin-c"], 17.6);
+
+        // S5 · meta: llena y se queda quieta (17.7–22.7)
+        tl.from("#s5-card", { y: 80, opacity: 0, duration: 0.9, ease: "expo.out" }, 17.8);
+        const meta = { v: 0 };
+        const metaEl = document.getElementById("s5-v");
+        const pctEl = document.getElementById("s5-p");
+        const showMeta = () => {
+          metaEl.textContent = fmt(meta.v);
+          pctEl.textContent = String(Math.round((meta.v / 30000) * 100));
+        };
+        showMeta();
+        tl.to(meta, { v: 14500, duration: 1.6, ease: "power2.out", onUpdate: showMeta }, 18.5);
+        tl.fromTo("#s5-bar .fill", { scaleX: 0 }, { scaleX: 14500 / 30000, duration: 1.6, ease: "power2.out", immediateRender: true }, 18.5);
+        words("#s5-line", 19.9, 0.12);
+        // 20.4–22.4: quieto (pausa en el beneficio clave)
+        sceneOut("#s5", 22.6);
+
+        // S6 · bancos + tarjeta 3D (22.7–25.2)
+        words("#s6-line", 22.75, 0.07);
+        tl.from("#s6-chips p", { y: 30, opacity: 0, duration: 0.5, ease: "back.out(1.6)", stagger: 0.09 }, 23.2);
+        tl.from("#card3d", { y: 220, rotation: 18, scale: 0.6, opacity: 0, duration: 0.9, ease: "back.out(1.3)" }, 23.1);
+        sceneOut(["#s6", "#card3d"], 25.1);
+
+        // S7 · cierre (25.2–30): Nubi entra, logo, quieto al final
+        tl.from("#nubi", { y: 120, scale: 0.7, opacity: 0, duration: 1, ease: "back.out(1.5)" }, 25.3);
+        tl.from("#s7-logo", { y: 40, opacity: 0, filter: "blur(10px)", duration: 0.8, ease: "expo.out" }, 25.9);
+        tl.from("#s7-url", { y: 20, opacity: 0, duration: 0.6, ease: "expo.out" }, 26.3);
+        tl.set({}, {}, 30);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["mispesos-promo"] = tl;
+      </script>
+    </div>
+  </body>
+</html>
