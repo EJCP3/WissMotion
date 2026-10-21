@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>path-dot · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #05060a;
+      }
+      svg {
+        position: absolute;
+        inset: 0;
+      }
+      .label {
+        position: absolute;
+        margin: 0;
+        font:
+          500 18px Inter,
+          sans-serif;
+        color: #dfe3ff;
+        white-space: nowrap;
+        transform: translate(22px, -32px);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="path-dot"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <svg
+        id="track"
+        class="clip"
+        viewBox="0 0 1280 720"
+        data-start="0"
+        data-duration="4.5"
+        data-track-index="0"
+      >
+        <defs>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="18" />
+          </filter>
+        </defs>
+        <!-- Haz ancho desenfocado + línea fina: la «luz» de la curva. -->
+        <path
+          id="halo"
+          d="M 160 60 C 140 300, 520 330, 760 430 S 1120 560, 1100 760"
+          fill="none"
+          stroke="#3b4cff"
+          stroke-width="44"
+          filter="url(#glow)"
+          opacity="0.8"
+        />
+        <path
+          id="line"
+          d="M 160 60 C 140 300, 520 330, 760 430 S 1120 560, 1100 760"
+          fill="none"
+          stroke="#ffffff"
+          stroke-width="2.5"
+        />
+        <circle id="dot" r="8" fill="#ffffff" />
+      </svg>
+      <p
+        id="label-submitted"
+        class="label clip"
+        data-at="0.12"
+        data-start="0"
+        data-duration="4.5"
+        data-track-index="1"
+      >
+        Transaction Submitted
+      </p>
+      <p
+        id="label-confirming"
+        class="label clip"
+        data-at="0.5"
+        data-start="0"
+        data-duration="4.5"
+        data-track-index="2"
+      >
+        Transaction Confirming
+      </p>
+      <p
+        id="label-filled"
+        class="label clip"
+        data-at="0.86"
+        data-start="0"
+        data-duration="4.5"
+        data-track-index="3"
+      >
+        Filled
+      </p>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const line = document.getElementById("line");
+        const halo = document.getElementById("halo");
+        const dot = document.getElementById("dot");
+        const length = line.getTotalLength();
+        // Posición del punto = función pura de p (seek-safe, como counter-up).
+        const state = { p: 0 };
+        const place = () => {
+          const pt = line.getPointAtLength(length * state.p);
+          dot.setAttribute("cx", pt.x);
+          dot.setAttribute("cy", pt.y);
+        };
+        for (const path of [line, halo]) {
+          path.style.strokeDasharray = `${length}`;
+          path.style.strokeDashoffset = `${length}`;
+        }
+        place();
+
+        const START = 0.4;
+        const TRAVEL = 3;
+        const tl = gsap.timeline({ paused: true });
+        tl.to([line, halo], { strokeDashoffset: 0, duration: TRAVEL, ease: "power2.inOut" }, START);
+        tl.to(state, { p: 1, duration: TRAVEL, ease: "power2.inOut", onUpdate: place }, START);
+        // Instante en que el punto pasa por la fracción `at`: se invierte la ease
+        // (búsqueda binaria), así la etiqueta aparece justo cuando llega el punto.
+        const ease = gsap.parseEase("power2.inOut");
+        const timeAt = (at) => {
+          let lo = 0;
+          let hi = 1;
+          for (let i = 0; i < 30; i++) {
+            const mid = (lo + hi) / 2;
+            if (ease(mid) < at) lo = mid;
+            else hi = mid;
+          }
+          return START + TRAVEL * lo;
+        };
+        for (const label of document.querySelectorAll(".label")) {
+          const at = Number(label.dataset.at);
+          const pt = line.getPointAtLength(length * at);
+          label.style.left = `${pt.x}px`;
+          label.style.top = `${pt.y}px`;
+          tl.from(label, { opacity: 0, x: -12, duration: 0.4, ease: "power3.out" }, timeAt(at));
+        }
+        window.__timelines = window.__timelines || {};
+        window.__timelines["path-dot"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

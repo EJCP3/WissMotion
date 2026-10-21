@@ -14,6 +14,7 @@ import { extractBrand } from "../brand-kit/extract-lib.mjs";
 import { brandFromImages } from "../brand-kit/extract-from-images.mjs";
 import { getBrand, listBrands, resolveLibraryDir, saveBrand } from "../brand-kit/brand-library.mjs";
 import { instantiate, parseDeclaredVariables } from "../templates/instantiate.mjs";
+import { criterioIds } from "../criterios/criterios.mjs";
 import {
   formatsIn,
   planBatch,
@@ -223,11 +224,17 @@ const TOOLS = [
             type: "number",
             description: "Segundos (6, 15, 30, 60…): re-escala el timing",
           },
+          criterio: {
+            type: "string",
+            enum: criterioIds,
+            description:
+              "Tipo de video y su criterio de calidad (wissmotion/criterios/). Sin él, el de la plantilla; 'libre' = sin criterio, a gusto del usuario.",
+          },
           brandsDir: { type: "string" },
         },
       },
     },
-    run: async ({ template, brand, vars, out, format, duration, brandsDir }) => {
+    run: async ({ template, brand, vars, out, format, duration, criterio, brandsDir }) => {
       const brandObj = (await resolveBrand(brand, brandsDir)) ?? {};
       return text(
         await instantiate({
@@ -237,6 +244,7 @@ const TOOLS = [
           outDir: out,
           format,
           duration,
+          criterio,
         }),
       );
     },

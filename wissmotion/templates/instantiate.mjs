@@ -11,6 +11,7 @@ import { fileURLToPath } from "node:url";
 import { validateBrand } from "../brand-kit/validate-brand.mjs";
 import { applyFormat, supportedFormats } from "./formats.mjs";
 import { brandFontsLink } from "./fonts.mjs";
+import { catalog, criterioFile, resolveCriterio } from "../criterios/criterios.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const TYPES = new Set(["string", "number", "color", "boolean", "enum"]);
@@ -66,6 +67,7 @@ export async function instantiate({
   outDir,
   format,
   duration,
+  criterio: requestedCriterio,
   templatesDir = here,
 }) {
   const dir = join(templatesDir, templateId);
@@ -80,6 +82,7 @@ export async function instantiate({
   if (format && !formats.includes(format)) {
     throw new Error(`${templateId} no tiene layout ${format} (soporta: ${formats.join(", ")})`);
   }
+  const criterio = resolveCriterio(templateId, requestedCriterio);
   const declared = parseDeclaredVariables(html);
   const declaredIds = new Set(declared.map((v) => v.id));
 
@@ -116,10 +119,18 @@ export async function instantiate({
   await writeFile(join(outDir, "brand.json"), `${JSON.stringify(brand, null, 2)}\n`, "utf8");
   await writeFile(
     join(outDir, "README.md"),
-    `# ${manifest.name} (instancia de ${templateId})\n\nVariables en \`variables.json\` (editables en el panel Variables del Studio).\n\n\`\`\`bash\nnode packages/cli/dist/cli.js render . --variables-file variables.json\n\`\`\`\n`,
+    `# ${manifest.name} (instancia de ${templateId})\n\n${criterioLine(criterio)}\n\nVariables en \`variables.json\` (editables en el panel Variables del Studio).\n\n\`\`\`bash\nnode packages/cli/dist/cli.js render . --variables-file variables.json\n\`\`\`\n`,
     "utf8",
   );
-  return { manifest, variables: overrides, duration: duration ?? manifest.duration };
+  return { manifest, variables: overrides, duration: duration ?? manifest.duration, criterio };
+}
+
+function criterioLine(id) {
+  const file = criterioFile(id);
+  const { name } = catalog.criterios[id];
+  return file
+    ? `Criterio: **${name}** (\`${file}\`): seguirlo y pasar su lista de revisión antes de renderizar.`
+    : `Criterio: **${name}**: estilo a gusto del usuario; solo reglas técnicas (lint, seek-safe, marca válida).`;
 }
 
 function opt(args, name) {
@@ -139,7 +150,7 @@ if (process.argv.includes("--template")) {
   const out = opt(process.argv.slice(2), "--out");
   if (!templateId || !out) {
     console.error(
-      "Uso: node instantiate.mjs --template <id> --brand brand.json [--vars vars.json] [--format 9:16] [--duration 15] --out dir",
+      "Uso: node instantiate.mjs --template <id> --brand brand.json [--vars vars.json] [--format 9:16] [--duration 15] [--criterio promo-marca|tutorial|anuncio|full-animacion|libre] --out dir",
     );
     process.exit(2);
   }
@@ -148,7 +159,7 @@ if (process.argv.includes("--template")) {
     const varsPath = opt(process.argv.slice(2), "--vars");
     const brand = brandPath ? await readJson(brandPath) : {};
     const contentVars = varsPath ? await readJson(varsPath) : {};
-    const { manifest, variables } = await instantiate({
+    const { manifest, variables, criterio } = await instantiate({
       templateId,
       brand,
       contentVars,
@@ -157,8 +168,11 @@ if (process.argv.includes("--template")) {
       duration: opt(process.argv.slice(2), "--duration")
         ? Number(opt(process.argv.slice(2), "--duration"))
         : undefined,
+      criterio: opt(process.argv.slice(2), "--criterio"),
     });
-    console.log(`OK: ${manifest.name} en ${out} (${Object.keys(variables).length} variables)`);
+    console.log(
+      `OK: ${manifest.name} en ${out} (${Object.keys(variables).length} variables, criterio ${criterio})`,
+    );
   } catch (e) {
     console.error(`error: ${e.message}`);
     process.exitCode = 1;

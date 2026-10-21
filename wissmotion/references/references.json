@@ -414,6 +414,216 @@
       },
       "status": "lista",
       "missing": []
+    },
+    {
+      "id": "apple-siri-sizzle",
+      "title": "Apple: sizzle Siri AI / iPhone 18 Pro",
+      "files": ["examples/plantilla/apple-siri-sizzle.mp4"],
+      "origin": "Apple (vía X)",
+      "aspect": ["16:9"],
+      "duration": 9.4,
+      "description": "Montaje de cortes muy rápidos (~0,3 s): texto que se escribe con cursor («Make a beat», «Edit a [clip] video»), resplandor Siri sobre negro, iPhone y Watch con UI de Siri, cifra «24-hour» con halo verde y «PRO» cromado 3D entre nubes.",
+      "techniques": [
+        "texto escrito con cursor",
+        "palabra sustituida por clip",
+        "resplandor tipo Siri",
+        "cortes al beat",
+        "UI de asistente en dispositivo",
+        "texto cromado 3D"
+      ],
+      "recreate": {
+        "templates": ["lanzamiento", "lista-cinetica"],
+        "presets": [
+          "typewriter",
+          "glow",
+          "blur-in",
+          "kinetic-type",
+          "device-mockup-scroll",
+          "prop-3d"
+        ],
+        "transitions": ["tr-zoom-through", "tr-whip"],
+        "mockups": ["wm-phone", "wm-watch"]
+      },
+      "status": "parcial",
+      "missing": [
+        "dispositivos fotorrealistas (marco PNG o GLB)",
+        "texto cromado 3D con nubes volumétricas (Three.js o clip pre-renderizado)"
+      ]
+    },
+    {
+      "id": "intently-prizepicks",
+      "title": "PrizePicks: bento en vivo 2×2 sobre cielo",
+      "files": ["examples/plantilla/intently-prizepicks.mp4"],
+      "origin": "Intently (@leomeethewoo) — x.com/leomeethewoo/status/2103529310208606701",
+      "aspect": ["16:9"],
+      "duration": 13.5,
+      "description": "Rejilla 2×2 de cuatro mini escenas en bucle (~5 s) a la vez: globo 3D de pera cromada con objetos flotando sobre cielo y estadio / UI que teclea $50 → Confirm; foto de cielo y montañas con «Back your instincts» / tarjeta de cristal Insights que cuenta; móvil muy inclinado en 3D con burbujas de iMessage y nubes pasando; pradera con mancha de cristal en forma de nube que revela «Confirm» y versión de noche. Una palabra por frase en manuscrita lima. Sin cortes secos.",
+      "techniques": [
+        "bento en vivo (rejilla de escenas en bucle simultáneas)",
+        "cielo fotográfico con nubes en movimiento",
+        "transición de nube de cristal (blob que tapa y revela)",
+        "una palabra manuscrita de acento por frase",
+        "móvil inclinado en 3D a sangre",
+        "contraste día / noche",
+        "objetos 3D flotando",
+        "palabra que cambia"
+      ],
+      "recreate": {
+        "templates": ["promo-app", "palabra", "ui-zoom"],
+        "presets": [
+          "flip-3d",
+          "blur-in",
+          "spring-pop",
+          "stagger-words",
+          "counter-up",
+          "prop-3d",
+          "bento-shuffle"
+        ],
+        "transitions": ["tr-push"],
+        "mockups": ["wm-phone"]
+      },
+      "status": "parcial",
+      "missing": [
+        "fondos fotográficos (cielo, pradera, montaña) vía /media-use",
+        "balones 3D: modelarlos con un script de Blender como objetos-3d/blender/ejemplo_pera.py (la pera ya está)"
+      ]
+    },
+    {
+      "id": "intently-fomo",
+      "title": "fomo: «now live on fomo»",
+      "files": ["examples/plantilla/intently-fomo.mp4"],
+      "origin": "Intently (@leomeethewoo) — x.com/leomeethewoo/status/2103529310208606701",
+      "aspect": ["16:9"],
+      "duration": 9.4,
+      "description": "Degradado azul-violeta con tarjetas de trading oscuras (cifras que cuentan, botones Close/Long), frases que entran y salen con desenfoque, logo con rebote y una rampa 3D extruida con texto encima.",
+      "techniques": [
+        "tarjetas de UI oscuras sobre degradado",
+        "cifras que cuentan",
+        "texto con desenfoque de entrada y salida",
+        "logo con rebote",
+        "rampa 3D extruida"
+      ],
+      "recreate": {
+        "templates": ["promo-app", "stats", "logo-sting", "ui-zoom"],
+        "presets": [
+          "blur-in",
+          "blur-out",
+          "counter-up",
+          "number-roll",
+          "spring-pop",
+          "logo-build",
+          "prop-3d"
+        ],
+        "transitions": ["tr-zoom-through"],
+        "mockups": ["wm-phone"]
+      },
+      "status": "parcial",
+      "missing": ["rampa 3D extruida con texto (Three.js o clip pre-renderizado)"]
+    },
+    {
+      "id": "intently-trust-wallet",
+      "title": "Trust Wallet: meme trading",
+      "files": ["examples/plantilla/intently-trust-wallet.webm"],
+      "origin": "Intently (@leomeethewoo) — x.com/leomeethewoo/status/2103529310208606701",
+      "aspect": ["16:9"],
+      "duration": 21,
+      "description": "Fondo blanco, pantallas planas de la app: búsqueda con teclado, gráfica que se dibuja, importe tecleado ($0 → $100), botón de deslizar, «Bought ✓» y cierre en negro con el logo. Monedas 3D cruzando entre planos.",
+      "techniques": [
+        "UI de app reconstruida en HTML",
+        "cámara cerca de un elemento por plano",
+        "importe tecleado",
+        "gráfica de línea que se dibuja",
+        "botón de deslizar",
+        "cierre con logo"
+      ],
+      "recreate": {
+        "templates": ["ui-zoom", "promo-app", "logo-sting"],
+        "presets": [
+          "typewriter",
+          "number-roll",
+          "underline-draw",
+          "spring-pop",
+          "scale-fade",
+          "logo-build",
+          "prop-3d"
+        ],
+        "transitions": ["tr-push", "tr-morph"],
+        "mockups": ["wm-phone"]
+      },
+      "status": "lista",
+      "missing": []
+    },
+    {
+      "id": "intently-axiom-bnb",
+      "title": "Axiom: «Trade BNB at full speed»",
+      "files": [
+        "examples/plantilla/intently-axiom-bnb.mp4",
+        "examples/plantilla/intently-axiom-bnb-mosaico.mp4"
+      ],
+      "origin": "Intently (@leomeethewoo) — x.com/leomeethewoo/status/2103529310208606701",
+      "aspect": ["16:9"],
+      "duration": 7.5,
+      "description": "Negro con un único azul: haces de luz diagonales tras «Introducing», logo BNB sobre rejilla de cuadros que parpadean, frases pequeñas centradas palabra a palabra sobre losas 3D azules brillantes apiladas, línea de luz curva con un punto que la recorre marcando estados (Submitted → Confirming → Filled), gráfica de trading y cierre con logo y pie de enlaces. El segundo archivo es el mismo promo en mosaico 2×2.",
+      "techniques": [
+        "un solo color de acento sobre negro",
+        "texto pequeño centrado palabra a palabra",
+        "losas 3D brillantes apiladas",
+        "punto que recorre una curva con etiquetas de estado",
+        "rejilla de cuadros que parpadea",
+        "cierre con logo y pie de enlaces"
+      ],
+      "recreate": {
+        "templates": ["lanzamiento", "logo-sting"],
+        "presets": [
+          "stagger-words",
+          "blur-in",
+          "glow",
+          "logo-build",
+          "scale-fade",
+          "prop-3d",
+          "path-dot"
+        ],
+        "transitions": ["tr-push"],
+        "mockups": []
+      },
+      "status": "lista",
+      "missing": []
+    },
+    {
+      "id": "intently-showreel",
+      "title": "Showreel de Intently (fintech, 50 s)",
+      "files": ["examples/plantilla/intently-showreel.webm"],
+      "origin": "Intently (@leomeethewoo) — x.com/leomeethewoo/status/2103529310208606701",
+      "aspect": ["16:9"],
+      "duration": 50.3,
+      "description": "Recopilatorio de su trabajo: tipografía gigante recortada que entra desenfocada sobre un color a sangre (naranja, violeta), cifra enorme «$1,100,000», tarjetas de UI rodeadas de objetos 3D tipo emoji, avatares flotando hacia una dirección de wallet, frases en marcos con esquinas («Every order / market / asset»), tarjetas Visa 3D, botón de voz con halo y la curva de estados de Axiom.",
+      "techniques": [
+        "tipografía gigante recortada con desenfoque",
+        "plano de color a sangre",
+        "cifra enorme que cuenta",
+        "objetos 3D alrededor de una tarjeta de UI",
+        "marco con esquinas que se mueve entre palabras",
+        "avatares que convergen",
+        "tarjetas físicas 3D"
+      ],
+      "recreate": {
+        "templates": ["palabra", "promo-app", "stats", "lista-cinetica"],
+        "presets": [
+          "kinetic-type",
+          "blur-in",
+          "counter-up",
+          "spring-pop",
+          "card-stack",
+          "typewriter",
+          "glow",
+          "morph-box",
+          "prop-3d"
+        ],
+        "transitions": ["tr-zoom-through", "tr-whip", "tr-push"],
+        "mockups": ["wm-phone"]
+      },
+      "status": "parcial",
+      "missing": ["emojis 3D y coche: traerlos como PNG/WebM con alfa (objetos-3d/README.md §2-3)"]
     }
   ]
 }

@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "default": "promo-marca",
+  "criterios": {
+    "promo-marca": {
+      "name": "Promo de marca",
+      "purpose": "Presentar una marca, producto o lanzamiento con aire premium.",
+      "file": "promo-marca.md",
+      "templates": [
+        "promo-app",
+        "promo-web",
+        "lanzamiento",
+        "logo-sting",
+        "feature-highlight",
+        "stats",
+        "tabla-ui",
+        "antes-despues",
+        "ui-zoom"
+      ]
+    },
+    "tutorial": {
+      "name": "Tutorial",
+      "purpose": "Enseñar a usar algo paso a paso: que se entienda antes que nada.",
+      "file": "tutorial.md",
+      "templates": []
+    },
+    "anuncio": {
+      "name": "Anuncio",
+      "purpose": "Vender o convertir: oferta, precio, evento o testimonio, con gancho y CTA.",
+      "file": "anuncio.md",
+      "templates": ["oferta", "precios", "evento", "testimonios", "historia"]
+    },
+    "full-animacion": {
+      "name": "Full animación",
+      "purpose": "El movimiento es el mensaje: mucho efecto y transición, sin cortes secos, al beat.",
+      "file": "full-animacion.md",
+      "templates": ["palabra", "fichas-logo", "ruleta-colores", "lista-cinetica"]
+    },
+    "libre": {
+      "name": "Libre",
+      "purpose": "Sin criterio: el usuario decide el estilo. Solo se aplican las reglas técnicas (lint, seek-safe, marca válida).",
+      "file": null,
+      "templates": []
+    }
+  }
+}

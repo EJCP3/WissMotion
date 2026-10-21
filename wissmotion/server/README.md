@@ -15,9 +15,9 @@ node wissmotion/server/mcp.mjs   # los agentes lo lanzan como `npx wissmotion mc
 | `brand_extract`                           | Marca desde URL (sin IA)                                           |
 | `brand_extract_images`                    | Marca desde capturas + candidatos a color de marca (`primary`)     |
 | `brand_list` / `brand_save` / `brand_get` | Biblioteca (`--dir` o `WISSMOTION_BRANDS_DIR`)                     |
-| `template_list`                           | 17 plantillas con sus variables                                    |
+| `template_list`                           | 18 plantillas con sus variables                                    |
 | `template_instantiate`                    | Proyecto desde plantilla + marca + vars (`format` opcional)        |
-| `motion_list`                             | Personalidades, 38 presets y 4 transiciones                        |
+| `motion_list`                             | Personalidades, 40 presets y 4 transiciones                        |
 | `render_plan`                             | Lote por destino con chequeo de aspecto y formatos (no renderiza)  |
 | `film_build`                              | Película de varias escenas desde un storyboard (`dryRun` opcional) |
 | `film_review`                             | `hyperframes check` por escena + hoja de fotogramas de la película |

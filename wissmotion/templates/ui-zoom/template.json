@@ -1,0 +1,10 @@
+{
+  "id": "ui-zoom",
+  "name": "UI con zoom",
+  "description": "Pantalla de app en HTML con una cámara que se acerca a un elemento por plano: frase de entrada, importe que se teclea, botón de deslizar que confirma, gráfica que se dibuja y cierre con la marca. Estilo Trust Wallet. 10,5 s, 16:9.",
+  "format": "16:9",
+  "width": 1280,
+  "height": 720,
+  "duration": 10.5,
+  "formats": ["16:9"]
+}

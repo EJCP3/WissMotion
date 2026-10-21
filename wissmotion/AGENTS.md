@@ -6,17 +6,19 @@ paquetes `packages/` de HyperFrames (no duplicar: reutilizar CLI/API).
 
 ## Mapa
 
-| Necesidad                                                            | Dónde                                |
-| -------------------------------------------------------------------- | ------------------------------------ |
-| Marca: esquema, extractor, biblioteca, tokens                        | `brand-kit/` + `brand-kit/README.md` |
-| Movimiento: personalidades, presets, transiciones, ejemplos, pósters | `presets/motion/` + `README.md`      |
-| Plantillas: 17 promos con variables + instanciador                   | `templates/` + `README.md`           |
-| Referencias de estilo: ficha, técnica y cómo recrear cada video      | `references/references.json`         |
-| Mockups de dispositivos (CSS puro, tema claro/oscuro)                | `mockups/` + `README.md`             |
-| Render por lotes + destinos                                          | `render/` + `README.md`              |
-| Servidor MCP (23 herramientas, puente en vivo al Studio) + plugin    | `server/` + `README.md`              |
-| Skills del producto                                                  | `skills/`                            |
-| Plan por fases                                                       | `ROADMAP.md`                         |
+| Necesidad                                                                                | Dónde                                |
+| ---------------------------------------------------------------------------------------- | ------------------------------------ |
+| Marca: esquema, extractor, biblioteca, tokens                                            | `brand-kit/` + `brand-kit/README.md` |
+| Movimiento: personalidades, presets, transiciones, ejemplos, pósters                     | `presets/motion/` + `README.md`      |
+| Plantillas: 18 promos con variables + instanciador                                       | `templates/` + `README.md`           |
+| Criterios de calidad por tipo de video (promo, tutorial, anuncio, full animación, libre) | `criterios/` + `README.md`           |
+| Referencias de estilo: ficha, técnica y cómo recrear cada video                          | `references/references.json`         |
+| Objetos 3D con alfa: Three.js + Blender en consola (GLB, Cycles)                         | `objetos-3d/` + `README.md`          |
+| Mockups de dispositivos (CSS puro, tema claro/oscuro)                                    | `mockups/` + `README.md`             |
+| Render por lotes + destinos                                                              | `render/` + `README.md`              |
+| Servidor MCP (23 herramientas, puente en vivo al Studio) + plugin                        | `server/` + `README.md`              |
+| Skills del producto                                                                      | `skills/`                            |
+| Plan por fases                                                                           | `ROADMAP.md`                         |
 
 ## Reglas del producto
 
@@ -25,7 +27,8 @@ paquetes `packages/` de HyperFrames (no duplicar: reutilizar CLI/API).
 3. **Seek-safe**: una root timeline pausada por composición en `window.__timelines`; sin `Date.now()`, sin `Math.random()`, sin fetches en render. `hyperframes lint` debe dar 0 errores.
 4. **Variables**: las plantillas declaran `data-composition-variables`; contenido por `--variables-file` o panel Variables. IDs de marca estándar: `brandPrimary…brandText`, `brandHeading`, `brandBody`, `brandLogo`, `brandName`, `brandTagline`.
 5. **Espejos documentados**: `packages/studio/src/brand/contrast.ts` espeja `packages/cli/src/commands/contrast-bg.ts` (hay test de paridad); `brandTokens.ts` espeja `brand-tokens.mjs`. Si cambia el original, cambia el espejo.
-6. **Ramas**: `main` = upstream (no desarrollar), `wissmotion` = producto. Código propio en `wissmotion/` + parches mínimos al Studio.
+6. **Criterio por tipo de video**: cada video sigue el criterio de su tipo en [`criterios/`](criterios/README.md) (`promo-marca`, `tutorial`, `anuncio`, `full-animacion`) y pasa su lista de revisión antes de renderizar. Si el usuario no dice el tipo, el de la plantilla; si pide hacerlo a su gusto, `libre` (solo reglas técnicas).
+7. **Ramas**: `main` = upstream (no desarrollar), `wissmotion` = producto. Código propio en `wissmotion/` + parches mínimos al Studio.
 
 ## Comandos
 

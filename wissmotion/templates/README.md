@@ -4,29 +4,30 @@ Composiciones HyperFrames con variables (`data-composition-variables`):
 el mismo `index.html` sirve a todas las marcas vía `--variables-file`
 (y el panel Variables del Studio las edita en vivo).
 
-| Plantilla            | Qué es                                                                                                                                                                        |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `promo-app/`         | App móvil: mockup con scroll, nombre, tagline, 3 features y CTA. 8 s. ![promo-app](promo-app/preview.png)                                                                     |
-| `promo-web/`         | Web/SaaS: navegador con captura, titular, subtítulo, 3 features y CTA. 8 s. ![promo-web](promo-web/preview.png)                                                               |
-| `logo-sting/`        | Intro de logo (pop + reveal + tagline + fade). 6 s. ![logo-sting](logo-sting/preview.png)                                                                                     |
-| `feature-highlight/` | Una función en 8 s: kicker, titular con reveal, subrayado y descripción. ![feature-highlight](feature-highlight/preview.png)                                                  |
-| `stats/`             | 3 cifras con etiquetas en grilla. 6 s. ![stats](stats/preview.png)                                                                                                            |
-| `testimonios/`       | Cita con autor, cargo y estrellas. 6 s. ![testimonios](testimonios/preview.png)                                                                                               |
-| `oferta/`            | Badge, titular con descuento, descripción y CTA con pulse. 6 s. ![oferta](oferta/preview.png)                                                                                 |
-| `precios/`           | 3 planes con destacado central y CTA. 6 s. ![precios](precios/preview.png)                                                                                                    |
-| `evento/`            | Anuncio de evento en vivo con fecha y CTA. 6 s. ![evento](evento/preview.png)                                                                                                 |
-| `lanzamiento/`       | Countdown 3-2-1 con reveal del nombre y fecha. 6 s. ![lanzamiento](lanzamiento/preview.png)                                                                                   |
-| `antes-despues/`     | Comparativa con dos imágenes, divisor y etiquetas. 6 s. ![antes-despues](antes-despues/preview.png)                                                                           |
-| `historia/`          | Vertical 9:16 con barra de progreso, titular y CTA. 6 s. ![historia](historia/preview.png)                                                                                    |
-| `palabra/`           | Palabra gigante con punto de acento y desenfoque de movimiento; encadénala en una película (`film/`). 2,6 s. ![palabra](palabra/preview.png)                                  |
-| `tabla-ui/`          | Titular + tabla de producto con filas en cascada, etiquetas y columna resaltada. 5 s. ![tabla-ui](tabla-ui/preview.png)                                                       |
-| `fichas-logo/`       | Nombre de marca letra a letra en fichas de colores (giro + desenfoque) sobre rejilla de puntos. 4,5 s. ![fichas-logo](fichas-logo/preview.png)                                |
-| `ruleta-colores/`    | Columna circular de palabras; el fondo cambia al color de la activa y el HEX se actualiza. Palabras y colores editables. 9,8 s. ![ruleta-colores](ruleta-colores/preview.png) |
-| `lista-cinetica/`    | Columna cinética vertical con foco nítido y flecha (estilo Jitter List). 9 s, 9:16. ![lista-cinetica](lista-cinetica/preview.png)                                             |
+| Plantilla            | Qué es                                                                                                                                                                                                                     |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `promo-app/`         | App móvil: mockup con scroll, nombre, tagline, 3 features y CTA. 8 s. ![promo-app](promo-app/preview.png)                                                                                                                  |
+| `ui-zoom/`           | UI de app en HTML con cámara que se acerca a un elemento por plano: importe que se teclea, botón de deslizar que confirma, gráfica y cierre con marca (estilo Trust Wallet). 10,5 s, 16:9. ![ui-zoom](ui-zoom/preview.png) |
+| `promo-web/`         | Web/SaaS: navegador con captura, titular, subtítulo, 3 features y CTA. 8 s. ![promo-web](promo-web/preview.png)                                                                                                            |
+| `logo-sting/`        | Intro de logo (pop + reveal + tagline + fade). 6 s. ![logo-sting](logo-sting/preview.png)                                                                                                                                  |
+| `feature-highlight/` | Una función en 8 s: kicker, titular con reveal, subrayado y descripción. ![feature-highlight](feature-highlight/preview.png)                                                                                               |
+| `stats/`             | 3 cifras con etiquetas en grilla. 6 s. ![stats](stats/preview.png)                                                                                                                                                         |
+| `testimonios/`       | Cita con autor, cargo y estrellas. 6 s. ![testimonios](testimonios/preview.png)                                                                                                                                            |
+| `oferta/`            | Badge, titular con descuento, descripción y CTA con pulse. 6 s. ![oferta](oferta/preview.png)                                                                                                                              |
+| `precios/`           | 3 planes con destacado central y CTA. 6 s. ![precios](precios/preview.png)                                                                                                                                                 |
+| `evento/`            | Anuncio de evento en vivo con fecha y CTA. 6 s. ![evento](evento/preview.png)                                                                                                                                              |
+| `lanzamiento/`       | Countdown 3-2-1 con reveal del nombre y fecha. 6 s. ![lanzamiento](lanzamiento/preview.png)                                                                                                                                |
+| `antes-despues/`     | Comparativa con dos imágenes, divisor y etiquetas. 6 s. ![antes-despues](antes-despues/preview.png)                                                                                                                        |
+| `historia/`          | Vertical 9:16 con barra de progreso, titular y CTA. 6 s. ![historia](historia/preview.png)                                                                                                                                 |
+| `palabra/`           | Palabra gigante con punto de acento y desenfoque de movimiento; encadénala en una película (`film/`). 2,6 s. ![palabra](palabra/preview.png)                                                                               |
+| `tabla-ui/`          | Titular + tabla de producto con filas en cascada, etiquetas y columna resaltada. 5 s. ![tabla-ui](tabla-ui/preview.png)                                                                                                    |
+| `fichas-logo/`       | Nombre de marca letra a letra en fichas de colores (giro + desenfoque) sobre rejilla de puntos. 4,5 s. ![fichas-logo](fichas-logo/preview.png)                                                                             |
+| `ruleta-colores/`    | Columna circular de palabras; el fondo cambia al color de la activa y el HEX se actualiza. Palabras y colores editables. 9,8 s. ![ruleta-colores](ruleta-colores/preview.png)                                              |
+| `lista-cinetica/`    | Columna cinética vertical con foco nítido y flecha (estilo Jitter List). 9 s, 9:16. ![lista-cinetica](lista-cinetica/preview.png)                                                                                          |
 
 ## Multiformato (16:9, 9:16, 1:1, 4:5)
 
-Todas salvo `historia` y `lista-cinetica` (nativas 9:16) traen composición
+Todas salvo `historia` y `lista-cinetica` (nativas 9:16) y `ui-zoom` (solo 16:9: la cámara está calculada para ese encuadre) traen composición
 propia para cada formato: en su CSS, bloques `#stage[data-format="9:16"] …`
 y en `template.json` la lista `formats`. No es un 16:9 encogido: cada
 formato recoloca y reescala texto, mockups y CTA.
@@ -36,12 +37,12 @@ node instantiate.mjs --template promo-app --brand b.json --format 9:16 --out ./v
 node ../render/render-batch.mjs --project ./mi-promo --dest all   # cada destino en su formato
 ```
 
-**Calidad**: `lint.test.mjs` pasa `hyperframes lint` a las 17 plantillas
+**Calidad**: `lint.test.mjs` pasa `hyperframes lint` a las 18 plantillas
 (base y re-escaladas a 30 s). `determinism.mjs` comprueba que un instante da
 el mismo PNG capturado en orden A → B → A y en otra ejecución
 (`wissmotion determinism --project dir --at 1.5`);
 `WISSMOTION_DETERMINISM=1 node --test templates/determinism.test.mjs` lo
-corre sobre las 17 plantillas y los 42 ejemplos de presets (~10 min).
+corre sobre las 18 plantillas y los 44 ejemplos de presets (~10 min).
 
 **Duraciones variables**: `--duration 15` (o `duration` en el MCP y en cada
 escena de `film`) re-escala la plantilla a 6, 15, 30, 60 s… `retime.mjs`

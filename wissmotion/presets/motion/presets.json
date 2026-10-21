@@ -598,6 +598,41 @@
           "fontVariationSettings": "\"wdth\" 50, \"wght\" 900"
         }
       }
+    },
+    "prop-3d": {
+      "kind": "escena",
+      "description": "Objeto 3D (PNG o WebM con alfa) que entra con giro y rebote en cascada y luego flota con yoyo finito, desfasado por objeto (parallax). Monedas, tarjetas, losas o emojis 3D alrededor de una UI. Sombra con CSS drop-shadow.",
+      "ease": "back.out(1.4)",
+      "duration": 0.9,
+      "stagger": 0.15,
+      "gsap": {
+        "from": {
+          "y": 160,
+          "rotation": -25,
+          "scale": 0.5,
+          "opacity": 0
+        },
+        "to": {
+          "y": 0,
+          "rotation": 0,
+          "scale": 1,
+          "opacity": 1
+        }
+      }
+    },
+    "path-dot": {
+      "kind": "escena",
+      "description": "Punto que recorre una curva SVG mientras la línea se dibuja, con etiquetas de estado que aparecen al pasar (Submitted → Confirming → Filled). Posición por onUpdate puro de p (seek-safe), sin MotionPathPlugin. Pagos, envíos, onboarding.",
+      "ease": "power2.inOut",
+      "duration": 3,
+      "gsap": {
+        "from": {
+          "p": 0
+        },
+        "to": {
+          "p": 1
+        }
+      }
     }
   }
 }

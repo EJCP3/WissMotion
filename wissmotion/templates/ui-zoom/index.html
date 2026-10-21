@@ -1,0 +1,395 @@
+<!doctype html>
+<html
+  lang="es"
+  data-composition-variables='[
+    {"id":"headline1","type":"string","label":"Frase de entrada","default":"Compra en segundos"},
+    {"id":"headline2","type":"string","label":"Frase final","default":"Sin comisiones ocultas"},
+    {"id":"assetName","type":"string","label":"Nombre del activo o producto","default":"CASHCAT"},
+    {"id":"price","type":"string","label":"Precio mostrado","default":"$0.1682"},
+    {"id":"change","type":"string","label":"Variación","default":"+1.3%"},
+    {"id":"currency","type":"string","label":"Símbolo de moneda","default":"$"},
+    {"id":"amount","type":"number","label":"Importe que se teclea","default":100},
+    {"id":"swipeLabel","type":"string","label":"Texto del botón","default":"Desliza para comprar"},
+    {"id":"doneLabel","type":"string","label":"Texto de confirmación","default":"Comprado"},
+    {"id":"brandName","type":"string","label":"Nombre de la marca","default":"Mi App"},
+    {"id":"brandTagline","type":"string","label":"Tagline","default":"Tu dinero, al instante"},
+    {"id":"brandPrimary","type":"color","label":"Primario (botones, gráfica)","default":"#1d4ed8"},
+    {"id":"brandAccent","type":"color","label":"Acento (confirmación)","default":"#16a34a"},
+    {"id":"brandBackground","type":"color","label":"Fondo","default":"#f4f5f7"},
+    {"id":"brandSurface","type":"color","label":"Pantalla de la app","default":"#ffffff"},
+    {"id":"brandText","type":"color","label":"Texto","default":"#0f172a"},
+    {"id":"brandHeading","type":"string","label":"Fuente titulares","default":"Inter"},
+    {"id":"brandBody","type":"string","label":"Fuente texto","default":"Inter"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      data-wm-fonts
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=block"
+    />
+    <title>UI Zoom · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: var(--brandBackground);
+        color: var(--brandText);
+        font-family: var(--brandBody);
+      }
+      /* La «cámara»: todo lo que vive dentro se encuadra con x/y/scale
+         (transform-origin 0 0). focus() en el script calcula el encuadre. */
+      #camera {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1280px;
+        height: 720px;
+        transform-origin: 0 0;
+      }
+      #phone {
+        position: absolute;
+        left: 485px;
+        top: 34px;
+        width: 310px;
+        height: 652px;
+        border-radius: 52px;
+        background: #0b0b0f;
+        box-shadow: 0 40px 90px rgba(15, 23, 42, 0.18);
+      }
+      #screen {
+        position: absolute;
+        inset: 10px;
+        border-radius: 43px;
+        overflow: hidden;
+        background: var(--brandSurface);
+      }
+      .abs {
+        position: absolute;
+        margin: 0;
+      }
+      #status {
+        left: 30px;
+        top: 18px;
+        font: 600 14px var(--brandBody);
+      }
+      #avatar {
+        left: 22px;
+        top: 66px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--brandPrimary);
+      }
+      #asset {
+        left: 70px;
+        top: 66px;
+        font: 800 17px var(--brandHeading);
+      }
+      #asset-sub {
+        left: 70px;
+        top: 88px;
+        font: 500 12px var(--brandBody);
+        opacity: 0.5;
+      }
+      #price {
+        right: 22px;
+        top: 66px;
+        font: 700 17px var(--brandBody);
+      }
+      #change {
+        right: 22px;
+        top: 88px;
+        font: 600 12px var(--brandBody);
+        color: var(--brandAccent);
+      }
+      #chart {
+        left: 14px;
+        top: 124px;
+        width: 262px;
+        height: 150px;
+      }
+      #chart path {
+        fill: none;
+        stroke: var(--brandPrimary);
+        stroke-width: 2.5;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+      }
+      #amount-label {
+        left: 0;
+        right: 0;
+        top: 300px;
+        text-align: center;
+        font: 500 13px var(--brandBody);
+        opacity: 0.5;
+      }
+      #amount {
+        left: 0;
+        right: 0;
+        top: 320px;
+        text-align: center;
+        font: 800 64px/1 var(--brandHeading);
+        letter-spacing: -2px;
+      }
+      #amount small {
+        font-size: 30px;
+        vertical-align: 26px;
+        margin-right: 2px;
+      }
+      .chip {
+        top: 412px;
+        width: 72px;
+        height: 32px;
+        border-radius: 16px;
+        background: rgba(15, 23, 42, 0.06);
+        font: 600 13px/32px var(--brandBody);
+        text-align: center;
+      }
+      #chip1 {
+        left: 25px;
+      }
+      #chip2 {
+        left: 109px;
+      }
+      #chip3 {
+        left: 193px;
+      }
+      #swipe {
+        left: 18px;
+        top: 540px;
+        width: 254px;
+        height: 64px;
+        border-radius: 32px;
+        background: rgba(15, 23, 42, 0.06);
+        overflow: hidden;
+      }
+      #swipe-fill {
+        position: absolute;
+        inset: 0;
+        background: var(--brandAccent);
+        transform-origin: 0 50%;
+      }
+      #swipe-label,
+      #done-label {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        margin: 0;
+        text-align: center;
+        font: 600 15px/64px var(--brandBody);
+      }
+      #swipe-label {
+        padding-left: 40px;
+        opacity: 0.55;
+      }
+      #done-label {
+        color: #fff;
+        opacity: 0;
+      }
+      #knob {
+        position: absolute;
+        left: 6px;
+        top: 6px;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: var(--brandAccent);
+        color: #fff;
+        font: 700 24px/52px var(--brandBody);
+        text-align: center;
+      }
+      /* Frases y cierre: fuera de la cámara, no se mueven con el zoom. */
+      .line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0;
+        text-align: center;
+        font: 700 46px var(--brandHeading);
+        letter-spacing: -1px;
+      }
+      #headline1 {
+        top: 330px;
+      }
+      #headline2 {
+        top: 330px;
+        left: 830px;
+        right: 60px;
+        text-align: left;
+        font-size: 40px;
+      }
+      #end {
+        position: absolute;
+        inset: 0;
+        background: var(--brandText);
+        color: var(--brandBackground);
+      }
+      #end-name {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 300px;
+        margin: 0;
+        text-align: center;
+        font: 800 64px var(--brandHeading);
+        letter-spacing: -2px;
+      }
+      #end-tag {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 392px;
+        margin: 0;
+        text-align: center;
+        font: 500 22px var(--brandBody);
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="ui-zoom"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="camera" class="clip" data-start="1.3" data-duration="7.6" data-track-index="0">
+        <div id="phone">
+          <div id="screen">
+            <p id="status" class="abs">9:41</p>
+            <div id="avatar" class="abs"></div>
+            <p id="asset" class="abs" data-var-text="assetName">CASHCAT</p>
+            <p id="asset-sub" class="abs">Comprar</p>
+            <p id="price" class="abs" data-var-text="price">$0.1682</p>
+            <p id="change" class="abs" data-var-text="change">+1.3%</p>
+            <svg id="chart" class="abs" viewBox="0 0 262 150">
+              <path
+                id="chart-line"
+                d="M 4 120 L 26 112 L 44 118 L 66 96 L 86 102 L 106 78 L 124 86 L 146 60 L 166 70 L 186 44 L 206 52 L 228 28 L 258 18"
+              />
+            </svg>
+            <p id="amount-label" class="abs">Importe</p>
+            <p id="amount" class="abs">
+              <small data-var-text="currency">$</small><span id="amount-value">0</span>
+            </p>
+            <p id="chip1" class="abs chip">25%</p>
+            <p id="chip2" class="abs chip">50%</p>
+            <p id="chip3" class="abs chip">100%</p>
+            <div id="swipe" class="abs">
+              <div id="swipe-fill"></div>
+              <p id="swipe-label" data-var-text="swipeLabel">Desliza para comprar</p>
+              <p id="done-label"><span data-var-text="doneLabel">Comprado</span> ✓</p>
+              <div id="knob">›</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p
+        id="headline1"
+        class="line clip"
+        data-start="0"
+        data-duration="1.8"
+        data-track-index="1"
+        data-var-text="headline1"
+      >
+        Compra en segundos
+      </p>
+      <p
+        id="headline2"
+        class="line clip"
+        data-start="6.6"
+        data-duration="2.3"
+        data-track-index="2"
+        data-var-text="headline2"
+      >
+        Sin comisiones ocultas
+      </p>
+      <div id="end" class="clip" data-start="8.6" data-duration="1.9" data-track-index="3">
+        <p id="end-name" data-var-text="brandName">Mi App</p>
+        <p id="end-tag" data-var-text="brandTagline">Tu dinero, al instante</p>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const vars = window.__hyperframes?.getVariables?.() ?? {};
+        const amount = Number(vars.amount ?? 100);
+
+        // Encuadre: (fx, fy) del escenario al centro, a escala s.
+        const focus = (fx, fy, s) => ({ x: 640 - fx * s, y: 360 - fy * s, scale: s });
+        const PHONE = { x: 485 + 10, y: 34 + 10 }; // origen de #screen en el escenario
+        const WIDE = { x: 0, y: 0, scale: 1 };
+        const AMOUNT = focus(PHONE.x + 145, PHONE.y + 370, 2.1);
+        const SWIPE = focus(PHONE.x + 145, PHONE.y + 572, 2.3);
+        const CAM = { duration: 1, ease: "power3.inOut" };
+
+        const line = document.getElementById("chart-line");
+        const length = line.getTotalLength();
+        line.style.strokeDasharray = `${length}`;
+        line.style.strokeDashoffset = `${length}`;
+
+        const amountEl = document.getElementById("amount-value");
+        const typed = { v: 0 };
+        const showAmount = () => {
+          amountEl.textContent = String(Math.round(typed.v));
+        };
+        showAmount();
+
+        const tl = gsap.timeline({ paused: true });
+        // 1. Frase de entrada, pequeña y centrada.
+        tl.from(
+          "#headline1",
+          { opacity: 0, filter: "blur(14px)", y: 16, duration: 0.7, ease: "expo.out" },
+          0.15,
+        );
+        tl.to(
+          "#headline1",
+          { opacity: 0, filter: "blur(14px)", y: -16, duration: 0.5, ease: "power2.in" },
+          1.3,
+        );
+        // 2. El móvil sube; la cámara arranca abierta.
+        tl.set("#camera", WIDE, 0);
+        tl.from("#phone", { y: 120, opacity: 0, duration: 1, ease: "expo.out" }, 1.4);
+        // 3. Zoom al importe: se teclea 0 → amount.
+        tl.to("#camera", { ...AMOUNT, ...CAM }, 2.3);
+        tl.to(typed, { v: amount, duration: 1.1, ease: "power2.out", onUpdate: showAmount }, 3.1);
+        tl.to("#chip3", { backgroundColor: "rgba(15, 23, 42, 0.16)", duration: 0.25 }, 3.9);
+        // 4. Paneo al botón: el mando se desliza y confirma.
+        tl.to("#camera", { ...SWIPE, ...CAM }, 4.3);
+        tl.to("#knob", { x: 190, duration: 0.7, ease: "power2.inOut" }, 5.2);
+        tl.fromTo(
+          "#swipe-fill",
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.7, ease: "power2.inOut", immediateRender: true },
+          5.2,
+        );
+        tl.to("#swipe-label", { opacity: 0, duration: 0.3 }, 5.2);
+        tl.to("#done-label", { opacity: 1, duration: 0.35, ease: "power2.out" }, 5.8);
+        // 5. Vuelta al plano general (móvil a la izquierda) y la gráfica se dibuja.
+        tl.to("#camera", { ...focus(760, 360, 1), ...CAM }, 6.1);
+        tl.to(line, { strokeDashoffset: 0, duration: 1.4, ease: "power2.inOut" }, 6.5);
+        tl.from(
+          "#headline2",
+          { opacity: 0, x: 30, filter: "blur(10px)", duration: 0.7, ease: "expo.out" },
+          6.9,
+        );
+        // 6. Cierre con la marca, quieto.
+        tl.from("#end", { opacity: 0, duration: 0.5, ease: "power2.out" }, 8.6);
+        tl.from("#end-name", { y: 24, opacity: 0, duration: 0.7, ease: "expo.out" }, 8.75);
+        tl.from("#end-tag", { y: 16, opacity: 0, duration: 0.6, ease: "expo.out" }, 8.95);
+        tl.set({}, {}, 10.5);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["ui-zoom"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

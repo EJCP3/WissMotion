@@ -39,7 +39,7 @@ function errorsOf(report) {
 const skip = !existsSync(CLI) && "CLI sin construir";
 
 describe("hyperframes lint de las plantillas", { skip }, () => {
-  it("hay 17 plantillas", () => assert.equal(ids.length, 17));
+  it("hay 18 plantillas", () => assert.equal(ids.length, 18));
 
   for (const id of ids) {
     it(`${id}: 0 errores`, async () => {

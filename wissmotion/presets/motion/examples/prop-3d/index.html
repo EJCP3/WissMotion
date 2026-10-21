@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>prop-3d · WissMotion</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: radial-gradient(circle at 50% 45%, #ffffff, #e9edf5);
+      }
+      #card {
+        position: absolute;
+        left: 470px;
+        top: 200px;
+        width: 340px;
+        height: 320px;
+        border-radius: 28px;
+        background: #fff;
+        box-shadow: 0 30px 80px rgba(20, 30, 60, 0.12);
+        font:
+          600 18px Inter,
+          sans-serif;
+        color: #111;
+      }
+      #card small {
+        position: absolute;
+        left: 30px;
+        top: 30px;
+        color: #8a8f99;
+        font-size: 14px;
+      }
+      #card b {
+        position: absolute;
+        left: 30px;
+        top: 60px;
+        font-size: 56px;
+      }
+      #card i {
+        position: absolute;
+        left: 30px;
+        right: 30px;
+        bottom: 30px;
+        height: 56px;
+        border-radius: 16px;
+        background: #2f55ff;
+      }
+      /* El objeto 3D: PNG o WebM con alfa. La sombra la pone CSS, no el render. */
+      .prop {
+        position: absolute;
+        filter: drop-shadow(0 24px 30px rgba(20, 30, 60, 0.25));
+      }
+      #p1 {
+        left: 200px;
+        top: 120px;
+        width: 240px;
+      }
+      #p2 {
+        left: 860px;
+        top: 330px;
+        width: 300px;
+      }
+      #p3 {
+        left: 860px;
+        top: 70px;
+        width: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="stage"
+      data-composition-id="prop-3d"
+      data-start="0"
+      data-width="1280"
+      data-height="720"
+    >
+      <div id="card" class="clip" data-start="0" data-duration="4" data-track-index="0">
+        <small>Private Transfer</small><b>13.86</b><i></i>
+      </div>
+      <img
+        id="p1"
+        class="prop clip"
+        src="moneda.png"
+        alt=""
+        data-start="0"
+        data-duration="4"
+        data-track-index="1"
+      />
+      <img
+        id="p2"
+        class="prop clip"
+        src="tarjeta.png"
+        alt=""
+        data-start="0"
+        data-duration="4"
+        data-track-index="2"
+      />
+      <img
+        id="p3"
+        class="prop clip"
+        src="moneda.png"
+        alt=""
+        data-start="0.05"
+        data-duration="3.95"
+        data-track-index="3"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.from("#card", { y: 40, opacity: 0, duration: 0.6, ease: "power3.out" }, 0.2);
+        // Entrada con giro y rebote, en cascada; después flotación finita
+        // (yoyo con repeat fijo, nunca infinito) desfasada por objeto = parallax.
+        gsap.utils.toArray(".prop").forEach((el, i) => {
+          const at = 0.5 + i * 0.15;
+          tl.from(
+            el,
+            { y: 160, rotation: -25, scale: 0.5, opacity: 0, duration: 0.9, ease: "back.out(1.4)" },
+            at,
+          );
+          tl.to(
+            el,
+            {
+              y: -14 - i * 6,
+              rotation: 4 - i * 3,
+              duration: 1.2,
+              ease: "sine.inOut",
+              yoyo: true,
+              repeat: 1,
+            },
+            at + 0.9,
+          );
+        });
+        window.__timelines = window.__timelines || {};
+        window.__timelines["prop-3d"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

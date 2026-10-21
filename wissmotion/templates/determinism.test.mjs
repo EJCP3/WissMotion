@@ -1,4 +1,4 @@
-// Determinismo de las 17 plantillas y los 42 ejemplos de presets (A → B → A
+// Determinismo de las 18 plantillas y los 44 ejemplos de presets (A → B → A
 // y una ejecución nueva dan el mismo PNG). Tarda ~10 min: solo corre con
 // WISSMOTION_DETERMINISM=1 y el CLI construido.
 import { describe, it } from "node:test";

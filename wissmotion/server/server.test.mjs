@@ -108,11 +108,11 @@ describe("mcp.mjs (stdio)", () => {
     }
   });
 
-  it("template_list trae 17 plantillas con variables", async () => {
+  it("template_list trae 18 plantillas con variables", async () => {
     const list = JSON.parse(
       textOf(await send("tools/call", { name: "template_list", arguments: {} })),
     );
-    assert.equal(list.length, 17);
+    assert.equal(list.length, 18);
     const app = list.find((t) => t.id === "promo-app");
     assert.ok(app.variables.some((v) => v.id === "brandPrimary" && v.type === "color"));
   });
@@ -155,7 +155,7 @@ describe("mcp.mjs (stdio)", () => {
   it("motion_list trae personalidades, presets y transiciones", async () => {
     const m = JSON.parse(textOf(await send("tools/call", { name: "motion_list", arguments: {} })));
     assert.equal(Object.keys(m.personalities).length, 6);
-    assert.equal(Object.keys(m.presets).length, 38);
+    assert.equal(Object.keys(m.presets).length, 40);
     assert.equal(Object.keys(m.transitions).length, 4);
   });
 
