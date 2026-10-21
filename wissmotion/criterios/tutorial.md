@@ -49,3 +49,5 @@ explicativo) aquí es necesario.
 - [ ] Se entiende con el sonido apagado.
 - [ ] Ningún texto desaparece antes de poder leerse.
 - [ ] Hay resumen al final.
+- [ ] Nada fijo cae fuera de la zona segura del formato (`README.md`, reglas comunes).
+- [ ] Ningún texto va sobre un par prohibido de `validate-brand.mjs`.

@@ -40,4 +40,5 @@ y cambia las prioridades.
 - [ ] Hay un solo mensaje y una sola oferta.
 - [ ] El CTA tiene verbo y destino y se ve ≥ 2 s.
 - [ ] Se entiende sin sonido.
-- [ ] Nada importante cae fuera de la zona segura del formato.
+- [ ] Nada fijo cae fuera de la zona segura del formato (`README.md`, reglas comunes).
+- [ ] Ningún texto va sobre un par prohibido de `validate-brand.mjs`.

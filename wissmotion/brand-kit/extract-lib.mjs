@@ -243,6 +243,12 @@ export function luminance(hex) {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
+/** Contraste WCAG entre dos colores hex (1 a 21). */
+export function contrast(a, b) {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
 export function saturation(hex) {
   const [r, g, b] = hexToRgb(hex);
   const max = Math.max(r, g, b);

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { validateBrand } from "./validate-brand.mjs";
+import { forbiddenPairs, validateBrand } from "./validate-brand.mjs";
 import { brandToCss } from "./brand-tokens.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -72,5 +72,22 @@ describe("brand-tokens.mjs", () => {
     ]) {
       assert.ok(css.includes(`${token}: ${value}`), `falta ${token}`);
     }
+  });
+});
+
+describe("forbiddenPairs", () => {
+  it("marca los pares con contraste < 3:1 y deja pasar los legibles", () => {
+    const colors = {
+      primary: "#000000",
+      secondary: "#ffffff",
+      accent: "#ffd60a",
+      background: "#ffffff",
+      surface: "#0b0b0c",
+      text: "#000000",
+    };
+    const pairs = forbiddenPairs({ colors }).map((p) => `${p.a}/${p.b}`);
+    assert.ok(pairs.includes("secondary/accent"), "amarillo sobre blanco");
+    assert.ok(pairs.includes("primary/text"), "mismo color");
+    assert.ok(!pairs.includes("primary/secondary"), "negro/blanco es legible");
   });
 });

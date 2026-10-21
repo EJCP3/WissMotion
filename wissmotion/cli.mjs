@@ -3,7 +3,7 @@
 // todo el producto sin recordar rutas. Despacha a los scripts existentes:
 //   node wissmotion/cli.mjs <comando> [args]
 // Comandos: mcp, brand-validate, brand-extract, brands, template, instantiate,
-//   templateize, render, voiceover, captions, beats, package, agents, film, help.
+//   templateize, determinism, safe-zone, render, voiceover, captions, beats, package, agents, film, help.
 import { spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -40,6 +40,10 @@ const COMMANDS = {
   determinism: {
     file: ["templates", "determinism.mjs"],
     help: "--project dir [--at 1.5] [--other 4] — mismo instante = mismo fotograma",
+  },
+  "safe-zone": {
+    file: ["criterios", "safe-zone.mjs"],
+    help: "--project dir [--format 9:16] [--meta] [--seek .25,.5,.75,1] — texto en los márgenes que tapan las apps",
   },
   render: {
     file: ["render", "render-batch.mjs"],

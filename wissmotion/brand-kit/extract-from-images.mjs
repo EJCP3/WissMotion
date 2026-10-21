@@ -6,7 +6,7 @@ import { spawnSync } from "node:child_process";
 import { writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { luminance, saturation } from "./extract-lib.mjs";
+import { contrast, saturation } from "./extract-lib.mjs";
 import { resolveLibraryDir, saveBrand } from "./brand-library.mjs";
 import { validateBrand } from "./validate-brand.mjs";
 
@@ -53,11 +53,6 @@ export function countColors(buffers) {
     }
   }
   return counts;
-}
-
-function contrast(a, b) {
-  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
-  return (hi + 0.05) / (lo + 0.05);
 }
 
 function hue(c) {

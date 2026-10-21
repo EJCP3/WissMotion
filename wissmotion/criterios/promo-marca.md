@@ -22,7 +22,8 @@ abarata (efectos de más, SFX sin motivo, música que no encaja) se quita.
 ## 2. Diseño antes que animación
 
 Antes de escribir GSAP, el storyboard: una lista de planos con su idea, su
-texto y su objeto principal (o fotogramas de Figma vía `/figma`). Si un plano
+texto y su objeto principal (o fotogramas de Figma vía `/figma`), más el
+estado de frontera de cada corte (ver `README.md`, reglas comunes). Si un plano
 no se ve bien quieto, no se arregla animándolo.
 
 Cada plano cumple:
@@ -102,3 +103,6 @@ Además de `hyperframes lint` y `check`, repasar fotogramas (`frame_snapshot` o
 - [ ] La duración de los planos varía (hay al menos una pausa en el beneficio clave).
 - [ ] La música está en el rango de BPM de la personalidad y los cortes caen en el beat.
 - [ ] Ningún SFX sobra.
+- [ ] Cada corte coincide con su estado de frontera del storyboard.
+- [ ] Nada fijo cae fuera de la zona segura del formato (`README.md`, reglas comunes).
+- [ ] Ningún texto va sobre un par prohibido de `validate-brand.mjs`.

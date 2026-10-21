@@ -61,3 +61,6 @@ tranquilo en la mitad. Cualquier formato; en 9:16 las palabras grandes van parti
 - [ ] Los golpes caen en el beat.
 - [ ] El marco de esquinas no se mueve.
 - [ ] El logo cierra y se queda quieto al final.
+- [ ] Cada corte coincide con su estado de frontera del storyboard.
+- [ ] Nada fijo cae fuera de la zona segura del formato (`README.md`, reglas comunes).
+- [ ] Ningún texto va sobre un par prohibido de `validate-brand.mjs`.
